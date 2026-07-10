@@ -1,6 +1,6 @@
 {
   "name": "切果NOW · 文案助手",
-  "short_name": "切果文案",
+  "short_name": "切果NOW",
   "description": "社群推送文案一键生成 · 周二到周六全覆盖",
   "start_url": "./index.html",
   "scope": "./",
