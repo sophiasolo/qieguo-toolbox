@@ -2924,7 +2924,16 @@
 
     // ==================== PWA Service Worker ====================
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(() => {});
+      navigator.serviceWorker.register('sw.js?v=4', { updateViaCache: 'none' }).then(function(reg) {
+        reg.addEventListener('updatefound', function() {
+          var newWorker = reg.installing;
+          newWorker.addEventListener('statechange', function() {
+            if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
+              location.reload();
+            }
+          });
+        });
+      }).catch(function() {});
     }
 
     // ==================== 启动 ====================
