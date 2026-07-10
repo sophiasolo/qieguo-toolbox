@@ -1,6 +1,6 @@
 // 切果NOW文案助手 · Service Worker
 const CACHE = 'qieguo-copy-v2';
-const FILES = ['index.html', 'manifest.json', 'app-icon.png'];
+const FILES = ['index.html', 'manifest.json', 'app-icon.png', 'app-icon-ios.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES)));
