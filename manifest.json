@@ -1,0 +1,19 @@
+{
+  "name": "切果NOW · 文案助手",
+  "short_name": "切果文案",
+  "description": "社群推送文案一键生成 · 周二到周六全覆盖",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8faf8",
+  "theme_color": "#2d8a4e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232d8a4e'/><text x='50' y='65' text-anchor='middle' font-size='50'>🍉</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
