@@ -121,33 +121,45 @@
 
     /* Flatpickr 品牌主题 */
     .flatpickr-calendar {
-      border-radius: 12px !important;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.12) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
       font-family: inherit !important;
-      width: 300px !important;
+      width: 312px !important;
+      padding: 6px 8px 10px !important;
     }
-    .flatpickr-months .flatpickr-month { color: var(--accent) !important; }
+    .flatpickr-months { padding-top: 4px; }
+    .flatpickr-months .flatpickr-month { color: var(--accent) !important; font-size: 15px; }
     .flatpickr-current-month .flatpickr-monthDropdown-months { font-weight: 600; }
-    .flatpickr-weekday { color: var(--text-muted) !important; font-weight: 500; }
+    .flatpickr-weekday { color: var(--text-muted) !important; font-weight: 500; font-size: 11px; padding: 8px 0 4px; }
+    .flatpickr-days { padding: 0 2px; }
     .flatpickr-day {
-      border-radius: 8px !important;
-      font-size: 14px;
-      height: 42px; line-height: 42px;
-      position: relative;
+      border-radius: 50% !important;
+      font-size: 13px;
+      height: 36px; line-height: 22px;
+      max-width: 40px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border: none !important;
+      color: var(--text);
     }
-    .flatpickr-day.today { border-color: var(--accent) !important; background: var(--accent-light) !important; }
-    .flatpickr-day.selected, .flatpickr-day:hover { background: var(--accent) !important; border-color: var(--accent) !important; }
-    .flatpickr-day.flatpickr-disabled { color: rgba(0,0,0,0.25) !important; }
-    /* 节日标记 */
-    .flatpickr-day.festival-day { position: relative; font-weight: 600; }
+    .flatpickr-day:hover { background: var(--accent-light) !important; }
+    .flatpickr-day.today { background: var(--accent-subtle) !important; font-weight: 600; }
+    .flatpickr-day.selected { background: var(--accent) !important; color: white !important; font-weight: 600; }
+    .flatpickr-day.selected .lunar-label,
+    .flatpickr-day.selected .festival-label,
+    .flatpickr-day.selected .solar-label { color: rgba(255,255,255,0.85) !important; }
+    .flatpickr-day.flatpickr-disabled { color: rgba(0,0,0,0.2) !important; }
+    .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(0,0,0,0.25); }
+    /* 节日圆点标记 */
+    .flatpickr-day.festival-day { position: relative; }
     .flatpickr-day.festival-day::after {
       content: ''; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
-      width: 5px; height: 5px; border-radius: 50%; background: var(--accent);
+      width: 4px; height: 4px; border-radius: 50%; background: var(--accent);
     }
-    /* 格子内小字：农历/节气 */
-    .lunar-label { font-size: 10px; line-height: 1; color: var(--text-muted); display: block; margin-top: -2px; }
-    .festival-label { font-size: 10px; line-height: 1; color: var(--accent); font-weight: 600; display: block; margin-top: -2px; }
-    .solar-label { font-size: 10px; line-height: 1; color: #e67e22; font-weight: 500; display: block; margin-top: -2px; }
+    .flatpickr-day.festival-day.selected::after { background: white; }
+    /* 格子内小字 */
+    .lunar-label { font-size: 9px; line-height: 1; color: var(--text-muted); margin-top: 1px; }
+    .festival-label { font-size: 9px; line-height: 1; color: var(--accent); font-weight: 600; margin-top: 1px; }
+    .solar-label { font-size: 9px; line-height: 1; color: #e67e22; font-weight: 500; margin-top: 1px; }
 
     /* 节日提示条 */
     .festival-hint {
