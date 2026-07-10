@@ -157,15 +157,22 @@
     #festivalBanner {
       background: linear-gradient(135deg, var(--accent) 0%, #1a6b35 100%);
       color: white;
-      padding: 10px 18px;
+      padding: 8px 14px;
       border-radius: var(--radius);
       margin-bottom: 14px;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 600;
       text-align: center;
       animation: fadeSlideIn 0.5s ease;
       box-shadow: 0 2px 12px rgba(45,138,78,0.25);
       letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      line-height: 1.3;
     }
     #festivalBanner.valentine { background: linear-gradient(135deg, #e91e63, #c2185b); box-shadow: 0 2px 12px rgba(233,30,99,0.3); }
     #festivalBanner.spring { background: linear-gradient(135deg, #e74c3c, #c0392b); box-shadow: 0 2px 12px rgba(231,76,60,0.3); }
@@ -173,8 +180,8 @@
     #festivalBanner.christmas { background: linear-gradient(135deg, #27ae60, #1e8449); box-shadow: 0 2px 12px rgba(39,174,96,0.3); }
 
     /* 节日横幅装饰emoji */
-    .fx-left { margin-right: 8px; }
-    .fx-right { margin-left: 8px; }
+    .fx-left, .fx-right { flex-shrink: 0; }
+    .fx-text { flex-shrink: 1; }
 
     /* 雪花飘落特效 */
     @keyframes snowfall {
@@ -843,9 +850,9 @@
       if (f) {
         const icons = FESTIVAL_ICONS[f.name] || { left:'🎉', right:'🎉', fx:'' };
         banner.innerHTML = '<span class="fx-left">' + icons.left + '</span>' +
-          f.name + '限定 · 文案已自动匹配节日氛围' +
+          '<span class="fx-text">' + f.name + '限定</span>' +
           '<span class="fx-right">' + icons.right + '</span>';
-        banner.style.display = 'block';
+        banner.style.display = 'flex';
         banner.className = (f.theme || '') + (icons.fx ? ' fx-' + icons.fx : '');
         // 全局漂浮粒子
         if (icons.particle) {
