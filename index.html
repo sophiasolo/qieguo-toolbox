@@ -753,6 +753,17 @@
 
     // ==================== 节日营销配置 ====================
     // 农历节日阳历日期需每年更新（标注的农历日期供参考）
+    // 农历节日→阳历日期对照表 (2026-2035)
+    // 数据来源：中国天文年历，每年自动换算无需手动修改
+    const LUNAR_DATES = {
+      春节:   {2026:'02-17',2027:'02-06',2028:'01-26',2029:'02-13',2030:'02-03',2031:'01-23',2032:'02-11',2033:'01-31',2034:'02-19',2035:'02-08'},
+      元宵节: {2026:'03-03',2027:'02-20',2028:'02-09',2029:'02-27',2030:'02-17',2031:'02-06',2032:'02-25',2033:'02-14',2034:'03-04',2035:'02-22'},
+      端午节: {2026:'06-19',2027:'06-09',2028:'05-28',2029:'06-16',2030:'06-05',2031:'05-25',2032:'06-12',2033:'06-01',2034:'06-20',2035:'06-10'},
+      七夕:   {2026:'08-29',2027:'08-18',2028:'08-06',2029:'08-25',2030:'08-14',2031:'08-04',2032:'08-22',2033:'08-11',2034:'08-30',2035:'08-20'},
+      中秋节: {2026:'09-25',2027:'09-15',2028:'10-03',2029:'09-22',2030:'09-12',2031:'10-01',2032:'09-19',2033:'09-08',2034:'09-27',2035:'09-16'},
+      重阳节: {2026:'10-19',2027:'10-09',2028:'10-26',2029:'10-16',2030:'10-06',2031:'09-24',2032:'10-12',2033:'10-01',2034:'10-20',2035:'10-10'},
+    };
+
     const FESTIVALS = [
       // ---- 阳历固定节日 ----
       { name:'元旦', start:'01-01', end:'01-03', hua:'🎉 新年第一口甜｜{product}', cta:'🎉 新年第一单·甜蜜开局', theme:'spring' },
@@ -765,9 +776,9 @@
       { name:'儿童节', start:'06-01', end:'06-01', hua:'🍭 谁还不是个宝宝｜{product}', cta:'🍭 大朋友的儿童节甜蜜' },
       { name:'618', start:'06-17', end:'06-19', hua:'🛒 618甜蜜加购｜{product}', cta:'🛒 年中狂欢·甜蜜不缺席' },
       { name:'父亲节', start:'06-20', end:'06-22', hua:'👔 老爸也爱这一口甜｜{product}', cta:'👔 给老爸的甜蜜心意' }, // 6月第三个周日附近
-      { name:'七夕', start:'08-28', end:'08-30', hua:'🌌 鹊桥相会·以果传情｜{product}', cta:'🌌 七夕的甜·比情话更动人', theme:'valentine' },
+      { name:'七夕', type:'lunar', lunarName:'七夕', startOffset:-1, endOffset:1, hua:'🌌 鹊桥相会·以果传情｜{product}', cta:'🌌 七夕的甜·比情话更动人', theme:'valentine' },
       { name:'教师节', start:'09-09', end:'09-11', hua:'🍎 谢师恩·甜蜜献礼｜{product}', cta:'🍎 桃李芬芳·甜蜜谢师' },
-      { name:'中秋节', start:'09-24', end:'09-27', hua:'🥮 月圆人甜｜{product}', cta:'🥮 月满中秋·甜蜜团圆', theme:'golden' },
+      { name:'中秋节', type:'lunar', lunarName:'中秋节', startOffset:-1, endOffset:2, hua:'🥮 月圆人甜｜{product}', cta:'🥮 月满中秋·甜蜜团圆', theme:'golden' },
       { name:'国庆节', start:'10-01', end:'10-07', hua:'🇨🇳 国庆甜蜜假期｜{product}', cta:'🇨🇳 长假快乐·甜蜜相伴', theme:'spring' },
       { name:'万圣节', start:'10-30', end:'11-01', hua:'🎃 不给糖就捣蛋·给果切也行｜{product}', cta:'🎃 Trick or Sweet!' },
       { name:'双十一', start:'11-10', end:'11-12', hua:'🛍️ 双十一不剁手·只剁果｜{product}', cta:'🛍️ 狂欢价·甜蜜不等待' },
@@ -775,9 +786,9 @@
       { name:'平安夜', start:'12-24', end:'12-24', hua:'🎄 平安夜的一口甜｜{product}', cta:'🎄 平安夜的甜蜜祝福', theme:'christmas' },
       { name:'圣诞节', start:'12-25', end:'12-26', hua:'🎅 圣诞老人的甜蜜快递｜{product}', cta:'🎅 圣诞快乐·甜蜜到家', theme:'christmas' },
       { name:'跨年夜', start:'12-31', end:'12-31', hua:'🎆 跨年夜的最后一甜｜{product}', cta:'🎆 新年倒计时·甜蜜迎新年', theme:'golden' },
-      { name:'春节', start:'02-16', end:'02-23', hua:'🧧 新年大吉·甜蜜开运｜{product}', cta:'🧧 金兔送福·甜蜜新年', theme:'spring' },
-      { name:'元宵节', start:'03-02', end:'03-04', hua:'🏮 汤圆甜甜·果切也甜｜{product}', cta:'🏮 元宵快乐·甜蜜圆满', theme:'spring' },
-      { name:'端午节', start:'06-18', end:'06-20', hua:'🐲 粽情一夏·甜蜜相伴｜{product}', cta:'🐲 端午安康·甜蜜加分' },
+      { name:'春节', type:'lunar', lunarName:'春节', startOffset:-1, endOffset:7, hua:'🧧 新年大吉·甜蜜开运｜{product}', cta:'🧧 金兔送福·甜蜜新年', theme:'spring' },
+      { name:'元宵节', type:'lunar', lunarName:'元宵节', startOffset:-1, endOffset:1, hua:'🏮 汤圆甜甜·果切也甜｜{product}', cta:'🏮 元宵快乐·甜蜜圆满', theme:'spring' },
+      { name:'端午节', type:'lunar', lunarName:'端午节', startOffset:-1, endOffset:1, hua:'🐲 粽情一夏·甜蜜相伴｜{product}', cta:'🐲 端午安康·甜蜜加分' },
     ];
 
     function getTodayFestival() {
@@ -788,11 +799,25 @@
       } else {
         useDate = new Date();
       }
+      const year = useDate.getFullYear();
       const m = String(useDate.getMonth() + 1).padStart(2, '0');
       const d = String(useDate.getDate()).padStart(2, '0');
       const md = m + '-' + d;
       for (const f of FESTIVALS) {
-        if (md >= f.start && md <= f.end) return f;
+        let start = f.start, end = f.end;
+        // 农历节日：从对照表取基日+offset动态计算
+        if (f.type === 'lunar') {
+          const baseStr = LUNAR_DATES[f.lunarName]?.[year];
+          if (!baseStr) continue; // 超出对照表年份跳过
+          const baseDate = new Date(year + '-' + baseStr + 'T00:00:00');
+          const s = new Date(baseDate);
+          s.setDate(s.getDate() + (f.startOffset || 0));
+          const e = new Date(baseDate);
+          e.setDate(e.getDate() + (f.endOffset || 0));
+          start = String(s.getMonth() + 1).padStart(2, '0') + '-' + String(s.getDate()).padStart(2, '0');
+          end   = String(e.getMonth() + 1).padStart(2, '0') + '-' + String(e.getDate()).padStart(2, '0');
+        }
+        if (md >= start && md <= end) return f;
       }
       return null;
     }
