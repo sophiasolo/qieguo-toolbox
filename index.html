@@ -116,6 +116,22 @@
     .day-badge.active { background: var(--accent-light); color: var(--accent); }
     .day-badge.inactive { background: rgba(0,0,0,0.05); color: var(--text-muted); }
 
+    /* 节日提示条 */
+    .festival-hint {
+      background: linear-gradient(135deg, var(--accent-light), #e8f5e9);
+      border: 1px solid rgba(45,138,78,0.2);
+      border-radius: var(--radius);
+      padding: 10px 16px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: fadeSlideIn 0.3s ease;
+    }
+
     /* Tab导航 */
     .day-tabs {
       display: flex;
@@ -671,6 +687,7 @@
       <input type="date" id="datePicker">
       <span id="dayBadge" class="day-badge">--</span>
     </div>
+    <div id="festivalHint" class="festival-hint" style="display:none"></div>
 
     <!-- 价格模式全局设置 -->
     <div class="price-mode-bar">
@@ -866,6 +883,27 @@
       } else {
         banner.style.display = 'none';
         banner.innerHTML = '';
+      }
+      // 更新节日提示条
+      updateFestivalHint(f);
+    }
+
+    function updateFestivalHint(festival) {
+      const hint = document.getElementById('festivalHint');
+      if (!hint) return;
+      if (festival) {
+        const icons = FESTIVAL_ICONS[festival.name] || { left: '🎉' };
+        let rangeText = '';
+        if (festival.type === 'lunar') {
+          rangeText = '农历节日 · 每年自动换算';
+        } else {
+          rangeText = festival.start + ' ~ ' + festival.end;
+        }
+        hint.innerHTML = '<span>' + icons.left + '</span> <strong>' + festival.name + '</strong> ' + rangeText;
+        hint.style.display = 'flex';
+      } else {
+        hint.style.display = 'none';
+        hint.innerHTML = '';
       }
     }
 
