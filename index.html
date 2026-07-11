@@ -121,13 +121,14 @@
 
     /* Flatpickr 品牌主题 */
     .flatpickr-calendar {
-      border-radius: 14px !important;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04) !important;
       font-family: inherit !important;
       width: 312px !important;
-      padding: 6px 8px 10px !important;
+      padding: 10px 12px 12px !important;
+      background: linear-gradient(180deg, #ffffff 0%, #fafcfa 100%);
     }
-    .flatpickr-months { padding-top: 4px; }
+    .flatpickr-months { padding-top: 2px; margin-bottom: 4px; }
     .flatpickr-months .flatpickr-month {
       color: var(--accent) !important;
       font-family: system-ui, -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif !important;
@@ -190,13 +191,20 @@
       margin: 0 !important;
     }
     .flatpickr-day:hover { background: var(--accent-light) !important; }
-    .flatpickr-day.today { background: var(--accent-subtle) !important; font-weight: 600; }
+    .flatpickr-day.today { background: var(--accent) !important; color: white !important; font-weight: 600; }
+    .flatpickr-day.today .lunar-label,
+    .flatpickr-day.today .solar-label { color: rgba(255,255,255,0.8) !important; }
     .flatpickr-day.selected { background: var(--accent) !important; color: white !important; font-weight: 600; }
     .flatpickr-day.selected .lunar-label,
     .flatpickr-day.selected .festival-label,
     .flatpickr-day.selected .solar-label { color: rgba(255,255,255,0.85) !important; }
     .flatpickr-day.flatpickr-disabled { color: rgba(0,0,0,0.2) !important; }
     .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay { color: rgba(0,0,0,0.25); }
+    /* 周末列淡绿底 */
+    .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n+1),
+    .flatpickr-days .dayContainer .flatpickr-day:nth-child(7n) {
+      background: rgba(45,138,78,0.03);
+    }
     /* 节日圆点标记 */
     .flatpickr-day.festival-day { position: relative; }
     .flatpickr-day.festival-day::after {
