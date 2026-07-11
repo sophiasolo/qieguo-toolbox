@@ -1932,7 +1932,7 @@
             end   = String(e.getMonth() + 1).padStart(2, '0') + '-' + String(e.getDate()).padStart(2, '0');
           } else continue;
         }
-        if (md >= start && md <= end) return { cls: 'festival-day', label: f.name, labelCls: 'festival-label' };
+        if (md === start) return { cls: 'festival-day', label: f.name, labelCls: 'festival-label' };
       }
 
       // 2. 检查节气
