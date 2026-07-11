@@ -1,5 +1,5 @@
 // 切果NOW文案助手 · Service Worker
-const CACHE = 'qieguo-copy-v4';
+const CACHE = 'qieguo-copy-v5';
 const FILES = ['index.html', 'manifest.json', 'app-icon.png', 'app-icon-ios.png'];
 
 self.addEventListener('install', e => {
