@@ -130,17 +130,16 @@
     .flatpickr-months { padding-top: 4px; }
     .flatpickr-months .flatpickr-month {
       color: var(--accent) !important;
-      font-family: 'Noto Sans SC', 'Inter', system-ui, sans-serif !important;
-      font-size: 17px; font-weight: 600;
-      letter-spacing: -0.01em;
+      font-family: system-ui, -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif !important;
+      font-size: 16px; font-weight: 600;
     }
     .flatpickr-current-month {
       padding: 0 !important;
       display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     .flatpickr-current-month .flatpickr-monthDropdown-months {
-      font-family: 'Noto Sans SC', 'Inter', system-ui, sans-serif !important;
-      font-weight: 600; font-size: 17px;
+      font-family: system-ui, -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif !important;
+      font-weight: 600; font-size: 16px;
       -webkit-appearance: none; appearance: none;
       background: transparent; border: none; color: var(--accent);
       padding: 2px 20px 2px 4px;
@@ -149,11 +148,11 @@
       cursor: pointer;
     }
     .flatpickr-current-month input.cur-year {
-      font-family: 'Noto Sans SC', 'Inter', system-ui, sans-serif !important;
-      font-weight: 600 !important; font-size: 17px !important;
+      font-family: system-ui, -apple-system, 'PingFang SC', 'Noto Sans SC', sans-serif !important;
+      font-weight: 600 !important; font-size: 16px !important;
       color: var(--accent) !important;
       background: transparent; border: none;
-      width: 52px; text-align: center;
+      width: 48px; text-align: center;
     }
     .flatpickr-prev-month, .flatpickr-next-month {
       width: 30px; height: 30px; padding: 0 !important;
@@ -164,15 +163,26 @@
     .flatpickr-prev-month svg, .flatpickr-next-month svg { width: 14px; height: 14px; }
     .flatpickr-prev-month svg path, .flatpickr-next-month svg path { fill: var(--accent) !important; }
     .flatpickr-weekday { color: var(--text-muted) !important; font-weight: 500; font-size: 11px; padding: 8px 0 4px; }
-    .flatpickr-days { padding: 0; }
+    .flatpickr-days {
+      padding: 0 !important;
+      width: 100%;
+    }
+    .flatpickr-days .dayContainer {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 100% !important;
+      justify-content: space-evenly;
+      padding: 0 !important;
+    }
     .flatpickr-day {
       border-radius: 50% !important;
       font-size: 13px;
       height: 36px; line-height: 22px;
-      width: 100%;
+      flex: 0 0 calc(100% / 7);
       display: flex; flex-direction: column; align-items: center; justify-content: center;
       border: none !important;
       color: var(--text);
+      margin: 0 !important;
     }
     .flatpickr-day:hover { background: var(--accent-light) !important; }
     .flatpickr-day.today { background: var(--accent-subtle) !important; font-weight: 600; }
