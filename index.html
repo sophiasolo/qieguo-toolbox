@@ -1578,35 +1578,29 @@
     reasonTemplateIdx = (reasonTemplateIdx + 1) % REASON_TEMPLATES.length;
 
     function matchFruitTrait(productName) {
-      // 一级：精确最长匹配
-      let bestMatch = null, bestLen = 0;
-      for (const [key, trait] of Object.entries(FRUIT_TRAITS)) {
-        if (productName.includes(key) && key.length > bestLen) {
-          bestMatch = trait;
-          bestLen = key.length;
+      // 复合产品：按+/／分割，每部分独立匹配，返回组合描述
+      const parts = productName.split(/[+／\/]/).map(s => s.trim()).filter(Boolean);
+      const traits = [];
+      const seen = new Set();
+      for (const part of parts) {
+        const resolved = resolveFruitName(part);
+        let bestMatch = null, bestLen = 0;
+        for (const [key, trait] of Object.entries(FRUIT_TRAITS)) {
+          if (resolved.includes(key) && key.length > bestLen) {
+            bestMatch = trait; bestLen = key.length;
+          }
+        }
+        if (bestMatch && !seen.has(bestLen + bestMatch.taste)) {
+          seen.add(bestLen + bestMatch.taste);
+          traits.push(bestMatch);
         }
       }
-      if (bestMatch) return bestMatch;
-
-      // 二级：模糊关键词映射（边缘品类→最接近的已知品类）
-      const FUZZY_MAP = {
-        '番茄': '圣女果', '小番茄': '圣女果', '千禧': '圣女果',
-        '乌梅': '杨梅', '梅': '杨梅',
-        '杨枝': '芒果', '甘露': '芒果', '椰奶': '椰青',
-        '李': '桃', '梨': '苹果', '枣': '冬枣',
-        '柠': '橙', '橘': '柑橘', '桔': '柑橘',
-        '莓': '草莓', '蕉': '芒果', '榴': '榴莲',
-        '柚': '青柚', '柿': '苹果', '杏': '桃',
-        '瓜': '甜瓜', '提': '葡萄', '荔': '荔枝',
-      };
-      for (const [fuzzy, target] of Object.entries(FUZZY_MAP)) {
-        if (productName.includes(fuzzy) && FRUIT_TRAITS[target]) {
-          return FRUIT_TRAITS[target];
-        }
+      if (traits.length > 0) {
+        // 合并多个品类的季节/口感/卖点
+        const allTaste = [...new Set(traits.map(t => t.taste))].join('·');
+        return { season: traits[0].season, taste: allTaste, tip: traits.map(t => t.tip).join('·'), scene: traits[0].scene };
       }
-
-      // 三级：智能兜底（不再返回空洞废话）
-      return { season:'当季鲜切', taste:'新鲜现做', texture:'口感刚好', scene:'日常享用', tip:'冰一下更好吃' };
+      return FRUIT_TRAITS['西瓜']; // fallback
     }
 
     function optimizeReason(productName, keywords, customTemplates) {
