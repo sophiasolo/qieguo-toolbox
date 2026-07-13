@@ -1800,33 +1800,33 @@
     function renderFruitPicker(containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
-      // 分类定义
+      // 品类合并：绿果→奇异果, 哈密→蜜瓜
+      const MERGE = { '绿果':'奇异果', '哈密':'蜜瓜' };
+      const HIDE = new Set(['绿果','哈密','提子','菠萝','蜜桃','麒麟']);
       const CATEGORIES = {
         '风味': ['乌梅','酸嘢','海盐青柠','干噎酸奶','青柠','柠檬'],
-        '瓜类': ['西瓜','麒麟','蜜瓜','哈密','羊角蜜','甜瓜','木瓜','椰青'],
+        '瓜类': ['西瓜','蜜瓜','羊角蜜','甜瓜','木瓜','椰青'],
         '热带': ['芒果','凤梨','榴莲','山竹','火龙果','菠萝蜜','百香果','芭乐','红毛丹','释迦','莲雾','杨桃','龙眼'],
         '浆果': ['草莓','蓝莓','樱桃','杨梅','桑葚','圣女果','石榴'],
-        '核果': ['桃','蜜桃','黄桃','李子','西梅','杏','枇杷','柿子'],
+        '核果': ['桃','李子','西梅','杏','枇杷','柿子','黄桃'],
         '柑橘': ['橙','柑橘','青柚','柚子'],
-        '葡萄': ['葡萄','提子','阳光玫瑰'],
+        '葡萄': ['葡萄','阳光玫瑰'],
         '仁果': ['苹果','梨'],
-        '猕猴桃': ['奇异果'],
+        '奇异果': ['奇异果'],
         '其他': ['荔枝','冬枣','青枣','甘蔗','荸荠','无花果'],
       };
-      // 去重 & 只显示FRUIT_TRAITS中存在的
       const cats = {};
       for (const [cat, fruits] of Object.entries(CATEGORIES)) {
-        const valid = fruits.filter(f => FRUIT_TRAITS[f]);
+        const valid = fruits.filter(f => FRUIT_TRAITS[f] && !HIDE.has(f));
         if (valid.length) cats[cat] = valid;
       }
-      // 找遗漏的
       const used = new Set(Object.values(cats).flat());
-      const unused = Object.keys(FRUIT_TRAITS).filter(k => k.length >= 2 && !used.has(k));
+      const unused = Object.keys(FRUIT_TRAITS).filter(k => k.length >= 2 && !used.has(k) && !HIDE.has(k));
       if (unused.length) cats['其他'] = [...(cats['其他']||[]), ...unused];
 
       let html = '';
       for (const [cat, fruits] of Object.entries(cats)) {
-        html += `<div style="font-size:11px;color:rgba(0,0,0,0.35);margin:8px 0 4px">${cat}</div><div class="fruit-tags" style="max-height:none">`;
+        html += `<div style="font-size:11px;color:rgba(0,0,0,0.3);margin:10px 0 4px;font-weight:500">${cat}</div><div class="fruit-tags" style="max-height:none;gap:8px">`;
         for (const fruit of fruits) {
           const sel = tueSelectedFruits.includes(fruit) ? ' selected' : '';
           html += `<span class="fruit-tag${sel}" data-fruit="${fruit}" onclick="toggleFruitTag(this)">${fruit}</span>`;
@@ -1837,24 +1837,10 @@
     }
 
     function getSelectedFruits() {
-      if (tueSelectedFruits.length > 0) return [...tueSelectedFruits];
-      // 自动从产品名匹配
-      const productEl = document.getElementById('tueProduct');
-      const product = (productEl && productEl.value && productEl.value.trim()) || (productEl && productEl.placeholder) || '招牌鲜果切';
-      const matched = [];
-      const sortedKeys = Object.keys(FRUIT_TRAITS).sort((a, b) => b.length - a.length);
-      const seenMatch = new Set();
-      for (const key of sortedKeys) {
-        if (key.length >= 2 && product.includes(key) && !seenMatch.has(key)) {
-          seenMatch.add(key);
-          matched.push(key);
-        }
-      }
-      return matched.length > 0 ? matched : ['西瓜'];
+      return [...tueSelectedFruits]; // 纯手动选择，不自动匹配
     }
 
-    // ========== 周五品类识别 + 自动优化 ==========
-    function autoOptimizeFri() {
+    // ==================== 周三生成 ====================
       const productEl = document.getElementById('friProduct');
       const reasonEl = document.getElementById('friReason');
       const tagEl = document.getElementById('friFruitTag');
