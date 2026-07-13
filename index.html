@@ -118,6 +118,9 @@
     }
     .day-badge.active { background: var(--accent-light); color: var(--accent); }
     .day-badge.inactive { background: rgba(0,0,0,0.05); color: var(--text-muted); }
+    .live-hint { margin-top:6px; font-size:12px; color:rgba(0,0,0,0.5); min-height:20px; }
+    .live-hint .htag { display:inline-block; background:#e8f5e9; color:#2d8a4e; padding:2px 8px; border-radius:10px; font-size:11px; margin:2px 4px 2px 0; }
+    .live-hint .htag .hdesc { font-weight:400; color:rgba(0,0,0,0.5); }
 
     /* Flatpickr 品牌主题 */
     .flatpickr-calendar {
@@ -1653,6 +1656,33 @@
       return '未知品类';
     }
 
+    // ========== 实时品类识别提示条 ==========
+    function showLiveHint(prodId, hintId) {
+      const prodEl = document.getElementById(prodId);
+      const hintEl = document.getElementById(hintId);
+      if (!prodEl || !hintEl) return;
+      const raw = (prodEl.value || '').trim();
+      if (!raw) { hintEl.innerHTML = ''; return; }
+      const parts = raw.split(/[+\\/]/).map(s => s.trim()).filter(Boolean);
+      if (parts.length === 0) { hintEl.innerHTML = ''; return; }
+      const sortedKeys = Object.keys(FRUIT_TRAITS).sort((a, b) => b.length - a.length);
+      let html = '';
+      for (const part of parts) {
+        let matched = null;
+        for (const key of sortedKeys) {
+          if (part.includes(key)) { matched = key; break; }
+        }
+        if (matched) {
+          const t = FRUIT_TRAITS[matched];
+          const desc = `${t.season}·${t.taste}·${t.scene}`;
+          html += `<span class="htag">🍉${matched} <span class="hdesc">${desc}</span></span>`;
+        } else {
+          html += `<span class="htag" style="background:#f5f5f5;color:rgba(0,0,0,0.5)">📝 未识别到品类</span>`;
+        }
+      }
+      hintEl.innerHTML = html;
+    }
+
     function autoOptimizeReason() {
       const productEl = document.getElementById('tueProduct');
       const keywordEl = document.getElementById('tueKeywords');
@@ -2140,12 +2170,13 @@
         case 2: // 周二
           html = `
             <div class="input-section">
-              <h3>📊 周二 · 热销风向标</h3>
-              <div class="hint" style="margin-bottom:12px">基于上周真实销售数据，生成数据背书+本周理由的爆品种草文案</div>
+              <h3>📊 周二 · 生活关怀</h3>
+              <div class="hint" style="margin-bottom:12px">基于季节天气+节日关怀，生成生活化品类种草文案，无数据背书</div>
               <div class="input-group">
                 <label>🔥 爆品名称（如：麒麟瓜鲜切）</label>
-                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();">
+                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();showLiveHint('tueProduct','tueLiveHint');">
               </div>
+              <div class="live-hint" id="tueLiveHint"></div>
               <div class="input-group" id="subThemeRow" style="display:none">
                 <label>🎯 内含主题（用 / 分隔）</label>
                 <input type="text" id="tueSubThemes" placeholder="如：芒果蓝莓/西瓜/橙子蓝莓/绿果蓝莓" oninput="updateReasonWithSubThemes()">
@@ -2155,14 +2186,6 @@
                 品类识别：
                 <span id="tueFruitTag" style="color:#2d8a4e;font-weight:600;cursor:pointer;border-bottom:1px dashed #2d8a4e" onclick="toggleCategoryPicker()">--</span>
                 <span id="categoryPicker" style="display:none;margin-top:6px;padding:8px;background:#f9faf9;border-radius:8px;border:1px solid var(--border);max-height:200px;overflow-y:auto"></span>
-              </div>
-              <div class="input-group">
-                <label>📊 数据背书（自动生成，可刷新）</label>
-                <div style="display:flex;gap:8px;align-items:center">
-                  <input type="text" id="tueDataLabel" readonly style="background:#f5f5f5;color:#333;flex:1;font-weight:500">
-                  <button type="button" class="btn btn-sm btn-outline" onclick="refreshTueDataLabel()" style="white-space:nowrap;flex-shrink:0">🔄 换一个</button>
-                </div>
-                <div class="hint">30条口语化背书 · 相邻4次自动不重复 · 活人感群主口吻</div>
               </div>
               <div class="input-group">
                 <label>🏷️ 核心卖点关键词（1-3个词）</label>
@@ -2189,8 +2212,9 @@
               <div class="hint" style="margin-bottom:12px">全自动生成，无需输入。自动匹配当月应季产品+天气情绪+花字轮换。</div>
               <div class="input-group">
                 <label>🍉 本周主打产品（可选，不填则自动匹配）</label>
-                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow')">
+                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow');showLiveHint('wedProduct','wedLiveHint');">
               </div>
+              <div class="live-hint" id="wedLiveHint"></div>
               <div class="input-group" id="wedSubRow" style="display:none">
                 <label>🎯 内含主题（用 / 分隔）</label>
                 <input type="text" id="wedSubThemes" placeholder="如：芒果/西瓜/橙子蓝莓">
@@ -2214,8 +2238,9 @@
               <div class="hint" style="margin-bottom:12px">每周一款特价产品，外卖双平台链接，系统自动匹配品类卖点</div>
               <div class="input-group">
                 <label>🔥 特价产品名（必填）</label>
-                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow')">
+                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow');showLiveHint('thuProduct','thuLiveHint');">
               </div>
+              <div class="live-hint" id="thuLiveHint"></div>
               <div class="input-group" id="thuSubRow" style="display:none">
                 <label>🎯 内含组合（用 / 分隔）</label>
                 <input type="text" id="thuSubThemes" placeholder="如：芒果/西瓜双拼">
@@ -2243,7 +2268,8 @@
               <div class="hint" style="margin-bottom:12px">优先推套餐/拼盘，绑定周末场景</div>
               <div class="input-group">
                 <label>🥡 产品名（优先拼盘/套餐）</label>
-                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri()">
+                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri();showLiveHint('friProduct','friLiveHint');">
+                <div class="live-hint" id="friLiveHint"></div>
                 <div style="margin-top:6px;font-size:12px;color:#999">
                   品类识别：<span id="friFruitTag" style="color:#2d8a4e;font-weight:600">--</span>
                 </div>
@@ -2286,8 +2312,9 @@
               </div>
               <div class="input-group">
                 <label>🍉 推荐产品名</label>
-                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow')">
+                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow');showLiveHint('satProduct','satLiveHint');">
               </div>
+              <div class="live-hint" id="satLiveHint"></div>
               <div class="input-group" id="satSubRow" style="display:none">
                 <label>🎯 内含主题（用 / 分隔）</label>
                 <input type="text" id="satSubThemes" placeholder="如：芒果蓝莓/西瓜/橙子蓝莓">
@@ -2335,7 +2362,6 @@
       // 填充默认值
       setTimeout(() => {
         if (day === 2) {
-          document.getElementById('tueDataLabel').value = getFreshDataBadge();
           // 产品名修改时也触发理由优化
           const prodEl = document.getElementById('tueProduct');
           if (prodEl) prodEl.addEventListener('input', autoOptimizeReason);
@@ -2389,6 +2415,58 @@
       return (el && el.value && el.value.trim()) || (el && el.placeholder) || fallback;
     }
 
+    // 获取季节天气描述（无法实时获取天气，用月份推断）
+    function getSeasonWeatherDesc() {
+      const m = new Date().getMonth() + 1;
+      if (m >= 6 && m <= 8) return { type:'summer', label:'盛夏', temp:'35°C+' };
+      if (m === 9) return { type:'autumn', label:'初秋', temp:'凉爽' };
+      if (m === 10) return { type:'autumn', label:'金秋', temp:'微凉' };
+      if (m === 11) return { type:'winter', label:'深秋', temp:'渐冷' };
+      if (m === 12 || m === 1 || m === 2) return { type:'winter', label:'冬日', temp:'寒冷' };
+      if (m >= 3 && m <= 5) return { type:'spring', label:'春天', temp:'温暖' };
+      return { type:'summer', label:'当季', temp:'宜人' };
+    }
+
+    // 周二生活化花字池（关怀型，无数据背书）
+    function getLifeHuaZi(product, season) {
+      const dynamicPool = [];
+      const dayName = '周二工作日';
+      if (season.type === 'summer') {
+        dynamicPool.push(
+          `☀️${season.temp}的夏天，你需要${product}`,
+          `💼${dayName}的解暑方案｜${product}`,
+          `🧊打败高温的快乐源泉｜${product}`,
+          `🌡️热到不想动？试试${product}`,
+          `🍃三伏天的续命果切｜${product}`,
+          `💦高温天的清爽选择｜${product}`,
+        );
+      } else if (season.type === 'winter') {
+        dynamicPool.push(
+          `❄️${season.label}的温暖甜蜜｜${product}`,
+          `💼${dayName}的暖心果切｜${product}`,
+          `🔥天冷也要吃新鲜｜${product}`,
+          `🍊冬日维C补给站｜${product}`,
+        );
+      } else if (season.type === 'spring') {
+        dynamicPool.push(
+          `🌿${season.label}的新鲜味道｜${product}`,
+          `💼${dayName}的活力补给｜${product}`,
+          `🌸春日元气果切｜${product}`,
+        );
+      } else {
+        dynamicPool.push(
+          `🍂${season.label}的甜蜜收获｜${product}`,
+          `💼${dayName}的秋日甜蜜｜${product}`,
+          `🍁秋高气爽来份果切｜${product}`,
+        );
+      }
+      // 合并HUA_ZI中生活化类型（emojiChain/report/summer），不用数据类花字
+      const huaExtra = [...HUA_ZI.emojiChain, ...HUA_ZI.report];
+      if (season.type === 'summer') huaExtra.push(...HUA_ZI.summer);
+      const fullPool = [...dynamicPool, ...huaExtra];
+      return pickFreshHuaZi(fullPool, 'tueLifeHuaUsed', 6);
+    }
+
     function genTuesday() {
       const productEl = document.getElementById('tueProduct');
       const product = (productEl && productEl.value && productEl.value.trim()) || '招牌鲜果切';
@@ -2397,29 +2475,25 @@
         const el = document.getElementById('tueReason');
         const val = (el && el.value && el.value.trim()) || '';
         if (val && !val.includes('新鲜现做') && !val.includes('关键词')) return val;
-        return matchFruitSelling(effectiveProduct)[0];
+        // 从FRUIT_TRAITS匹配品类卖点
+        const trait = matchFruitTrait(effectiveProduct);
+        return `${trait.season}，${trait.taste}，${trait.tip}`;
       })();
-      const dataLabel = getInputVal('tueDataLabel', getFreshDataBadge());
       const subThemes = getSubThemes();
       const themeCount = getSubThemeCount();
       const priceLine = formatPrice(getPriceById('tuePrice'));
       const links = renderSelectedLinks(2);
 
-      // 花字开头
+      // 生活化花字：基于季节/天气+节日（节日优先）
       const festHua2 = getFestivalHua(product);
-      const huaLine = festHua2 || getTueHuaZi(product, dataLabel);
+      const seasonDesc = getSeasonWeatherDesc();
+      const huaLine = festHua2 || getLifeHuaZi(product, seasonDesc);
 
-      // 构建行数组
       const lines = [huaLine, ''];
 
-      // 数据区（每行≤25字）
-      const dataLines = [
-        `📊 ${dataLabel}`,
-        `🔥 ${product}｜覆盖1,000+家店`,
-      ];
-      lines.push(...dataLines);
+      lines.push(`🔥 ${product}`);
+      lines.push('📱 下单鲜切·各区域以平台实际价格为准');
 
-      // 价格
       if (priceLine) lines.push(priceLine);
 
       // 主题多样性
@@ -2434,14 +2508,13 @@
 
       lines.push('');
 
-      // 理由区（自动拆行）
-      const reasonLines = splitLines(`💡 ${reason}`, 20);
+      // 理由区：品类卖点，使用splitLines确保每行≤20字
+      const reasonLines = splitLines(`💡 为什么这周还值得吃？\n${reason}`, 20);
       lines.push(...reasonLines);
 
       lines.push('');
       lines.push(getFestivalCTA() || getCTA(2));
       lines.push('');
-      // 链接
       if (links) {
         const linkLines = links.split('\n');
         lines.push(...linkLines);
