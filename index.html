@@ -1657,29 +1657,39 @@
     }
 
     // ========== 实时品类识别提示条 ==========
-    function showLiveHint(prodId, hintId) {
+    function resolveFruitName(name) {
+      // 模糊映射：别名 → 标准品类名
+      const ALIAS = { '小番茄':'圣女果', '番茄':'圣女果', '千禧':'圣女果', '车厘子':'樱桃', '西柚':'青柚', '菠萝':'凤梨', '提子':'葡萄', '巨峰':'葡萄', '夏黑':'葡萄', '哈密':'蜜瓜', '红提':'葡萄', '青提':'葡萄' };
+      for (const [k, v] of Object.entries(ALIAS)) { if (name.includes(k)) return v; }
+      return name;
+    }
+    function showLiveHint(prodId, hintId, subId) {
       const prodEl = document.getElementById(prodId);
       const hintEl = document.getElementById(hintId);
       if (!prodEl || !hintEl) return;
-      const raw = (prodEl.value || '').trim();
+      let raw = (prodEl.value || '').trim();
+      // 如果有子主题输入，也加入识别
+      if (subId) { const subEl = document.getElementById(subId); if (subEl && subEl.value.trim()) raw += '/' + subEl.value.trim(); }
       if (!raw) { hintEl.innerHTML = ''; return; }
-      const parts = raw.split(/[+\\/]/).map(s => s.trim()).filter(Boolean);
+      const parts = raw.split(/[+／\/]/).map(s => s.trim()).filter(Boolean);
       if (parts.length === 0) { hintEl.innerHTML = ''; return; }
       const sortedKeys = Object.keys(FRUIT_TRAITS).sort((a, b) => b.length - a.length);
+      const seen = new Set();
       let html = '';
       for (const part of parts) {
+        const resolved = resolveFruitName(part);
         let matched = null;
         for (const key of sortedKeys) {
-          if (part.includes(key)) { matched = key; break; }
+          if (resolved.includes(key)) { matched = key; break; }
         }
-        if (matched) {
+        if (matched && !seen.has(matched)) {
+          seen.add(matched);
           const t = FRUIT_TRAITS[matched];
           const desc = `${t.season}·${t.taste}·${t.scene}`;
           html += `<span class="htag">🍉${matched} <span class="hdesc">${desc}</span></span>`;
-        } else {
-          html += `<span class="htag" style="background:#f5f5f5;color:rgba(0,0,0,0.5)">📝 未识别到品类</span>`;
         }
       }
+      if (!html) html = '<span class="htag" style="background:#f5f5f5;color:rgba(0,0,0,0.5)">📝 未识别到品类</span>';
       hintEl.innerHTML = html;
     }
 
@@ -1925,10 +1935,12 @@
       const subRow = document.getElementById('subThemeRow');
       if (!prodEl || !subRow) return;
       const name = (prodEl.value || prodEl.placeholder || '').trim();
+      const subEl = document.getElementById('tueSubThemes');
       if (isContainerProduct(name)) {
         subRow.style.display = 'block';
       } else {
         subRow.style.display = 'none';
+        if (subEl) subEl.value = ''; // 清空旧子主题
       }
     }
 
@@ -2174,7 +2186,7 @@
               <div class="hint" style="margin-bottom:12px">基于季节天气+节日关怀，生成生活化品类种草文案，无数据背书</div>
               <div class="input-group">
                 <label>🔥 爆品名称（如：麒麟瓜鲜切）</label>
-                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();showLiveHint('tueProduct','tueLiveHint');">
+                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();showLiveHint('tueProduct','tueLiveHint','tueSubThemes');">
               </div>
               <div class="live-hint" id="tueLiveHint"></div>
               <div class="input-group" id="subThemeRow" style="display:none">
@@ -2212,7 +2224,7 @@
               <div class="hint" style="margin-bottom:12px">全自动生成，无需输入。自动匹配当月应季产品+天气情绪+花字轮换。</div>
               <div class="input-group">
                 <label>🍉 本周主打产品（可选，不填则自动匹配）</label>
-                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow');showLiveHint('wedProduct','wedLiveHint');">
+                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow');showLiveHint('wedProduct','wedLiveHint','wedSubThemes');">
               </div>
               <div class="live-hint" id="wedLiveHint"></div>
               <div class="input-group" id="wedSubRow" style="display:none">
@@ -2238,7 +2250,7 @@
               <div class="hint" style="margin-bottom:12px">每周一款特价产品，外卖双平台链接，系统自动匹配品类卖点</div>
               <div class="input-group">
                 <label>🔥 特价产品名（必填）</label>
-                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow');showLiveHint('thuProduct','thuLiveHint');">
+                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow');showLiveHint('thuProduct','thuLiveHint','thuSubThemes');">
               </div>
               <div class="live-hint" id="thuLiveHint"></div>
               <div class="input-group" id="thuSubRow" style="display:none">
@@ -2268,7 +2280,7 @@
               <div class="hint" style="margin-bottom:12px">优先推套餐/拼盘，绑定周末场景</div>
               <div class="input-group">
                 <label>🥡 产品名（优先拼盘/套餐）</label>
-                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri();showLiveHint('friProduct','friLiveHint');">
+                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri();showLiveHint('friProduct','friLiveHint','friSubThemes');">
                 <div class="live-hint" id="friLiveHint"></div>
                 <div style="margin-top:6px;font-size:12px;color:#999">
                   品类识别：<span id="friFruitTag" style="color:#2d8a4e;font-weight:600">--</span>
@@ -2312,7 +2324,7 @@
               </div>
               <div class="input-group">
                 <label>🍉 推荐产品名</label>
-                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow');showLiveHint('satProduct','satLiveHint');">
+                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow');showLiveHint('satProduct','satLiveHint','satSubThemes');">
               </div>
               <div class="live-hint" id="satLiveHint"></div>
               <div class="input-group" id="satSubRow" style="display:none">
