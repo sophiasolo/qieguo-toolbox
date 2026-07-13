@@ -1840,32 +1840,6 @@
       return [...tueSelectedFruits]; // 纯手动选择，不自动匹配
     }
 
-    // ==================== 周三生成 ====================
-      const productEl = document.getElementById('friProduct');
-      const reasonEl = document.getElementById('friReason');
-      const tagEl = document.getElementById('friFruitTag');
-      if (!productEl || !reasonEl) return;
-      const rawVal = productEl.value.trim();
-      if (!rawVal) return;
-      const product = rawVal;
-      // 复合产品（含+）或子主题联动
-      const subThemes = (document.getElementById('friSubThemes')?.value || '').trim();
-      let effectiveProduct = product;
-      if (subThemes) {
-        effectiveProduct = subThemes.split('/')[0].trim() || product;
-      } else if (product.includes('+')) {
-        effectiveProduct = getEffectiveCategory(product).replace('复合·','').split('+')[0] || product;
-      }
-      if (tagEl) {
-        const cat = getEffectiveCategory(effectiveProduct);
-        tagEl.textContent = cat.includes('+') ? '复合·' + cat : cat;
-      }
-      const current = (reasonEl.value || '').trim();
-      if (!current || current.includes('如：') || current.includes('新鲜现做') || (current.length < 12 && !/[，。！？、]/.test(current))) {
-        reasonEl.value = optimizeReason(effectiveProduct, current.replace(/^如：|新鲜现做|关键词会自动优化/g,'').trim() || '');
-      }
-    }
-
     function updateFriContainerUI() {
       const prodEl = document.getElementById('friProduct');
       const subRow = document.getElementById('friSubThemeRow');
