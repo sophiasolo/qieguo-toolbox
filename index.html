@@ -735,6 +735,33 @@
       margin-bottom: 8px;
       color: var(--text-secondary);
     }
+    .history-search {
+      width: 100%;
+      padding: 9px 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      transition: border-color var(--transition);
+      -webkit-appearance: none;
+    }
+    .history-search:focus {
+      outline: none;
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    .history-search::placeholder {
+      color: var(--text-muted);
+    }
+    .history-section .no-result {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
     .history-item {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -872,6 +899,7 @@
     <!-- 历史记录 -->
     <div class="history-section" id="historySection">
       <h3>📚 最近生成 <span id="historyCount" style="font-size:12px;color:#999;font-weight:400"></span></h3>
+      <input type="text" id="historySearch" class="history-search" placeholder="🔍 搜索文案内容、产品名、日期..." oninput="searchHistory()">
       <div id="historyList"></div>
       <div id="historyClear" style="display:none;text-align:center;margin-top:8px">
         <button class="btn btn-sm btn-outline" onclick="clearHistory()" style="color:#d32f2f;border-color:#d32f2f">🗑️ 清空全部记录</button>
@@ -3223,28 +3251,44 @@
       renderHistory();
     }
 
-    function renderHistory() {
+    function searchHistory() {
+      var filter = (document.getElementById('historySearch').value || '').trim().toLowerCase();
+      renderHistory(filter);
+    }
+
+    function renderHistory(filterText) {
       const raw = JSON.parse(localStorage.getItem('copyHistory') || '[]');
       // 过滤损坏记录
-      const history = raw.filter(h => h && h.day != null && h.dateKey && h.savedAt);
+      const history = raw.filter(function(h) { return h && h.day != null && h.dateKey && h.savedAt; });
       if (history.length !== raw.length) localStorage.setItem('copyHistory', JSON.stringify(history));
       
+      // 搜索过滤
+      var filtered = history;
+      if (filterText) {
+        filtered = history.filter(function(h) {
+          var searchTarget = (h.copy || '') + ' ' + (h.preview || '') + ' ' + (h.dateKey || '') + ' ' + (DAY_NAMES[h.day] || '');
+          return searchTarget.toLowerCase().indexOf(filterText) >= 0;
+        });
+      }
+
       const list = document.getElementById('historyList');
       const countEl = document.getElementById('historyCount');
       const clearBtn = document.getElementById('historyClear');
 
-      if (countEl) countEl.textContent = '（' + history.length + '/100）';
+      if (countEl) countEl.textContent = filterText 
+        ? '（' + filtered.length + '条匹配 / 共' + history.length + '条）'
+        : '（' + history.length + '/100）';
       if (clearBtn) clearBtn.style.display = history.length > 0 ? 'block' : 'none';
 
-      if (history.length === 0) {
-        list.innerHTML = '<div class="empty-state"><p style="font-size:14px">还没有生成记录</p><p style="font-size:12px;color:#999">生成第一条文案后会出现在这里</p></div>';
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="no-result">' + (filterText ? '🔍 没有匹配「' + filterText + '」的记录' : '还没有生成记录') + '</div>';
         return;
       }
 
-      list.innerHTML = history.slice(0, 15).map(function(h, i) {
+      list.innerHTML = filtered.slice(0, 20).map(function(h) {
         var timeStr = '--:--';
         try { timeStr = new Date(h.savedAt).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}); } catch(e) {}
-        return '<div class="history-item" onclick="loadHistoryByIdx(' + i + ')">' +
+        return '<div class="history-item" onclick="loadHistory(\'' + h.dateKey + '\',' + h.day + ')">' +
           '<span class="date">' + (h.dateKey || '') + ' ' + (DAY_NAMES[h.day] || '') + '</span>' +
           '<span class="preview">' + (h.preview || '') + '</span>' +
           '<span style="font-size:11px;color:#999">' + timeStr + '</span>' +
@@ -3252,9 +3296,9 @@
       }).join('');
     }
 
-    function loadHistoryByIdx(index) {
+    function loadHistory(dateKey, day) {
       const history = JSON.parse(localStorage.getItem('copyHistory') || '[]');
-      const h = history[index];
+      const h = history.find(function(e) { return e.dateKey === dateKey && e.day === day; });
       if (h) {
         document.getElementById('datePicker').value = h.dateKey;
         updateDayInfo();
