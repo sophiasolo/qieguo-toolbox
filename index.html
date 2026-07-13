@@ -1457,7 +1457,7 @@
       '柑橘': { season:'鲜甜多汁季', taste:'酸甜平衡', texture:'粒粒分明', scene:'维C补充', tip:'爱媛爆汁·耙耙柑黄金酸甜比' },
       '蓝莓': { season:'当季', taste:'清甜微酸', texture:'小巧爆浆', scene:'健康轻食', tip:'云南甜过砂糖橘·野生花青素王者·护眼神器' },
       '樱桃': { season:'季节限定', taste:'甜美多汁', texture:'脆嫩', scene:'颜值天花板', tip:'国产美早不输车厘子·汶川个大色深' },
-      '榴莲': { season:'当季', taste:'浓郁香甜', texture:'绵密如奶油', scene:'爱它的人懂', tip:'一口上头' },
+      '圣女果': { season:'当季', taste:'酸甜爆汁', texture:'一口一个', scene:'低卡轻食', tip:'千禧9%·玲珑最甜·比零食健康多了' },
       '榴莲': { season:'当季', taste:'浓郁香甜', texture:'绵密如奶油', scene:'爱它的人懂', tip:'猫山王/金枕20°·冰镇后像冰淇淋·一口上头' },
       '火龙果': { season:'当季鲜摘', taste:'清甜爽滑', texture:'细腻多汁', scene:'润肠神器', tip:'蜜宝18°·红心15°·白心10°·红心更甜更营养' },
       '菠萝蜜': { season:'当季', taste:'浓郁甜蜜', texture:'脆韧有嚼劲', scene:'热带果王', tip:'红肉25°Q弹脆甜·黄肉17°甘甜' },
@@ -2477,20 +2477,14 @@
       const productEl = document.getElementById('tueProduct');
       const product = (productEl && productEl.value && productEl.value.trim()) || '招牌鲜果切';
       const effectiveProduct = getEffectiveProduct();
-      const reason = (() => {
-        const el = document.getElementById('tueReason');
-        const val = (el && el.value && el.value.trim()) || '';
-        if (val && !val.includes('新鲜现做') && !val.includes('关键词')) return val;
-        // 从FRUIT_TRAITS匹配品类卖点
-        const trait = matchFruitTrait(effectiveProduct);
-        return `${trait.season}，${trait.taste}，${trait.tip}`;
-      })();
+      const trait = matchFruitTrait(effectiveProduct);
+      const reason = `${trait.season}，${trait.taste}，${trait.tip}`;
       const subThemes = getSubThemes();
       const themeCount = getSubThemeCount();
       const priceLine = formatPrice(getPriceById('tuePrice'));
       const links = renderSelectedLinks(2);
 
-      // 生活化花字：基于季节/天气+节日（节日优先）
+      // 生活化花字
       const festHua2 = getFestivalHua(product);
       const seasonDesc = getSeasonWeatherDesc();
       const huaLine = festHua2 || getLifeHuaZi(product, seasonDesc);
@@ -2498,33 +2492,29 @@
       const lines = [huaLine, ''];
 
       lines.push(`🔥 ${product}`);
-      lines.push('📱 下单鲜切·各区域以平台实际价格为准');
 
-      if (priceLine) lines.push(priceLine);
+      // 价格：统一价格显示具体金额，区域差异显示提示
+      if (priceLine) {
+        lines.push(priceLine);
+      } else {
+        lines.push('📱 下单鲜切·各区域以平台实际价格为准');
+      }
 
       // 主题多样性
       if (themeCount > 1) {
         lines.push(`🎯 ${themeCount}款主题可选`);
         const themeItems = subThemes.split('/').map(s => s.trim());
         for (const t of themeItems) {
-          const itemLine = `  ${t}`;
-          if ([...itemLine].length <= 25) lines.push(itemLine);
+          if ([...`  ${t}`].length <= 25) lines.push(`  ${t}`);
         }
       }
 
       lines.push('');
-
-      // 理由区：品类卖点，使用splitLines确保每行≤20字
-      const reasonLines = splitLines(`💡 为什么这周还值得吃？\n${reason}`, 20);
-      lines.push(...reasonLines);
-
+      lines.push(`💡 ${reason}`);
       lines.push('');
       lines.push(getFestivalCTA() || getCTA(2));
       lines.push('');
-      if (links) {
-        const linkLines = links.split('\n');
-        lines.push(...linkLines);
-      }
+      if (links) lines.push(...links.split('\\n'));
 
       return formatCopy(lines);
     }
