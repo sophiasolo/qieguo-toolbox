@@ -2478,33 +2478,33 @@
       const product = (productEl && productEl.value && productEl.value.trim()) || '招牌鲜果切';
       const effectiveProduct = getEffectiveProduct();
       const trait = matchFruitTrait(effectiveProduct);
-      const reason = `${trait.season}，${trait.taste}，${trait.tip}`;
       const subThemes = getSubThemes();
       const themeCount = getSubThemeCount();
       const priceLine = formatPrice(getPriceById('tuePrice'));
       const links = renderSelectedLinks(2);
 
-      // 生活化花字
+      // 生活化花字：节日优先 → 天气/季节 → 通用
       const festHua2 = getFestivalHua(product);
       const seasonDesc = getSeasonWeatherDesc();
       const huaLine = festHua2 || getLifeHuaZi(product, seasonDesc);
+
+      // 卖点理由：优先用FRUIT_SELLING金句（更有营销味），其次用FRUIT_TRAITS数据
+      const selling = matchFruitSelling(effectiveProduct);
+      const sellPhrase = selling[Math.floor(Math.random() * selling.length)];
+      const reason = `${trait.season}｜${sellPhrase}`;
 
       const lines = [huaLine, ''];
 
       lines.push(`🔥 ${product}`);
 
-      // 价格：统一价格显示具体金额，区域差异显示提示
-      if (priceLine) {
-        lines.push(priceLine);
-      } else {
-        lines.push('📱 下单鲜切·各区域以平台实际价格为准');
-      }
+      // 价格
+      if (priceLine) { lines.push(priceLine); }
+      else { lines.push('📱 下单鲜切·各区域以平台实际价格为准'); }
 
-      // 主题多样性
+      // 主题
       if (themeCount > 1) {
         lines.push(`🎯 ${themeCount}款主题可选`);
-        const themeItems = subThemes.split('/').map(s => s.trim());
-        for (const t of themeItems) {
+        for (const t of (subThemes||'').split('/').map(s=>s.trim()).filter(Boolean)) {
           if ([...`  ${t}`].length <= 25) lines.push(`  ${t}`);
         }
       }
