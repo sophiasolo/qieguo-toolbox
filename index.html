@@ -1491,6 +1491,7 @@
       '木瓜': { season:'当季', taste:'香甜软糯', texture:'入口即化', scene:'养颜圣品', tip:'冰镇后像吃布丁' },
       '冬枣': { season:'秋冬限定', taste:'甜脆爽口', texture:'嘎嘣脆', scene:'维C之王', tip:'比苹果维C高70倍' },
       '酸嘢': { season:'四季', taste:'酸甜咸辣', texture:'脆爽开胃', scene:'一口上瘾', tip:'广西特色，越吃越上头' },
+      '干噎酸奶': { season:'四季', taste:'浓郁醇厚', texture:'绵密扎实', scene:'健康代餐', tip:'高蛋白低脂·饱腹感强' },
       '海盐青柠': { season:'四季', taste:'海盐+青柠', texture:'清爽刺激', scene:'风味天花板', tip:'咸甜交织，一口醒神' },
       '青柠': { season:'四季', taste:'清香酸爽', texture:'清新提神', scene:'解腻神器', tip:'比普通柠檬更香' },
       '乌梅': { season:'四季', taste:'酸甜回甘', texture:'脆韧有嚼劲', scene:'古早风味', tip:'腌制的魔力' },
@@ -1799,13 +1800,38 @@
     function renderFruitPicker(containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
-      const allKeys = Object.keys(FRUIT_TRAITS);
-      const seen = new Set();
-      const fruits = allKeys.filter(k => k.length >= 2 && !seen.has(k) && seen.add(k));
+      // 分类定义
+      const CATEGORIES = {
+        '风味': ['乌梅','酸嘢','海盐青柠','干噎酸奶','青柠','柠檬'],
+        '瓜类': ['西瓜','麒麟','蜜瓜','哈密','羊角蜜','甜瓜','木瓜','椰青'],
+        '热带': ['芒果','凤梨','榴莲','山竹','火龙果','菠萝蜜','百香果','芭乐','红毛丹','释迦','莲雾','杨桃','龙眼'],
+        '浆果': ['草莓','蓝莓','樱桃','杨梅','桑葚','圣女果','石榴'],
+        '核果': ['桃','蜜桃','黄桃','李子','西梅','杏','枇杷','柿子'],
+        '柑橘': ['橙','柑橘','青柚','柚子'],
+        '葡萄': ['葡萄','提子','阳光玫瑰'],
+        '仁果': ['苹果','梨'],
+        '猕猴桃': ['奇异果'],
+        '其他': ['荔枝','冬枣','青枣','甘蔗','荸荠','无花果'],
+      };
+      // 去重 & 只显示FRUIT_TRAITS中存在的
+      const cats = {};
+      for (const [cat, fruits] of Object.entries(CATEGORIES)) {
+        const valid = fruits.filter(f => FRUIT_TRAITS[f]);
+        if (valid.length) cats[cat] = valid;
+      }
+      // 找遗漏的
+      const used = new Set(Object.values(cats).flat());
+      const unused = Object.keys(FRUIT_TRAITS).filter(k => k.length >= 2 && !used.has(k));
+      if (unused.length) cats['其他'] = [...(cats['其他']||[]), ...unused];
+
       let html = '';
-      for (const fruit of fruits) {
-        const selected = tueSelectedFruits.includes(fruit) ? ' selected' : '';
-        html += `<span class="fruit-tag${selected}" data-fruit="${fruit}" onclick="toggleFruitTag(this)">${fruit}</span>`;
+      for (const [cat, fruits] of Object.entries(cats)) {
+        html += `<div style="font-size:11px;color:rgba(0,0,0,0.35);margin:8px 0 4px">${cat}</div><div class="fruit-tags" style="max-height:none">`;
+        for (const fruit of fruits) {
+          const sel = tueSelectedFruits.includes(fruit) ? ' selected' : '';
+          html += `<span class="fruit-tag${sel}" data-fruit="${fruit}" onclick="toggleFruitTag(this)">${fruit}</span>`;
+        }
+        html += '</div>';
       }
       container.innerHTML = html;
     }
