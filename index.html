@@ -777,6 +777,12 @@
       height: 72px;
       object-fit: contain;
     }
+.fruit-picker { margin-top:8px; }
+.fruit-picker .flabel { font-size:12px; color:rgba(0,0,0,0.55); margin-bottom:6px; }
+.fruit-tags { display:flex; flex-wrap:wrap; gap:6px; max-height:160px; overflow-y:auto; }
+.fruit-tag { padding:5px 10px; border-radius:16px; font-size:11px; cursor:pointer; border:1px solid rgba(0,0,0,0.1); background:#fff; color:rgba(0,0,0,0.65); transition:all 0.15s; user-select:none; white-space:nowrap; }
+.fruit-tag:hover { border-color:#2d8a4e; color:#2d8a4e; }
+.fruit-tag.selected { background:#2d8a4e; color:white; border-color:#2d8a4e; font-weight:600; }
   </style>
 </head>
 <body>
@@ -1778,6 +1784,48 @@
     }
 
     let lastManualProduct = '';
+    let tueSelectedFruits = [];
+
+    function toggleFruitTag(el) {
+      el.classList.toggle('selected');
+      const fruit = el.dataset.fruit;
+      if (el.classList.contains('selected')) {
+        if (!tueSelectedFruits.includes(fruit)) tueSelectedFruits.push(fruit);
+      } else {
+        tueSelectedFruits = tueSelectedFruits.filter(f => f !== fruit);
+      }
+    }
+
+    function renderFruitPicker(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      const allKeys = Object.keys(FRUIT_TRAITS);
+      const seen = new Set();
+      const fruits = allKeys.filter(k => k.length >= 2 && !seen.has(k) && seen.add(k));
+      let html = '';
+      for (const fruit of fruits) {
+        const selected = tueSelectedFruits.includes(fruit) ? ' selected' : '';
+        html += `<span class="fruit-tag${selected}" data-fruit="${fruit}" onclick="toggleFruitTag(this)">${fruit}</span>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function getSelectedFruits() {
+      if (tueSelectedFruits.length > 0) return [...tueSelectedFruits];
+      // 自动从产品名匹配
+      const productEl = document.getElementById('tueProduct');
+      const product = (productEl && productEl.value && productEl.value.trim()) || (productEl && productEl.placeholder) || '招牌鲜果切';
+      const matched = [];
+      const sortedKeys = Object.keys(FRUIT_TRAITS).sort((a, b) => b.length - a.length);
+      const seenMatch = new Set();
+      for (const key of sortedKeys) {
+        if (key.length >= 2 && product.includes(key) && !seenMatch.has(key)) {
+          seenMatch.add(key);
+          matched.push(key);
+        }
+      }
+      return matched.length > 0 ? matched : ['西瓜'];
+    }
 
     // ========== 周五品类识别 + 自动优化 ==========
     function autoOptimizeFri() {
@@ -2253,18 +2301,11 @@
               <div class="hint" style="margin-bottom:12px">基于季节天气+节日关怀，生成生活化品类种草文案，无数据背书</div>
               <div class="input-group">
                 <label>🔥 爆品名称（如：麒麟瓜鲜切）</label>
-                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();showLiveHint('tueProduct','tueLiveHint','tueSubThemes');">
+                <input type="text" id="tueProduct" placeholder="麒麟瓜鲜切" oninput="updateContainerUI();autoOptimizeReason();">
               </div>
-              <div class="live-hint" id="tueLiveHint"></div>
-              <div class="input-group" id="subThemeRow" style="display:none">
-                <label>🎯 内含主题（用 / 分隔）</label>
-                <input type="text" id="tueSubThemes" placeholder="如：芒果蓝莓/西瓜/橙子蓝莓/绿果蓝莓" oninput="updateReasonWithSubThemes()">
-                <div class="hint">输入后品类自动匹配第一个主题，文案体现多样性</div>
-              </div>
-              <div style="margin-top:-8px;margin-bottom:12px;font-size:12px;color:#999">
-                品类识别：
-                <span id="tueFruitTag" style="color:#2d8a4e;font-weight:600;cursor:pointer;border-bottom:1px dashed #2d8a4e" onclick="toggleCategoryPicker()">--</span>
-                <span id="categoryPicker" style="display:none;margin-top:6px;padding:8px;background:#f9faf9;border-radius:8px;border:1px solid var(--border);max-height:200px;overflow-y:auto"></span>
+              <div class="fruit-picker" id="tueFruitPicker">
+                <div class="flabel">🍉 选水果品类（可多选，未选则自动匹配）</div>
+                <div class="fruit-tags" id="tueFruitTags"></div>
               </div>
               <div class="input-group">
                 <label>🏷️ 核心卖点关键词（1-3个词）</label>
@@ -2444,6 +2485,7 @@
           // 产品名修改时也触发理由优化
           const prodEl = document.getElementById('tueProduct');
           if (prodEl) prodEl.addEventListener('input', autoOptimizeReason);
+          renderFruitPicker('tueFruitTags');
         }
         if (day === 6) {
           const theme = SAT_THEMES[satThemeIndex];
@@ -2549,10 +2591,12 @@
     function genTuesday() {
       const productEl = document.getElementById('tueProduct');
       const product = (productEl && productEl.value && productEl.value.trim()) || '招牌鲜果切';
-      const effectiveProduct = getEffectiveProduct();
-      const trait = matchFruitTrait(effectiveProduct);
-      const subThemes = getSubThemes();
-      const themeCount = getSubThemeCount();
+      const selectedFruits = getSelectedFruits();
+
+      // 品类特性：优先用用户选中的第一个水果
+      const primaryFruit = selectedFruits[0];
+      const trait = (primaryFruit && FRUIT_TRAITS[primaryFruit]) || matchFruitTrait(product);
+
       const priceLine = formatPrice(getPriceById('tuePrice'));
       const links = renderSelectedLinks(2);
 
@@ -2562,7 +2606,8 @@
       const huaLine = festHua2 || getLifeHuaZi(product, seasonDesc);
 
       // 卖点理由：优先用FRUIT_SELLING金句（更有营销味），其次用FRUIT_TRAITS数据
-      const selling = matchFruitSelling(effectiveProduct);
+      const sellingTarget = primaryFruit || product;
+      const selling = matchFruitSelling(sellingTarget);
       const sellPhrase = selling[Math.floor(Math.random() * selling.length)];
       const reason = `${trait.season}｜${sellPhrase}`;
 
@@ -2574,11 +2619,11 @@
       if (priceLine) { lines.push(priceLine); }
       else { lines.push('📱 下单鲜切·各区域以平台实际价格为准'); }
 
-      // 主题
-      if (themeCount > 1) {
-        lines.push(`🎯 ${themeCount}款主题可选`);
-        for (const t of (subThemes||'').split('/').map(s=>s.trim()).filter(Boolean)) {
-          if ([...`  ${t}`].length <= 25) lines.push(`  ${t}`);
+      // 主题：列出用户选中的水果
+      if (selectedFruits.length > 1) {
+        lines.push(`🎯 ${selectedFruits.length}款主题可选`);
+        for (const fruit of selectedFruits) {
+          lines.push(`  🍉 ${fruit}`);
         }
       }
 
@@ -2587,7 +2632,7 @@
       lines.push('');
       lines.push(getFestivalCTA() || getCTA(2));
       lines.push('');
-      if (links) lines.push(...links.split('\\n'));
+      if (links) lines.push(...links.split('\n'));
 
       return formatCopy(lines);
     }
