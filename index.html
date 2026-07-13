@@ -2349,8 +2349,9 @@
 
     // ==================== 舆情监测 Tab ====================
     function switchTab(tab) {
-      document.querySelectorAll('#mainNav button').forEach(function(b) { b.classList.remove('active'); });
-      document.querySelector('#mainNav button[onclick*=\"switchTab(\\''+tab+'\\')\"]').classList.add('active');
+      var nav = document.getElementById('mainNav');
+      nav.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
+      nav.children[tab === 'copy' ? 0 : 1].classList.add('active');
       document.getElementById('tab-copy').style.display = tab === 'copy' ? '' : 'none';
       document.getElementById('tab-sentiment').style.display = tab === 'sentiment' ? '' : 'none';
       if (tab === 'sentiment') fetchSentiment();
