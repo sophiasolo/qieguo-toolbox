@@ -1785,21 +1785,33 @@
     }
 
     let lastManualProduct = '';
-    let tueSelectedFruits = [];
+    let daySelectedFruits = {}; // {2:[], 3:[], 4:[], 5:[], 6:[]}
+
+    const FRUIT_DAY_MAP = { tue: 2, wed: 3, thu: 4, fri: 5, sat: 6 };
+
+    function getFruitPickerDay(containerId) {
+      const prefix = (containerId || '').slice(0, 3);
+      return FRUIT_DAY_MAP[prefix] || 2;
+    }
 
     function toggleFruitTag(el) {
       el.classList.toggle('selected');
       const fruit = el.dataset.fruit;
+      const tagsContainer = el.closest('.fruit-tags');
+      const day = getFruitPickerDay(tagsContainer ? tagsContainer.id : '');
+      if (!daySelectedFruits[day]) daySelectedFruits[day] = [];
       if (el.classList.contains('selected')) {
-        if (!tueSelectedFruits.includes(fruit)) tueSelectedFruits.push(fruit);
+        if (!daySelectedFruits[day].includes(fruit)) daySelectedFruits[day].push(fruit);
       } else {
-        tueSelectedFruits = tueSelectedFruits.filter(f => f !== fruit);
+        daySelectedFruits[day] = daySelectedFruits[day].filter(f => f !== fruit);
       }
     }
 
     function renderFruitPicker(containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
+      const day = getFruitPickerDay(containerId);
+      const selected = daySelectedFruits[day] || [];
       // 品类合并：绿果→奇异果, 哈密→蜜瓜
       const MERGE = { '绿果':'奇异果', '哈密':'蜜瓜' };
       const HIDE = new Set(['绿果','哈密','提子','菠萝','蜜桃','麒麟']);
@@ -1828,7 +1840,7 @@
       for (const [cat, fruits] of Object.entries(cats)) {
         html += `<div style="font-size:11px;color:rgba(0,0,0,0.3);margin:10px 0 4px;font-weight:500">${cat}</div><div class="fruit-tags" style="max-height:none;gap:8px">`;
         for (const fruit of fruits) {
-          const sel = tueSelectedFruits.includes(fruit) ? ' selected' : '';
+          const sel = selected.includes(fruit) ? ' selected' : '';
           html += `<span class="fruit-tag${sel}" data-fruit="${fruit}" onclick="toggleFruitTag(this)">${fruit}</span>`;
         }
         html += '</div>';
@@ -1836,8 +1848,9 @@
       container.innerHTML = html;
     }
 
-    function getSelectedFruits() {
-      return [...tueSelectedFruits]; // 纯手动选择，不自动匹配
+    function getSelectedFruits(day) {
+      if (!day) day = 2;
+      return [...(daySelectedFruits[day] || [])]; // 纯手动选择，不自动匹配
     }
 
     function updateFriContainerUI() {
@@ -2318,7 +2331,11 @@
               <div class="hint" style="margin-bottom:12px">全自动生成，无需输入。自动匹配当月应季产品+天气情绪+花字轮换。</div>
               <div class="input-group">
                 <label>🍉 本周主打产品（可选，不填则自动匹配）</label>
-                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow');showLiveHint('wedProduct','wedLiveHint','wedSubThemes');">
+                <input type="text" id="wedProduct" placeholder="如：麒麟瓜鲜切（留空自动匹配）" oninput="updateProductTag('wedProduct','wedFruitTag','wedSubRow');">
+              </div>
+              <div class="fruit-picker" id="wedFruitPicker">
+                <div class="flabel">🍉 选水果品类（可多选，未选则自动匹配）</div>
+                <div class="fruit-tags" id="wedFruitTags"></div>
               </div>
               <div class="live-hint" id="wedLiveHint"></div>
               <div class="input-group" id="wedSubRow" style="display:none">
@@ -2344,7 +2361,11 @@
               <div class="hint" style="margin-bottom:12px">每周一款特价产品，外卖双平台链接，系统自动匹配品类卖点</div>
               <div class="input-group">
                 <label>🔥 特价产品名（必填）</label>
-                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow');showLiveHint('thuProduct','thuLiveHint','thuSubThemes');">
+                <input type="text" id="thuProduct" placeholder="如：招牌鲜果切" oninput="updateProductTag('thuProduct','thuFruitTag','thuSubRow');">
+              </div>
+              <div class="fruit-picker" id="thuFruitPicker">
+                <div class="flabel">🍉 选水果品类（可多选，未选则自动匹配）</div>
+                <div class="fruit-tags" id="thuFruitTags"></div>
               </div>
               <div class="live-hint" id="thuLiveHint"></div>
               <div class="input-group" id="thuSubRow" style="display:none">
@@ -2374,11 +2395,15 @@
               <div class="hint" style="margin-bottom:12px">优先推套餐/拼盘，绑定周末场景</div>
               <div class="input-group">
                 <label>🥡 产品名（优先拼盘/套餐）</label>
-                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri();showLiveHint('friProduct','friLiveHint','friSubThemes');">
+                <input type="text" id="friProduct" placeholder="如：分享大拼盘" oninput="updateFriContainerUI();autoOptimizeFri();">
                 <div class="live-hint" id="friLiveHint"></div>
                 <div style="margin-top:6px;font-size:12px;color:#999">
                   品类识别：<span id="friFruitTag" style="color:#2d8a4e;font-weight:600">--</span>
                 </div>
+              </div>
+              <div class="fruit-picker" id="friFruitPicker">
+                <div class="flabel">🍉 选水果品类（可多选，未选则自动匹配）</div>
+                <div class="fruit-tags" id="friFruitTags"></div>
               </div>
               <div class="input-group" id="friSubThemeRow" style="display:none">
                 <label>🎯 内含组合（用 / 分隔）</label>
@@ -2418,7 +2443,11 @@
               </div>
               <div class="input-group">
                 <label>🍉 推荐产品名</label>
-                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow');showLiveHint('satProduct','satLiveHint','satSubThemes');">
+                <input type="text" id="satProduct" placeholder="如：麒麟瓜鲜切" oninput="updateProductTag('satProduct','satFruitTag','satSubRow');">
+              </div>
+              <div class="fruit-picker" id="satFruitPicker">
+                <div class="flabel">🍉 选水果品类（可多选，未选则自动匹配）</div>
+                <div class="fruit-tags" id="satFruitTags"></div>
               </div>
               <div class="live-hint" id="satLiveHint"></div>
               <div class="input-group" id="satSubRow" style="display:none">
@@ -2471,8 +2500,10 @@
           // 产品名修改时也触发理由优化
           const prodEl = document.getElementById('tueProduct');
           if (prodEl) prodEl.addEventListener('input', autoOptimizeReason);
-          renderFruitPicker('tueFruitTags');
         }
+        // 渲染水果多选器
+        const FRUIT_TAG_IDS = { 2: 'tueFruitTags', 3: 'wedFruitTags', 4: 'thuFruitTags', 5: 'friFruitTags', 6: 'satFruitTags' };
+        if (FRUIT_TAG_IDS[day]) renderFruitPicker(FRUIT_TAG_IDS[day]);
         if (day === 6) {
           const theme = SAT_THEMES[satThemeIndex];
           document.getElementById('satThemeDisplay').value = theme.name + ' — ' + theme.desc;
@@ -2583,7 +2614,8 @@
       const primaryFruit = selectedFruits[0];
       const trait = (primaryFruit && FRUIT_TRAITS[primaryFruit]) || matchFruitTrait(product);
 
-      const priceLine = formatPrice(getPriceById('tuePrice'));
+      const priceVal = (document.getElementById('tuePrice')?.value || '').trim();
+      const priceLine = priceVal ? formatPrice(priceVal) : '';
       const links = renderSelectedLinks(2);
 
       // 生活化花字：节日优先 → 天气/季节 → 通用
@@ -2603,13 +2635,12 @@
 
       // 价格
       if (priceLine) { lines.push(priceLine); }
-      else { lines.push('📱 下单鲜切·各区域以平台实际价格为准'); }
 
-      // 主题：列出用户选中的水果
+      // 主题：用知识库展示水果特性
       if (selectedFruits.length > 1) {
-        lines.push(`🎯 ${selectedFruits.length}款主题可选`);
         for (const fruit of selectedFruits) {
-          lines.push(`  🍉 ${fruit}`);
+          const t = FRUIT_TRAITS[fruit];
+          if (t) lines.push(`🍉 ${fruit}｜${t.taste}·${t.tip}`);
         }
       }
 
@@ -2640,6 +2671,12 @@
       const wedPrice = formatWedPrice(getPriceById('wedPrice'));
       const links = renderSelectedLinks(3);
 
+      // 品类卖点：优先用用户选中的水果
+      const wedSelectedFruits = getSelectedFruits(3);
+      const wedPrimaryFruit = wedSelectedFruits[0];
+      const sellingTarget = wedPrimaryFruit || product;
+      const wedSell = matchFruitSelling(sellingTarget)[0];
+
       const lines = [
         huaLine,
         '',
@@ -2650,8 +2687,6 @@
       if (wedPrice) lines.push(wedPrice);
       const delivery = getDeliveryText();
       if (delivery) lines.push(delivery);
-      // 品类卖点
-      const wedSell = matchFruitSelling(product)[0];
       lines.push(`🍈 ${wedSell}`);
       lines.push('');
       lines.push(getFestivalCTA() || getCTA(3));
@@ -2667,13 +2702,18 @@
       const sellingEl = document.getElementById('thuSelling');
       const product = (productEl && productEl.value && productEl.value.trim()) || '招牌鲜果切';
       const userSelling = (sellingEl && sellingEl.value && sellingEl.value.trim()) || '';
+
+      // 品类卖点：优先用用户选中的水果
+      const thuSelectedFruits = getSelectedFruits(4);
+      const thuPrimaryFruit = thuSelectedFruits[0];
+      const sellingTarget = thuPrimaryFruit || product;
       
       // 用户真正输入了卖点就用用户的；否则自动用品类金句
       let selling;
       if (userSelling && userSelling.length > 2 && userSelling !== sellingEl.placeholder) {
         selling = userSelling;
       } else {
-        const sellingPool = matchFruitSelling(product);
+        const sellingPool = matchFruitSelling(sellingTarget);
         const idx = parseInt(localStorage.getItem('thuSellingIdx') || '0');
         selling = sellingPool[idx % sellingPool.length];
         localStorage.setItem('thuSellingIdx', String((idx + 1) % sellingPool.length));
@@ -2716,11 +2756,17 @@
       const productEl = document.getElementById('friProduct');
       const product = (productEl && productEl.value && productEl.value.trim()) || '分享大拼盘';
       const scene = (document.getElementById('friScene')?.value) || 'binge';
+
+      // 品类卖点：优先用用户选中的水果
+      const friSelectedFruits = getSelectedFruits(5);
+      const friPrimaryFruit = friSelectedFruits[0];
+      const sellingTarget = friPrimaryFruit || product;
+
       let reason = (() => {
         const el = document.getElementById('friReason');
         const val = (el && el.value && el.value.trim()) || '';
         if (val && !val.includes('如：') && !val.includes('新鲜现做') && !val.includes('关键词')) return val;
-        return matchFruitSelling(product)[0];
+        return matchFruitSelling(sellingTarget)[0];
       })();
 
       const sceneNames = { binge: '追剧刷综艺', home: '宅家避暑', party: '朋友聚会', game: '游戏开黑夜', picnic: '周末野餐' };
@@ -2772,7 +2818,13 @@
       const product = (productEl && productEl.value && productEl.value.trim()) || '麒麟瓜鲜切';
       const reasonEl = document.getElementById('satReason');
       const userReason = (reasonEl && reasonEl.value && reasonEl.value.trim()) || '';
-      const reason = (userReason && userReason !== reasonEl.placeholder) ? userReason : matchFruitSelling(product)[0];
+
+      // 品类卖点：优先用用户选中的水果
+      const satSelectedFruits = getSelectedFruits(6);
+      const satPrimaryFruit = satSelectedFruits[0];
+      const sellingTarget = satPrimaryFruit || product;
+
+      const reason = (userReason && userReason !== reasonEl.placeholder) ? userReason : matchFruitSelling(sellingTarget)[0];
       const theme = SAT_THEMES[satThemeIndex];
 
       satThemeIndex = (satThemeIndex + 1) % SAT_THEMES.length;
