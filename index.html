@@ -273,6 +273,110 @@
     .day-tab.sunday { opacity: 0.3; cursor: not-allowed; }
     .day-tab.active { background: var(--surface); color: var(--accent); box-shadow: var(--shadow); font-weight: 700; }
 
+    /* 顶部主导航 */
+    .main-nav {
+      display: flex;
+      gap: 0;
+      margin-bottom: 14px;
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 4px;
+      box-shadow: var(--shadow-sm);
+    }
+    .main-nav button {
+      flex: 1;
+      padding: 10px 0;
+      border: none;
+      border-radius: calc(var(--radius) - 4px);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .main-nav button.active {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 1px 4px rgba(45,138,78,0.3);
+    }
+
+    /* 舆情卡片 */
+    .sent-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .sent-stat {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 14px 10px;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+    }
+    .sent-stat .num { font-size: 28px; font-weight: 700; line-height: 1.2; }
+    .sent-stat .num.pos-c { color: var(--accent); }
+    .sent-stat .num.neg-c { color: #e74c3c; }
+    .sent-stat .num.neu-c { color: #6c757d; }
+    .sent-stat .lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+    .sent-stat .pct { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+
+    .sent-date-label {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .sent-date-label .badge {
+      font-size: 11px; padding: 2px 8px; border-radius: 999px;
+      background: var(--accent-light); color: var(--accent); font-weight: 500;
+    }
+
+    .neg-header {
+      font-size: 13px; font-weight: 700; color: #e74c3c;
+      margin: 14px 0 8px;
+    }
+    .neg-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid #e74c3c;
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      font-size: 12px;
+    }
+    .neg-item .ni-head {
+      display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+    }
+    .neg-item .ni-platform {
+      font-size: 10px; padding: 1px 6px; border-radius: 4px;
+      background: #fdecea; color: #c0392b; font-weight: 600;
+    }
+    .neg-item .ni-time { font-size: 11px; color: var(--text-muted); }
+    .neg-item .ni-cat {
+      font-size: 10px; padding: 1px 6px; border-radius: 4px;
+      background: var(--accent-subtle); color: var(--accent);
+    }
+    .neg-item .ni-title {
+      font-weight: 600; margin-bottom: 2px; line-height: 1.4;
+    }
+    .neg-item .ni-summary {
+      color: var(--text-secondary); margin-bottom: 4px; line-height: 1.4;
+    }
+    .neg-item .ni-link {
+      font-size: 11px; color: var(--accent); text-decoration: none;
+    }
+    .sent-loading {
+      text-align: center; padding: 40px 20px; color: var(--text-muted);
+    }
+    .sent-error {
+      text-align: center; padding: 40px 20px; color: #e74c3c; font-size: 13px;
+    }
+    .sent-empty {
+      text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;
+    }
+
     /* 节日横幅 */
     #festivalBanner {
       background: linear-gradient(135deg, var(--accent) 0%, #1a6b35 100%);
@@ -819,6 +923,11 @@
   </div>
 
   <div class="container">
+    <div class="main-nav" id="mainNav">
+      <button class="active" onclick="switchTab('copy')">📝 文案助手</button>
+      <button onclick="switchTab('sentiment')">📊 舆情监测</button>
+    </div>
+    <div id="tab-copy">
     <!-- 日期选择 -->
     <div class="date-selector">
       <input type="date" id="datePicker">
@@ -904,6 +1013,10 @@
       <div id="historyClear" style="display:none;text-align:center;margin-top:8px">
         <button class="btn btn-sm btn-outline" onclick="clearHistory()" style="color:#d32f2f;border-color:#d32f2f">🗑️ 清空全部记录</button>
       </div>
+    </div>
+    </div>
+    <div id="tab-sentiment" style="display:none">
+      <div id="sentimentContent" class="sent-loading">⏳ 正在加载舆情数据…</div>
     </div>
   </div>
 
@@ -2232,6 +2345,81 @@
       }
 
       return null;
+    }
+
+    // ==================== 舆情监测 Tab ====================
+    function switchTab(tab) {
+      document.querySelectorAll('#mainNav button').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelector('#mainNav button[onclick*=\"switchTab(\\''+tab+'\\')\"]').classList.add('active');
+      document.getElementById('tab-copy').style.display = tab === 'copy' ? '' : 'none';
+      document.getElementById('tab-sentiment').style.display = tab === 'sentiment' ? '' : 'none';
+      if (tab === 'sentiment') fetchSentiment();
+    }
+
+    var SENTIMENT_CACHE = null;
+
+    function fetchSentiment() {
+      var el = document.getElementById('sentimentContent');
+      if (SENTIMENT_CACHE) { renderSentiment(SENTIMENT_CACHE); return; }
+      el.className = 'sent-loading';
+      el.innerHTML = '⏳ 正在加载舆情数据…';
+      fetch('sentiment_summary.json?v=' + Date.now())
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.json();
+        })
+        .then(function(data) {
+          SENTIMENT_CACHE = data;
+          renderSentiment(data);
+        })
+        .catch(function(e) {
+          el.className = 'sent-error';
+          el.innerHTML = '⚠️ 舆情数据加载失败<br><small>' + e.message + '</small><br><small>请确认今日看板已生成</small>';
+        });
+    }
+
+    function renderSentiment(d) {
+      var el = document.getElementById('sentimentContent');
+      var negCount = (d.negatives || []).length;
+      var html = '';
+
+      // 日期 + 更新时间
+      html += '<div class=\"sent-date-label\">📊 ' + (d.label || d.date || '') + ' 舆情概况';
+      html += '<span class=\"badge\">更新于 ' + (d.updated || '').slice(-5) + '</span></div>';
+
+      // 统计卡片
+      html += '<div class=\"sent-stats\">';
+      html += '<div class=\"sent-stat\"><div class=\"num\">' + (d.total || 0) + '</div><div class=\"lbl\">总条数</div></div>';
+      html += '<div class=\"sent-stat\"><div class=\"num pos-c\">' + (d.pos || 0) + '</div><div class=\"lbl\">正面</div><div class=\"pct\">' + (d.pos_pct || 0).toFixed(1) + '%</div></div>';
+      html += '<div class=\"sent-stat\"><div class=\"num neg-c\">' + (d.neg || 0) + '</div><div class=\"lbl\">负面</div><div class=\"pct\">' + (d.neg_pct || 0).toFixed(1) + '%</div></div>';
+      html += '</div>';
+
+      // 负面列表
+      if (negCount > 0) {
+        html += '<div class=\"neg-header\">⚠️ 负面舆情 (' + negCount + '条)</div>';
+        (d.negatives || []).forEach(function(n) {
+          html += '<div class=\"neg-item\">';
+          html += '<div class=\"ni-head\">';
+          html += '<span class=\"ni-platform\">' + esc(n.platform || n.p || '') + '</span>';
+          html += '<span class=\"ni-time\">' + esc(n.time || '') + '</span>';
+          if (n.category) html += '<span class=\"ni-cat\">' + esc(n.category) + '</span>';
+          html += '</div>';
+          html += '<div class=\"ni-title\">' + esc(n.title || '') + '</div>';
+          if (n.summary) html += '<div class=\"ni-summary\">' + esc(n.summary) + '</div>';
+          if (n.url) html += '<a class=\"ni-link\" href=\"' + esc(n.url) + '\" target=\"_blank\" rel=\"noopener\">📎 查看原帖 →</a>';
+          html += '</div>';
+        });
+      } else if ((d.neg || 0) === 0) {
+        html += '<div class=\"sent-empty\">✅ 本日无负面舆情</div>';
+      }
+
+      el.className = '';
+      el.innerHTML = html;
+    }
+
+    function esc(s) {
+      if (!s) return '';
+      return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\"/g,'&quot;');
     }
 
     // ==================== 初始化 ====================
