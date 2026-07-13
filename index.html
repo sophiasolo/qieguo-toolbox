@@ -1653,7 +1653,7 @@
     // ========== 实时品类识别提示条 ==========
     function resolveFruitName(name) {
       // 模糊映射：别名 → 标准品类名
-      const ALIAS = { '小番茄':'圣女果', '番茄':'圣女果', '千禧':'圣女果', '车厘子':'樱桃', '西柚':'青柚', '菠萝':'凤梨', '提子':'葡萄', '巨峰':'葡萄', '夏黑':'葡萄', '哈密':'蜜瓜', '红提':'葡萄', '青提':'葡萄' };
+      const ALIAS = { '小番茄':'圣女果', '番茄':'圣女果', '千禧':'圣女果', '车厘子':'樱桃', '西柚':'青柚', '菠萝':'凤梨', '提子':'葡萄', '巨峰':'葡萄', '夏黑':'葡萄', '哈密':'蜜瓜', '红提':'葡萄', '青提':'葡萄', '羊角蜜':'蜜瓜', '橙子':'橙', '橘子':'柑橘', '桔子':'柑橘', '蜜':'蜜瓜' };
       for (const [k, v] of Object.entries(ALIAS)) { if (name.includes(k)) return v; }
       return name;
     }
@@ -1662,6 +1662,8 @@
       const hintEl = document.getElementById(hintId);
       if (!prodEl || !hintEl) return;
       let raw = (prodEl.value || '').trim();
+      // 去掉【大四拼】之类的前缀标签
+      raw = raw.replace(/【[^】]*】/g, ' ').trim();
       // 如果有子主题输入，也加入识别
       if (subId) { const subEl = document.getElementById(subId); if (subEl && subEl.value.trim()) raw += '/' + subEl.value.trim(); }
       if (!raw) { hintEl.innerHTML = ''; return; }
