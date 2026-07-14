@@ -2539,28 +2539,39 @@
 
     // ==================== 初始化 ====================
     function init() {
-      // Flatpickr 替换原生日期控件
       const dpEl = document.getElementById('datePicker');
-      const fp = flatpickr(dpEl, {
-        locale: 'zh',
-        dateFormat: 'Y-m-d',
-        defaultDate: today,
-        disableMobile: true,
-        onDayCreate: function(dObj, dStr, fp, dayElem) {
-          const info = getDayDisplayInfo(dayElem.dateObj.getFullYear(), dayElem.dateObj.getMonth(), dayElem.dateObj.getDate());
-          if (info) {
-            if (info.cls) dayElem.classList.add(info.cls);
-            const span = document.createElement('span');
-            span.className = info.labelCls;
-            span.textContent = info.label;
-            dayElem.appendChild(span);
+      if (typeof flatpickr !== 'undefined' && dpEl) {
+        // Flatpickr 替换原生日期控件
+        const fp = flatpickr(dpEl, {
+          locale: 'zh',
+          dateFormat: 'Y-m-d',
+          defaultDate: today,
+          disableMobile: true,
+          onDayCreate: function(dObj, dStr, fp, dayElem) {
+            const info = getDayDisplayInfo(dayElem.dateObj.getFullYear(), dayElem.dateObj.getMonth(), dayElem.dateObj.getDate());
+            if (info) {
+              if (info.cls) dayElem.classList.add(info.cls);
+              const span = document.createElement('span');
+              span.className = info.labelCls;
+              span.textContent = info.label;
+              dayElem.appendChild(span);
+            }
+          },
+          onChange: function(selectedDates, dateStr) {
+            updateDayInfo();
+            updateFestivalBanner();
           }
-        },
-        onChange: function(selectedDates, dateStr) {
-          updateDayInfo();
-          updateFestivalBanner();
+        });
+      } else {
+        // 降级：原生 date input + onchange
+        if (dpEl) {
+          dpEl.value = today.toISOString().slice(0,10);
+          dpEl.addEventListener('change', function() {
+            updateDayInfo();
+            updateFestivalBanner();
+          });
         }
-      });
+      }
       initPriceMode();
       initDeliveryUI();
       renderLinkManager();
