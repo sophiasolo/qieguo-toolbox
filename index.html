@@ -377,6 +377,55 @@
       text-align: center; padding: 20px; color: var(--text-muted); font-size: 13px;
     }
 
+    /* Prompt 折叠卡片 */
+    .prompt-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 8px;
+      overflow: hidden;
+    }
+    .prompt-card .pc-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 12px; cursor: pointer;
+      font-size: 12px; font-weight: 600;
+      color: var(--text);
+    }
+    .prompt-card .pc-head .pc-tag {
+      font-size: 10px; padding: 2px 8px; border-radius: 999px;
+      background: var(--accent-light); color: var(--accent);
+      white-space: nowrap;
+    }
+    .prompt-card .pc-head .pc-preview {
+      flex: 1; margin: 0 8px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      color: var(--text-muted); font-weight: 400;
+    }
+    .prompt-card .pc-head .pc-arrow {
+      font-size: 10px; color: var(--text-muted); transition: transform 0.2s;
+    }
+    .prompt-card.open .pc-head .pc-arrow { transform: rotate(180deg); }
+    .prompt-card .pc-body {
+      display: none;
+      padding: 0 12px 12px;
+    }
+    .prompt-card.open .pc-body { display: block; }
+    .prompt-card .pc-body .copy-box {
+      font-size: 12px; max-height: 240px; overflow-y: auto;
+      white-space: pre-wrap; word-break: break-all;
+      background: var(--bg); border-radius: 6px; padding: 10px;
+      line-height: 1.6;
+    }
+    .prompt-card .pc-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .prompt-card .pc-actions button {
+      font-size: 11px; padding: 4px 10px;
+      border: 1px solid var(--border); border-radius: 6px;
+      background: var(--surface); cursor: pointer;
+      color: var(--text-secondary);
+    }
+
     /* 节日横幅 */
     #festivalBanner {
       background: linear-gradient(135deg, var(--accent) 0%, #1a6b35 100%);
@@ -1056,14 +1105,12 @@
             <option value="social">💬 社群图用（弱化LOGO）</option>
           </select>
         </div>
-        <button class="btn btn-primary" onclick="genPromptStandalone()" style="width:100%">🎨 生成Prompt</button>
+        <button class="btn btn-primary" onclick="genPromptStandalone()" style="width:100%">➕ 生成并追加</button>
       </div>
-      <div class="output-section" id="promptOutput" style="display:none">
-        <h3>🎨 配图Prompt</h3>
-        <div class="copy-box" id="promptOutputContent"></div>
-        <div class="btn-row" style="margin-top:8px">
-          <button class="btn btn-outline btn-sm" onclick="copyPromptOutput()">📋 复制Prompt</button>
-          <button class="btn btn-primary btn-sm" onclick="openDoubaoStandalone()">📱 打开豆包</button>
+      <div id="promptOutput" style="display:none;margin-top:14px">
+        <div id="promptList"></div>
+        <div style="text-align:center;margin-top:10px">
+          <button class="btn btn-sm btn-outline" onclick="clearPromptList()" style="color:#d32f2f;border-color:#d32f2f">🗑️ 清空全部</button>
         </div>
       </div>
     </div>
@@ -3434,17 +3481,20 @@
     }
 
     // ==================== 独立Prompt生成 ====================
+    var PROMPT_ITEMS = [];
+    var PROMPT_COUNTER = 0;
+
     function genPromptStandalone() {
       var product = document.getElementById('promptProduct').value.trim() || '招牌鲜果切';
       var sceneVal = document.getElementById('promptScene').value;
+      var sceneEl = document.getElementById('promptScene');
+      var sceneLabel = sceneEl.options[sceneEl.selectedIndex].text;
       var prompt = '';
 
       if (sceneVal === 'brand' || sceneVal === 'social') {
-        // 通用版本：品牌正式图 / 社群图用
         var logoRule = sceneVal === 'brand'
           ? '1.图1（产品白底图）强制规则：果盒、容器、果肉种类与摆放完整原样复刻，不得修改、增减水果；完整保留原图LOGO图案，LOGO统一放置画面左上角，随3:4画幅等比例适配缩放，禁止消除、扭曲、移位至其他区域。'
           : '1.图1（产品白底图）强制规则：果盒、容器、果肉种类与摆放完整原样复刻，不得修改、增减水果；LOGO可直接去除弱化。';
-
         prompt = '根据上传两张图片生成果切实拍图。\n\n' + logoRule + '\n\n' +
           '2.图2（博主氛围参考图）通用参考范围：保留画面整体光影色调、构图留白、桌面布景、餐具搭配、人物手持/摆放姿势、生活化氛围感、背景虚化层次；仅忽略图内博主手中盛放的水果、餐食、原装容器，禁止照搬这份食物形态。\n\n' +
           '3.版权约束：仅借鉴拍摄风格与布局逻辑，生成全新原创场景，不完整复刻博主原图道具、背景细节。\n\n' +
@@ -3455,13 +3505,55 @@
         prompt = genPrompt(sceneId, product);
       }
 
-      document.getElementById('promptOutputContent').textContent = prompt;
+      var id = 'p' + (++PROMPT_COUNTER);
+      PROMPT_ITEMS.push({ id: id, label: sceneLabel, text: prompt });
+      appendPromptCard(id, sceneLabel, prompt);
       document.getElementById('promptOutput').style.display = 'block';
-      document.getElementById('promptOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
-    function copyPromptOutput() {
-      var text = document.getElementById('promptOutputContent').textContent;
+    function appendPromptCard(id, label, text) {
+      var preview = text.replace(/\n/g, ' ').substring(0, 60);
+      var html = '<div class="prompt-card" id="' + id + '">' +
+        '<div class="pc-head" onclick="togglePromptCard(\'' + id + '\')">' +
+          '<span class="pc-tag">' + esc(label) + '</span>' +
+          '<span class="pc-preview">' + esc(preview) + '…</span>' +
+          '<span class="pc-arrow">▼</span>' +
+        '</div>' +
+        '<div class="pc-body">' +
+          '<div class="copy-box">' + esc(text) + '</div>' +
+          '<div class="pc-actions">' +
+            '<button onclick="event.stopPropagation();copyOnePrompt(\'' + id + '\')">📋 复制</button>' +
+            '<button onclick="event.stopPropagation();openDoubaoOne(\'' + id + '\')">📱 打开豆包</button>' +
+            '<button onclick="event.stopPropagation();deletePromptCard(\'' + id + '\')" style="color:#d32f2f">🗑️</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+      document.getElementById('promptList').insertAdjacentHTML('beforeend', html);
+    }
+
+    function togglePromptCard(id) {
+      document.getElementById(id).classList.toggle('open');
+    }
+
+    function deletePromptCard(id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+      PROMPT_ITEMS = PROMPT_ITEMS.filter(function(p) { return p.id !== id; });
+      if (PROMPT_ITEMS.length === 0) document.getElementById('promptOutput').style.display = 'none';
+    }
+
+    function clearPromptList() {
+      PROMPT_ITEMS = [];
+      PROMPT_COUNTER = 0;
+      document.getElementById('promptList').innerHTML = '';
+      document.getElementById('promptOutput').style.display = 'none';
+    }
+
+    function copyOnePrompt(id) {
+      var card = document.getElementById(id);
+      if (!card) return;
+      var text = card.querySelector('.pc-body .copy-box').textContent;
       navigator.clipboard.writeText(text).then(function() {
         showToast('✅ Prompt已复制');
       }).catch(function() {
@@ -3472,17 +3564,17 @@
       });
     }
 
-    function openDoubaoStandalone() {
-      var prompt = document.getElementById('promptOutputContent').textContent;
-      if (!prompt || !prompt.trim()) { showToast('⚠️ 请先生成Prompt'); return; }
+    function openDoubaoOne(id) {
+      var card = document.getElementById(id);
+      if (!card) return;
+      var prompt = card.querySelector('.pc-body .copy-box').textContent;
       var msg = '帮我生成一张小红书风格的产品配图：\n' + prompt;
       navigator.clipboard.writeText(msg).catch(function(){});
       var isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      showToast('✅ 已复制·正在打开豆包');
       if (isMobile) {
-        showToast('✅ 已复制·正在打开豆包');
         setTimeout(function() { window.location.href = 'https://www.doubao.com/chat/'; }, 300);
       } else {
-        showToast('✅ 已复制·正在打开豆包');
         window.open('doubao://', '_self');
         setTimeout(function() { if (document.hasFocus()) window.open('https://www.doubao.com/chat/', '_blank'); }, 1500);
       }
