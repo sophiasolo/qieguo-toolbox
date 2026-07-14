@@ -305,7 +305,7 @@
     /* 舆情卡片 */
     .sent-stats {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
       gap: 8px;
       margin-bottom: 14px;
     }
@@ -2409,6 +2409,7 @@
       html += '<div class=\"sent-stat\"><div class=\"num\">' + (d.total || 0) + '</div><div class=\"lbl\">总条数</div></div>';
       html += '<div class=\"sent-stat\"><div class=\"num pos-c\">' + (d.pos || 0) + '</div><div class=\"lbl\">正面</div><div class=\"pct\">' + (d.pos_pct || 0).toFixed(1) + '%</div></div>';
       html += '<div class=\"sent-stat\"><div class=\"num neg-c\">' + (d.neg || 0) + '</div><div class=\"lbl\">负面</div><div class=\"pct\">' + (d.neg_pct || 0).toFixed(1) + '%</div></div>';
+      html += '<div class=\"sent-stat\"><div class=\"num neu-c\">' + (d.neu || 0) + '</div><div class=\"lbl\">中性</div><div class=\"pct\">' + (d.neu_pct || 0).toFixed(1) + '%</div></div>';
       html += '</div>';
 
       // 负面列表
