@@ -782,6 +782,31 @@
       to { opacity: 1; transform: translateY(0); }
     }
     .output-section.visible { display: block; }
+    .output-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 12px;
+      padding: 3px;
+      background: rgba(0,0,0,0.03);
+      border-radius: 8px;
+    }
+    .output-tab {
+      flex: 1;
+      padding: 8px 0;
+      border: none;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all var(--transition);
+    }
+    .output-tab.active {
+      background: var(--surface);
+      color: var(--accent);
+      box-shadow: var(--shadow-sm);
+    }
     .output-section h3 {
       font-size: 13px;
       font-weight: 600;
@@ -986,22 +1011,21 @@
 
     <!-- 输出区 -->
     <div class="output-section" id="outputCopy">
-      <h3>
-        📋 社群文案
-        <span class="copy-label" id="copyStatus"></span>
-      </h3>
-      <div class="copy-box" id="copyContent"></div>
-      <div class="btn-row">
-        <button class="btn btn-outline btn-sm" onclick="copyText('copy')">📋 复制文案</button>
-        <button class="btn btn-outline btn-sm" onclick="copyText('prompt')">🎨 复制Prompt</button>
+      <div class="output-tabs">
+        <button class="output-tab active" onclick="switchOutputTab('copy')">📋 文案</button>
+        <button class="output-tab" onclick="switchOutputTab('prompt')">🎨 Prompt</button>
       </div>
-    </div>
-
-    <div class="output-section" id="outputPrompt">
-      <h3>🎨 配图Prompt</h3>
-      <div class="copy-box" id="promptContent"></div>
-      <div class="btn-row" style="margin-top:10px">
-        <button class="btn btn-primary btn-sm" onclick="openDoubao()">📱 复制Prompt并打开豆包</button>
+      <div id="outputCopyContent">
+        <div class="copy-box" id="copyContent"></div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn btn-outline btn-sm" onclick="copyText('copy')">📋 复制文案</button>
+        </div>
+      </div>
+      <div id="outputPromptContent" style="display:none">
+        <div class="copy-box" id="promptContent"></div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn btn-primary btn-sm" onclick="openDoubao()">📱 复制Prompt并打开豆包</button>
+        </div>
       </div>
     </div>
 
@@ -2517,7 +2541,6 @@
       } else {
         // 该日期无历史，清空输出区
         document.getElementById('outputCopy').classList.remove('visible');
-        document.getElementById('outputPrompt').classList.remove('visible');
         document.getElementById('copyContent').textContent = '';
         document.getElementById('promptContent').textContent = '';
       }
@@ -3371,16 +3394,23 @@
     // ==================== 输出展示 ====================
     function showOutput(copy, prompt, day) {
       document.getElementById('outputCopy').classList.add('visible');
-      document.getElementById('outputPrompt').classList.add('visible');
       document.getElementById('copyContent').textContent = copy;
       document.getElementById('promptContent').textContent = prompt;
-      document.getElementById('copyStatus').textContent = '';
+      switchOutputTab('copy'); // 默认显示文案
 
       // 保存历史（以选中日期为主键）
       saveHistory(day, copy, prompt, currentDateKey);
 
       // 滚动到输出区
       document.getElementById('outputCopy').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function switchOutputTab(tab) {
+      var tabs = document.querySelectorAll('.output-tab');
+      tabs.forEach(function(b) { b.classList.remove('active'); });
+      tabs[tab === 'copy' ? 0 : 1].classList.add('active');
+      document.getElementById('outputCopyContent').style.display = tab === 'copy' ? '' : 'none';
+      document.getElementById('outputPromptContent').style.display = tab === 'prompt' ? '' : 'none';
     }
 
     // ==================== 复制功能 ====================
