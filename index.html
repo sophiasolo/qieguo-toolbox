@@ -2358,10 +2358,11 @@
     }
 
     var SENTIMENT_CACHE = null;
+    var SENTIMENT_DAY_IDX = 0;
 
     function fetchSentiment() {
       var el = document.getElementById('sentimentContent');
-      if (SENTIMENT_CACHE) { renderSentiment(SENTIMENT_CACHE); return; }
+      if (SENTIMENT_CACHE) { renderSentiment(SENTIMENT_DAY_IDX); return; }
       el.className = 'sent-loading';
       el.innerHTML = '⏳ 正在加载舆情数据…';
       fetch('sentiment_summary.json?v=' + Date.now())
@@ -2370,8 +2371,9 @@
           return r.json();
         })
         .then(function(data) {
-          SENTIMENT_CACHE = data;
-          renderSentiment(data);
+          SENTIMENT_CACHE = data.days || [];
+          SENTIMENT_DAY_IDX = 0;
+          renderSentiment(0);
         })
         .catch(function(e) {
           el.className = 'sent-error';
@@ -2379,14 +2381,28 @@
         });
     }
 
-    function renderSentiment(d) {
+    function renderSentiment(idx) {
       var el = document.getElementById('sentimentContent');
+      var days = SENTIMENT_CACHE;
+      if (!days || days.length === 0) { el.className = 'sent-empty'; el.innerHTML = '暂无数据'; return; }
+      if (idx < 0) idx = 0;
+      if (idx >= days.length) idx = days.length - 1;
+      SENTIMENT_DAY_IDX = idx;
+      var d = days[idx];
       var negCount = (d.negatives || []).length;
       var html = '';
 
+      // 日期选择器
+      html += '<div class=\"date-selector\" style=\"margin-bottom:12px;padding:6px 8px;gap:4px;overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap;justify-content:flex-start\">';
+      days.forEach(function(day, i) {
+        var active = i === idx ? 'active' : '';
+        var label = (day.label || day.date || '').replace('月','/').replace('日','');
+        html += '<button class=\"day-badge ' + active + '\" onclick=\"renderSentiment(' + i + ')\" style=\"flex-shrink:0;font-size:11px;padding:5px 10px\">' + label + '</button>';
+      });
+      html += '</div>';
+
       // 日期 + 更新时间
-      html += '<div class=\"sent-date-label\">📊 ' + (d.label || d.date || '') + ' 舆情概况';
-      html += '<span class=\"badge\">更新于 ' + (d.updated || '').slice(-5) + '</span></div>';
+      html += '<div class=\"sent-date-label\">📊 ' + (d.label || d.date || '') + ' 舆情概况</div>';
 
       // 统计卡片
       html += '<div class=\"sent-stats\">';
