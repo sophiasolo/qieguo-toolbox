@@ -3730,7 +3730,7 @@
 
     // ==================== PWA Service Worker ====================
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js?v=9', { updateViaCache: 'none' }).then(function(reg) {
+      navigator.serviceWorker.register('sw.js?v=10', { updateViaCache: 'none' }).then(function(reg) {
         reg.addEventListener('updatefound', function() {
           var newWorker = reg.installing;
           newWorker.addEventListener('statechange', function() {
