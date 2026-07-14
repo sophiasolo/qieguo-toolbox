@@ -949,8 +949,9 @@
 
   <div class="container">
     <div class="main-nav" id="mainNav">
-      <button class="active" onclick="switchTab('copy')">📝 文案助手</button>
-      <button onclick="switchTab('sentiment')">📊 舆情监测</button>
+      <button class="active" onclick="switchTab('copy')">📝 文案</button>
+      <button onclick="switchTab('prompt')">🎨 Prompt</button>
+      <button onclick="switchTab('sentiment')">📊 舆情</button>
     </div>
     <div id="tab-copy">
     <!-- 日期选择 -->
@@ -1011,21 +1012,10 @@
 
     <!-- 输出区 -->
     <div class="output-section" id="outputCopy">
-      <div class="output-tabs">
-        <button class="output-tab active" onclick="switchOutputTab('copy')">📋 文案</button>
-        <button class="output-tab" onclick="switchOutputTab('prompt')">🎨 Prompt</button>
-      </div>
-      <div id="outputCopyContent">
-        <div class="copy-box" id="copyContent"></div>
-        <div class="btn-row" style="margin-top:8px">
-          <button class="btn btn-outline btn-sm" onclick="copyText('copy')">📋 复制文案</button>
-        </div>
-      </div>
-      <div id="outputPromptContent" style="display:none">
-        <div class="copy-box" id="promptContent"></div>
-        <div class="btn-row" style="margin-top:8px">
-          <button class="btn btn-primary btn-sm" onclick="openDoubao()">📱 复制Prompt并打开豆包</button>
-        </div>
+      <h3>📋 文案 <span class="copy-label" id="copyStatus"></span></h3>
+      <div class="copy-box" id="copyContent"></div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn btn-outline btn-sm" onclick="copyText('copy')">📋 复制文案</button>
       </div>
     </div>
 
@@ -1041,6 +1031,39 @@
     </div>
     <div id="tab-sentiment" style="display:none">
       <div id="sentimentContent" class="sent-loading">⏳ 正在加载舆情数据…</div>
+    </div>
+    <div id="tab-prompt" style="display:none">
+      <div class="input-section">
+        <h3>🎨 配图Prompt生成</h3>
+        <div class="hint" style="margin-bottom:12px">独立生成配图Prompt，产品选择+场景风格 → 一键出Prompt → 打开豆包生图</div>
+        <div class="input-group">
+          <label>🍉 产品名称</label>
+          <input type="text" id="promptProduct" placeholder="如：麒麟瓜鲜切 / 招牌四拼">
+        </div>
+        <div class="fruit-picker">
+          <div class="flabel">🍉 选水果品类（可多选）</div>
+          <div class="fruit-tags" id="promptFruitTags"></div>
+        </div>
+        <div class="input-group">
+          <label>🎬 场景风格</label>
+          <select id="promptScene">
+            <option value="2">🌡️ 热销爆品·精致质感</option>
+            <option value="3">💎 会员日·清新仪式感</option>
+            <option value="4">⚡ 特价·极简冰镇感</option>
+            <option value="5">🏠 周末·窗边松弛感</option>
+            <option value="6">🌟 种草·高级食欲感</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" onclick="genPromptStandalone()" style="width:100%">🎨 生成Prompt</button>
+      </div>
+      <div class="output-section" id="promptOutput" style="display:none">
+        <h3>🎨 配图Prompt</h3>
+        <div class="copy-box" id="promptOutputContent"></div>
+        <div class="btn-row" style="margin-top:8px">
+          <button class="btn btn-outline btn-sm" onclick="copyPromptOutput()">📋 复制Prompt</button>
+          <button class="btn btn-primary btn-sm" onclick="openDoubaoStandalone()">📱 打开豆包</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2375,8 +2398,10 @@
     function switchTab(tab) {
       var nav = document.getElementById('mainNav');
       nav.querySelectorAll('button').forEach(function(b) { b.classList.remove('active'); });
-      nav.children[tab === 'copy' ? 0 : 1].classList.add('active');
+      var idx = tab === 'copy' ? 0 : tab === 'prompt' ? 1 : 2;
+      nav.children[idx].classList.add('active');
       document.getElementById('tab-copy').style.display = tab === 'copy' ? '' : 'none';
+      document.getElementById('tab-prompt').style.display = tab === 'prompt' ? '' : 'none';
       document.getElementById('tab-sentiment').style.display = tab === 'sentiment' ? '' : 'none';
       if (tab === 'sentiment') fetchSentiment();
     }
@@ -2491,6 +2516,8 @@
       initPriceMode();
       initDeliveryUI();
       renderLinkManager();
+      // 预渲染 Prompt 板块的水果选择器
+      setTimeout(function() { renderFruitPicker('promptFruitTags'); }, 200);
       updateFestivalBanner();
       updateDayInfo();
 
@@ -3395,8 +3422,7 @@
     function showOutput(copy, prompt, day) {
       document.getElementById('outputCopy').classList.add('visible');
       document.getElementById('copyContent').textContent = copy;
-      document.getElementById('promptContent').textContent = prompt;
-      switchOutputTab('copy'); // 默认显示文案
+      (document.getElementById('promptContent') || {}).textContent = '';
 
       // 保存历史（以选中日期为主键）
       saveHistory(day, copy, prompt, currentDateKey);
@@ -3405,19 +3431,47 @@
       document.getElementById('outputCopy').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    function switchOutputTab(tab) {
-      var tabs = document.querySelectorAll('.output-tab');
-      tabs.forEach(function(b) { b.classList.remove('active'); });
-      tabs[tab === 'copy' ? 0 : 1].classList.add('active');
-      document.getElementById('outputCopyContent').style.display = tab === 'copy' ? '' : 'none';
-      document.getElementById('outputPromptContent').style.display = tab === 'prompt' ? '' : 'none';
+    // ==================== 独立Prompt生成 ====================
+    function genPromptStandalone() {
+      var product = document.getElementById('promptProduct').value.trim() || '招牌鲜果切';
+      var sceneId = parseInt(document.getElementById('promptScene').value) || 2;
+      var prompt = genPrompt(sceneId, product);
+      document.getElementById('promptOutputContent').textContent = prompt;
+      document.getElementById('promptOutput').style.display = 'block';
+      document.getElementById('promptOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function copyPromptOutput() {
+      var text = document.getElementById('promptOutputContent').textContent;
+      navigator.clipboard.writeText(text).then(function() {
+        showToast('✅ Prompt已复制');
+      }).catch(function() {
+        var ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta);
+        ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        showToast('✅ Prompt已复制');
+      });
+    }
+
+    function openDoubaoStandalone() {
+      var prompt = document.getElementById('promptOutputContent').textContent;
+      if (!prompt || !prompt.trim()) { showToast('⚠️ 请先生成Prompt'); return; }
+      var msg = '帮我生成一张小红书风格的产品配图：\n' + prompt;
+      navigator.clipboard.writeText(msg).catch(function(){});
+      var isMobile = /iPhone|iPad|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        showToast('✅ 已复制·正在打开豆包');
+        setTimeout(function() { window.location.href = 'https://www.doubao.com/chat/'; }, 300);
+      } else {
+        showToast('✅ 已复制·正在打开豆包');
+        window.open('doubao://', '_self');
+        setTimeout(function() { if (document.hasFocus()) window.open('https://www.doubao.com/chat/', '_blank'); }, 1500);
+      }
     }
 
     // ==================== 复制功能 ====================
     function copyText(type) {
-      const text = type === 'copy'
-        ? document.getElementById('copyContent').textContent
-        : document.getElementById('promptContent').textContent;
+      const text = document.getElementById('copyContent').textContent;
 
       navigator.clipboard.writeText(text).then(() => {
         showToast(type === 'copy' ? '✅ 文案已复制' : '🎨 Prompt已复制');
