@@ -4,11 +4,11 @@
   "label": "7月13日",
   "total": 36,
   "pos": 32,
-  "neg": 2,
-  "neu": 2,
+  "neg": 1,
+  "neu": 3,
   "pos_pct": 88.9,
-  "neg_pct": 5.6,
-  "neu_pct": 5.6,
+  "neg_pct": 2.8,
+  "neu_pct": 8.3,
   "channels": {
     "新浪微博": 4,
     "黑猫投诉": 2,
@@ -26,15 +26,6 @@
       "url": "https://tousu.sina.com.cn/complaint/view/17399740879/?sld=9cc39a21f0541edf5287246822bc3ca3",
       "category": "食品安全（异物）",
       "city": "江苏-南京"
-    },
-    {
-      "time": "11:12",
-      "platform": "黑猫投诉",
-      "title": "淘宝闪购",
-      "summary_note": "黑猫投诉-未分类(保守判负)",
-      "url": "https://tousu.sina.com.cn/complaint/view/17399713340/?sld=118a493cd5a3995aca7180e9a3f7cf7e",
-      "category": "黑猫投诉",
-      "city": "上海-上海"
     }
   ]
 }
