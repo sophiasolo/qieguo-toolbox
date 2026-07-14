@@ -1,6 +1,28 @@
 {
-  "updated": "20260713",
+  "updated": "20260714",
   "days": [
+    {
+      "date": "20260714",
+      "label": "7月14日",
+      "total": 28,
+      "pos": 25,
+      "neg": 1,
+      "neu": 2,
+      "pos_pct": 89.3,
+      "neg_pct": 3.6,
+      "neu_pct": 7.1,
+      "negatives": [
+        {
+          "time": "11:59",
+          "platform": "今日头条-微头条",
+          "title": "避雷亳州这家水果店！！亳州万达店切果NOW 昨天晚上在这家水果店买了一个榴莲，让商家帮我剥开，一开始商家说出肉率很高我还很开心，结果到了之后发现是生包（如图p1",
+          "summary": "负面关键词\"避雷\"-避雷警告",
+          "url": "https://www.toutiao.com/w/1870661199193344/#ocr",
+          "category": "服务态度",
+          "city": "安徽-亳州"
+        }
+      ]
+    },
     {
       "date": "20260713",
       "label": "7月13日",
@@ -174,37 +196,6 @@
           "url": "https://weibo.com/7065707672/R7K4rD8Iz#ocr",
           "category": "出品品质",
           "city": "北京-北京"
-        }
-      ]
-    },
-    {
-      "date": "20260707",
-      "label": "7月7日",
-      "total": 23,
-      "pos": 19,
-      "neg": 2,
-      "neu": 2,
-      "pos_pct": 82.6,
-      "neg_pct": 8.7,
-      "neu_pct": 8.7,
-      "negatives": [
-        {
-          "time": "15:52",
-          "platform": "黑猫投诉",
-          "title": "切果NOW！水果被人吃过",
-          "summary": "负面关键词\"投诉\"",
-          "url": "https://tousu.sina.com.cn/complaint/view/17399497862/?sld=7907377bcd1cb1935f3d23b22c6c1d45",
-          "category": "食品安全",
-          "city": "黑猫投诉-待查门店"
-        },
-        {
-          "time": "14:45",
-          "platform": "抖音",
-          "title": "喜欢吃切果的女孩子心碎了#水果店 #切果",
-          "summary": "消费者投诉-体验差",
-          "url": "https://www.iesdouyin.com/share/video/7659673558415105652#ocr",
-          "category": "产品品质",
-          "city": "湖北-武汉"
         }
       ]
     }
