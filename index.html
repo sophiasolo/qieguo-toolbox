@@ -1052,6 +1052,8 @@
             <option value="4">⚡ 特价·极简冰镇感</option>
             <option value="5">🏠 周末·窗边松弛感</option>
             <option value="6">🌟 种草·高级食欲感</option>
+            <option value="brand">🏷️ 品牌正式图（保留LOGO）</option>
+            <option value="social">💬 社群图用（弱化LOGO）</option>
           </select>
         </div>
         <button class="btn btn-primary" onclick="genPromptStandalone()" style="width:100%">🎨 生成Prompt</button>
@@ -3434,8 +3436,25 @@
     // ==================== 独立Prompt生成 ====================
     function genPromptStandalone() {
       var product = document.getElementById('promptProduct').value.trim() || '招牌鲜果切';
-      var sceneId = parseInt(document.getElementById('promptScene').value) || 2;
-      var prompt = genPrompt(sceneId, product);
+      var sceneVal = document.getElementById('promptScene').value;
+      var prompt = '';
+
+      if (sceneVal === 'brand' || sceneVal === 'social') {
+        // 通用版本：品牌正式图 / 社群图用
+        var logoRule = sceneVal === 'brand'
+          ? '1.图1（产品白底图）强制规则：果盒、容器、果肉种类与摆放完整原样复刻，不得修改、增减水果；完整保留原图LOGO图案，LOGO统一放置画面左上角，随3:4画幅等比例适配缩放，禁止消除、扭曲、移位至其他区域。'
+          : '1.图1（产品白底图）强制规则：果盒、容器、果肉种类与摆放完整原样复刻，不得修改、增减水果；LOGO可直接去除弱化。';
+
+        prompt = '根据上传两张图片生成果切实拍图。\n\n' + logoRule + '\n\n' +
+          '2.图2（博主氛围参考图）通用参考范围：保留画面整体光影色调、构图留白、桌面布景、餐具搭配、人物手持/摆放姿势、生活化氛围感、背景虚化层次；仅忽略图内博主手中盛放的水果、餐食、原装容器，禁止照搬这份食物形态。\n\n' +
+          '3.版权约束：仅借鉴拍摄风格与布局逻辑，生成全新原创场景，不完整复刻博主原图道具、背景细节。\n\n' +
+          '4.画质底线：原生实拍质感，禁用3D塑料建模感、高饱和刺眼色彩、厚重黑影、廉价塑料装饰；画面留白充足，产品始终清晰突出。\n\n' +
+          '5.规格：3:4竖版4K高清，无多余文字、无水印。';
+      } else {
+        var sceneId = parseInt(sceneVal) || 2;
+        prompt = genPrompt(sceneId, product);
+      }
+
       document.getElementById('promptOutputContent').textContent = prompt;
       document.getElementById('promptOutput').style.display = 'block';
       document.getElementById('promptOutput').scrollIntoView({ behavior: 'smooth', block: 'start' });
