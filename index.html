@@ -2600,12 +2600,16 @@
     }
 
     function updateDayInfo() {
-      const dateVal = document.getElementById('datePicker').value;
+      const dp = document.getElementById('datePicker');
+      if (!dp || !dp.value) return;
+      const dateVal = dp.value;
       const d = new Date(dateVal + 'T00:00:00');
       const dayOfWeek = d.getDay();
       const badge = document.getElementById('dayBadge');
-      badge.textContent = '📅 ' + DAY_NAMES[dayOfWeek];
-      badge.className = 'day-badge ' + (dayOfWeek === 0 ? 'inactive' : 'active');
+      if (badge) {
+        badge.textContent = '📅 ' + DAY_NAMES[dayOfWeek];
+        badge.className = 'day-badge ' + (dayOfWeek === 0 ? 'inactive' : 'active');
+      }
 
       // 核心：日期切换后，自动查询该日期有无历史文案
       const dateKey = dateVal; // YYYY-MM-DD
@@ -2613,11 +2617,14 @@
       const match = history.find(h => h.dateKey === dateKey);
 
       if (dayOfWeek === 0) {
-        selectDay(2); // 周日切到周二
+        if (document.getElementById('tab-copy').style.display !== 'none') selectDay(2);
         return;
       }
 
-      selectDay(dayOfWeek, dateKey);
+      // 只在文案Tab下切换推送日表单
+      if (document.getElementById('tab-copy').style.display !== 'none') {
+        selectDay(dayOfWeek, dateKey);
+      }
 
       // 如果该日期有历史记录，自动加载
       if (match) {
