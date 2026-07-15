@@ -1,7 +1,7 @@
 {
-  "name": "切果NOW · 文案助手",
-  "short_name": "切果NOW",
-  "description": "社群推送文案一键生成 · 周二到周六全覆盖",
+  "name": "私域运营工具箱",
+  "short_name": "私域运营箱",
+  "description": "切果NOW · 社群文案+AI配图+舆情监测 · 三合一私域运营工具箱",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

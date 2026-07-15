@@ -1,6 +1,6 @@
 // 切果NOW文案助手 · Service Worker (Network-First)
-const CACHE = 'qieguo-copy-v11';
-const FILES = ['index.html', 'manifest.json', 'app-icon.png', 'app-icon-ios.png'];
+const CACHE = 'qieguo-copy-v12';
+const FILES = ['index.html', 'manifest.json', 'app-icon.png', 'app-icon-ios.png', 'presentation.html', 'sentiment_summary.json'];
 
 self.addEventListener('install', e => {
   self.skipWaiting();
