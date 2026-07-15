@@ -1104,13 +1104,13 @@
         <div class="input-group">
           <label>🎬 场景风格</label>
           <select id="promptScene">
+            <option value="brand">🏷️ 品牌正式图（保留LOGO）</option>
+            <option value="social">💬 社群图用（弱化LOGO）</option>
             <option value="2">🌡️ 热销爆品·精致质感</option>
             <option value="3">💎 会员日·清新仪式感</option>
             <option value="4">⚡ 特价·极简冰镇感</option>
             <option value="5">🏠 周末·窗边松弛感</option>
             <option value="6">🌟 种草·高级食欲感</option>
-            <option value="brand">🏷️ 品牌正式图（保留LOGO）</option>
-            <option value="social">💬 社群图用（弱化LOGO）</option>
           </select>
         </div>
         <button class="btn btn-primary" onclick="genPromptStandalone()" style="width:100%">➕ 生成并追加</button>
@@ -2463,6 +2463,7 @@
       document.getElementById('tab-prompt').style.display = tab === 'prompt' ? '' : 'none';
       document.getElementById('tab-sentiment').style.display = tab === 'sentiment' ? '' : 'none';
       if (tab === 'sentiment') fetchSentiment();
+      if (tab === 'prompt') restorePromptList();
     }
 
     var SENTIMENT_CACHE = null;
@@ -3537,6 +3538,8 @@
       var id = 'p' + (++PROMPT_COUNTER);
       PROMPT_ITEMS.push({ id: id, label: sceneLabel, text: prompt });
       appendPromptCard(id, sceneLabel, prompt);
+      localStorage.setItem('promptItems', JSON.stringify(PROMPT_ITEMS));
+      localStorage.setItem('promptCounter', PROMPT_COUNTER);
       document.getElementById('promptOutput').style.display = 'block';
       document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
@@ -3577,6 +3580,27 @@
       PROMPT_COUNTER = 0;
       document.getElementById('promptList').innerHTML = '';
       document.getElementById('promptOutput').style.display = 'none';
+      localStorage.removeItem('promptItems');
+      localStorage.removeItem('promptCounter');
+    }
+
+    function restorePromptList() {
+      var saved = localStorage.getItem('promptItems');
+      if (!saved) return;
+      try {
+        PROMPT_ITEMS = JSON.parse(saved);
+        PROMPT_COUNTER = parseInt(localStorage.getItem('promptCounter') || '0');
+        document.getElementById('promptList').innerHTML = '';
+        PROMPT_ITEMS.forEach(function(item) {
+          appendPromptCard(item.id, item.label, item.text);
+        });
+        if (PROMPT_ITEMS.length > 0) {
+          document.getElementById('promptOutput').style.display = 'block';
+        }
+      } catch(e) {
+        localStorage.removeItem('promptItems');
+        localStorage.removeItem('promptCounter');
+      }
     }
 
     function copyOnePrompt(id) {
