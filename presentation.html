@@ -69,12 +69,13 @@ body {
   background: var(--card); border-radius: var(--radius);
   padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   transition: transform 0.2s;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 .card:hover { transform: translateY(-1px); }
 .card .icon { font-size: 26px; margin-bottom: 6px; }
 .card .label { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-.card .desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
-.card .stat { font-size: 28px; font-weight: 900; color: var(--green); }
+.card .desc { font-size: 11px; color: var(--text2); line-height: 1.5; min-height: 2.25em; }
+.card .stat { font-size: 28px; font-weight: 900; color: var(--green); min-width: 3ch; }
 
 /* ====== 对比表 ====== */
 .compare-table { width: 100%; max-width: 520px; border-radius: var(--radius); overflow: hidden; font-size: 13px; }
