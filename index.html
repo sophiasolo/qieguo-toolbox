@@ -1349,11 +1349,17 @@
     function spawnParticles(particleType) {
       const isCSS = /^[a-z]/.test(particleType);
       const count = 8;
+      // 用显式数组避免emoji被Array.from拆分
+      var chars;
+      if (!isCSS) {
+        if (Array.isArray(particleType)) chars = particleType;
+        else chars = particleType.split(/(?=[\u{1F000}-\u{1FFFF}\u{2600}-\u{27BF}\u{FE00}-\u{FEFF}])/u).filter(Boolean);
+        if (chars.length === 0) chars = ['🎉'];
+      }
       for (let i = 0; i < count; i++) {
         const p = document.createElement('span');
         p.className = 'festival-particle' + (isCSS ? ' ' + particleType : '');
         if (!isCSS) {
-          const chars = Array.from(particleType);
           p.textContent = chars[i % chars.length];
           p.style.fontSize = (14 + Math.random() * 16) + 'px';
         }
@@ -1383,7 +1389,7 @@
       '七夕': { left:'💕🌌', right:'✨💫💕', fx:'heart', particle:'💕💗💖' },
       '教师节': { left:'🍎📚', right:'✏️💐' },
       '中秋节': { left:'🌕🐇🥮', right:'🏮✨🌕', fx:'glow', particle:'🌙✨🌟', bg:'night' },
-      '国庆节': { left:'🇨🇳🎉', right:'🎆✨🇨🇳', fx:'firework', particle:'🇨🇳🎆', bg:'spring' },
+      '国庆节': { left:'🇨🇳🎉', right:'🎆✨🇨🇳', fx:'firework', particle:['🇨🇳','🎆'], bg:'spring' },
       '万圣节': { left:'🎃👻🕯️', right:'🦇🕸️🎃', fx:'glow', particle:'👻🎃🦇' },
       '感恩节': { left:'🍂🦃', right:'🍁🧡', fx:'glow', particle:'🍂🍁' },
       '平安夜': { left:'🎄✨❄', right:'🕯🎁🌟', fx:'snow', particle:'❄❅❆✨', bg:'xmas' },
