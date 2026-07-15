@@ -9,250 +9,472 @@
 :root {
   --green: #2d8a4e; --green-dark: #1a5c30; --green-light: #e8f5e9;
   --bg: #faf9f7; --card: #fff; --text: rgba(0,0,0,0.88);
-  --text2: rgba(0,0,0,0.55); --radius: 16px;
+  --text2: rgba(0,0,0,0.50); --radius: 14px;
+  --accent-orange: #f0a04b; --accent-blue: #4a90d9;
 }
 * { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Inter','Noto Sans SC',-apple-system,sans-serif;
   background: var(--bg); color: var(--text);
-  overflow: hidden; height: 100vh; height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  overflow: hidden; height: 100vh; height: 100dvh;
 }
 /* 导航指示器 */
 .nav-dots {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-  display: flex; gap: 10px; z-index: 100;
+  position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 100; background: rgba(255,255,255,0.85);
+  backdrop-filter: blur(8px); padding: 6px 16px; border-radius: 999px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
 }
 .nav-dot {
-  width: 10px; height: 10px; border-radius: 50%;
-  background: rgba(0,0,0,0.15); transition: all 0.3s; cursor: pointer;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(0,0,0,0.15); transition: all 0.3s; cursor: pointer; flex-shrink: 0;
 }
-.nav-dot.active { background: var(--green); width: 28px; border-radius: 5px; }
-/* 页面容器 */
+.nav-dot.active { background: var(--green); width: 24px; border-radius: 4px; }
+/* 页码 */
+.page-num {
+  position: fixed; top: 20px; left: 24px; font-size: 11px; font-weight: 700;
+  color: var(--text2); z-index: 100; letter-spacing: 0.05em;
+}
+/* 幻灯片容器 */
 .slides { position: relative; height: 100%; }
 .slide {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; padding: 56px 24px 80px;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  padding: 40px 24px; opacity: 0; transform: translateY(30px);
-  transition: all 0.5s cubic-bezier(0.4,0,0.2,1); pointer-events: none;
+  opacity: 0; transform: translateY(30px);
+  transition: all 0.45s cubic-bezier(0.4,0,0.2,1); pointer-events: none;
   overflow-y: auto; -webkit-overflow-scrolling: touch;
 }
 .slide.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
-/* 封面 */
+
+/* ====== 封面 ====== */
 .cover { text-align: center; }
-.cover .logo { width: 80px; margin-bottom: 16px; }
-.cover h1 { font-size: 32px; font-weight: 900; letter-spacing: -0.02em; }
+.cover .logo { width: 72px; margin-bottom: 12px; }
+.cover h1 { font-size: 34px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.2; }
 .cover h1 span { color: var(--green); }
-.cover .tagline { font-size: 15px; color: var(--text2); margin-top: 8px; }
-.cover .ip-decor { width: 120px; margin-top: 24px; opacity: 0.9; }
-/* 通用卡片 */
-.card-grid { display: grid; gap: 14px; width: 100%; max-width: 500px; }
+.cover .tagline { font-size: 15px; color: var(--text2); margin-top: 6px; }
+.cover .ip-decor { width: 100px; margin-top: 20px; }
+
+/* ====== 通用标题 ====== */
+.section-title { font-size: 22px; font-weight: 800; text-align: center; margin-bottom: 20px; }
+.section-title span { color: var(--green); }
+.subtitle { font-size: 12px; color: var(--text2); text-align: center; margin-bottom: 16px; margin-top: -12px; }
+
+/* ====== 卡片 ====== */
+.card-grid { display: grid; gap: 12px; width: 100%; max-width: 520px; }
 .card-grid.cols2 { grid-template-columns: 1fr 1fr; }
 .card-grid.cols3 { grid-template-columns: 1fr 1fr 1fr; }
+.card-grid.cols4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
 .card {
   background: var(--card); border-radius: var(--radius);
-  padding: 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   transition: transform 0.2s;
 }
-.card:hover { transform: translateY(-2px); }
-.card .icon { font-size: 28px; margin-bottom: 8px; }
-.card h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-.card p { font-size: 12px; color: var(--text2); line-height: 1.5; }
-/* 标题 */
-.section-title { font-size: 24px; font-weight: 800; text-align: center; margin-bottom: 24px; }
-.section-title span { color: var(--green); }
-/* 效率对比 */
-.compare-row { display: flex; gap: 14px; width: 100%; max-width: 500px; }
-.compare-col { flex:1; background: var(--card); border-radius: var(--radius); padding: 20px; }
-.compare-col.before { border-top: 4px solid #e74c3c; }
-.compare-col.after { border-top: 4px solid var(--green); }
-.compare-col h3 { font-size: 14px; margin-bottom: 12px; }
-.compare-col .metric { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.05); font-size: 13px; }
-.compare-col .metric .val { font-weight: 700; }
-/* 数据流 */
-.flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 16px; }
-.flow-node { background: var(--card); border: 2px solid var(--green); border-radius: 12px; padding: 10px 14px; font-size: 11px; font-weight: 600; text-align: center; }
-.flow-arrow { color: var(--green); font-size: 18px; font-weight: 700; }
-/* 编辑 */
-[contenteditable] { outline: none; border-radius: 4px; transition: background 0.2s; }
-[contenteditable]:focus { background: rgba(45,138,78,0.06); }
-/* 工具栏 */
+.card:hover { transform: translateY(-1px); }
+.card .icon { font-size: 26px; margin-bottom: 6px; }
+.card .label { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+.card .desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+.card .stat { font-size: 28px; font-weight: 900; color: var(--green); }
+
+/* ====== 对比表 ====== */
+.compare-table { width: 100%; max-width: 520px; border-radius: var(--radius); overflow: hidden; font-size: 13px; }
+.compare-table table { width: 100%; border-collapse: collapse; }
+.compare-table th { background: var(--green); color: #fff; padding: 10px 14px; font-weight: 700; text-align: left; }
+.compare-table td { padding: 9px 14px; background: var(--card); border-bottom: 1px solid rgba(0,0,0,0.04); }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table .red { color: #e74c3c; font-weight: 700; }
+.compare-table .green { color: var(--green); font-weight: 700; }
+.compare-row { display: flex; gap: 12px; width: 100%; max-width: 520px; }
+.compare-col { flex:1; background: var(--card); border-radius: var(--radius); padding: 18px; }
+.compare-col.old { border-top: 3px solid #e74c3c; }
+.compare-col.new { border-top: 3px solid var(--green); }
+.compare-col h3 { font-size: 14px; margin-bottom: 10px; }
+.compare-item { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 12px; }
+.compare-item:last-child { border-bottom: none; }
+.compare-item .v { font-weight: 700; }
+
+/* ====== 标签 ====== */
+.tag-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; justify-content: center; }
+.tag {
+  font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+  background: var(--green-light); color: var(--green-dark);
+}
+.tag.alt { background: #fff3e0; color: #e65100; }
+.tag.blue { background: #e3f2fd; color: #1565c0; }
+
+/* ====== 知识库统计卡 ====== */
+.kb-stats { display: flex; gap: 12px; width: 100%; max-width: 520px; }
+.kb-stat { flex: 1; background: var(--card); border-radius: var(--radius); padding: 14px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.kb-stat .num { font-size: 32px; font-weight: 900; color: var(--green); }
+.kb-stat .lbl { font-size: 11px; color: var(--text2); margin-top: 4px; }
+
+/* ====== 资料卡片 ====== */
+.src-card {
+  background: var(--card); border-radius: var(--radius); padding: 14px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05); display: flex; align-items: flex-start; gap: 12px;
+  margin-bottom: 10px; width: 100%; max-width: 520px;
+}
+.src-card .src-icon { font-size: 28px; flex-shrink: 0; }
+.src-card .src-info h4 { font-size: 13px; font-weight: 700; }
+.src-card .src-info p { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ====== 成品展示卡片 ====== */
+.demo-card {
+  background: #fafcf8; border: 1.5px solid #d4e8d7; border-radius: var(--radius);
+  padding: 16px; margin-bottom: 10px; width: 100%; max-width: 520px; font-size: 13px;
+  line-height: 1.7; font-family: 'Noto Sans SC', sans-serif;
+}
+.demo-card .emoji-line { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.demo-card .copy-line { color: var(--green); font-weight: 700; }
+.demo-card .price-line { color: #e65100; font-weight: 600; margin-top: 4px; }
+.demo-card .cta-line { background: var(--green); color: #fff; display: inline-block; padding: 4px 12px; border-radius: 999px; margin-top: 8px; font-size: 11px; }
+.demo-label { font-size: 10px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+
+/* ====== Prompt 卡片 ====== */
+.prompt-showcase { display: flex; gap: 10px; width: 100%; max-width: 520px; flex-wrap: wrap; }
+.ps-card {
+  flex: 1; min-width: 140px; background: var(--card); border-radius: var(--radius);
+  padding: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border-left: 3px solid var(--green);
+}
+.ps-card h4 { font-size: 12px; color: var(--green); margin-bottom: 4px; }
+.ps-card p { font-size: 10px; color: var(--text2); line-height: 1.5; }
+
+/* ====== 数据流 ====== */
+.flow { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center; margin: 16px 0; }
+.flow-node {
+  background: var(--card); border: 2px solid var(--green); border-radius: 10px;
+  padding: 8px 12px; font-size: 11px; font-weight: 600; text-align: center;
+}
+.flow-arrow { color: var(--green); font-size: 16px; font-weight: 700; }
+
+/* ====== 花字展示 ====== */
+.hua-show { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; width: 100%; max-width: 520px; }
+.hua-item {
+  font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+  background: var(--card); box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  white-space: nowrap;
+}
+.hua-cat { font-size: 10px; color: var(--text2); text-align: center; margin-bottom: 6px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ====== 工具栏 ====== */
 .toolbar {
   position: fixed; top: 16px; right: 16px; z-index: 100;
   display: flex; gap: 8px;
 }
 .toolbar button {
   background: var(--card); border: 1px solid rgba(0,0,0,0.1);
-  border-radius: 8px; padding: 8px 12px; font-size: 12px; cursor: pointer;
+  border-radius: 8px; padding: 8px 12px; font-size: 11px; cursor: pointer;
   color: var(--text); font-family: inherit; transition: all 0.2s;
 }
 .toolbar button:hover { border-color: var(--green); color: var(--green); }
 .toolbar button.export { background: var(--green); color: #fff; border-color: var(--green); }
-/* toast */
 .toast {
-  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%);
   background: var(--green); color: #fff; padding: 10px 20px; border-radius: 999px;
-  font-size: 13px; font-weight: 600; z-index: 200; opacity: 0;
+  font-size: 12px; font-weight: 600; z-index: 200; opacity: 0;
   transition: opacity 0.3s; pointer-events: none;
 }
 .toast.show { opacity: 1; }
-/* 移动端 */
+
+[contenteditable] { outline: none; border-radius: 3px; transition: background 0.2s; }
+[contenteditable]:focus { background: rgba(45,138,78,0.06); }
+
 @media (max-width: 420px) {
-  .cover h1 { font-size: 26px; }
-  .section-title { font-size: 20px; }
-  .card h3 { font-size: 13px; }
-  .card p { font-size: 11px; }
+  .cover h1 { font-size: 28px; }
+  .section-title { font-size: 19px; }
+  .card-grid.cols4 { grid-template-columns: 1fr 1fr; }
   .card-grid.cols3 { grid-template-columns: 1fr 1fr; }
+  .card .stat { font-size: 22px; }
+  .kb-stats { flex-wrap: wrap; }
+  .kb-stat { min-width: 44%; }
   .compare-row { flex-direction: column; }
+  .prompt-showcase { flex-direction: column; }
 }
 </style>
 </head>
 <body>
 
+<!-- 工具栏 -->
 <div class="toolbar">
-  <button onclick="resetAll()" title="恢复默认">🔄 重置</button>
-  <button class="export" onclick="exportHTML()" title="下载为HTML文件">📥 导出PPT</button>
+  <button onclick="resetAll()">🔄 重置</button>
+  <button class="export" onclick="exportHTML()">📥 导出</button>
 </div>
+<!-- 页码 -->
+<div class="page-num" id="pageNum">1 / 11</div>
 
 <div class="slides" id="slides">
-  <!-- 第1页：封面 -->
-  <div class="slide active cover">
-    <img src="brand-logo.png" class="logo" alt="切果NOW">
-    <h1><span>私域运营</span>工具箱</h1>
-    <p class="tagline" contenteditable="true">社群文案 + AI配图Prompt + 舆情监测 三合一</p>
-    <img src="brand-ip-1.png" class="ip-decor" alt="">
-    <p style="margin-top:20px;font-size:13px;color:var(--text2)" contenteditable="true">切果NOW · 千店连锁鲜果品牌</p>
-  </div>
 
-  <!-- 第2页：核心优势 -->
-  <div class="slide">
-    <h2 class="section-title"><span>核心</span>优势</h2>
-    <div class="card-grid cols2">
-      <div class="card">
-        <div class="icon">⚡</div>
-        <h3 contenteditable="true">一键生成文案</h3>
-        <p contenteditable="true">5天推送日自动匹配品类金句、花字轮换、节日专属话术，从30分钟到10秒</p>
-      </div>
-      <div class="card">
-        <div class="icon">🎨</div>
-        <h3 contenteditable="true">AI配图Prompt</h3>
-        <p contenteditable="true">7种风格可选，品牌正式图/社群图用通用模板，一键复制唤起豆包生图</p>
-      </div>
-      <div class="card">
-        <div class="icon">📊</div>
-        <h3 contenteditable="true">舆情实时监测</h3>
-        <p contenteditable="true">每日自动抓取全网舆情，正/负/中性分类，负面明细+原帖链接，手机随时看</p>
-      </div>
-      <div class="card">
-        <div class="icon">🏮</div>
-        <h3 contenteditable="true">节日自动营销</h3>
-        <p contenteditable="true">20+节日自动识别，横幅+漂浮粒子+背景色切换，日历格子标注农历节气</p>
-      </div>
-    </div>
-  </div>
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第1页 — 封面 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide active cover">
+  <img src="brand-logo.png" class="logo" alt="切果NOW">
+  <h1><span>私域运营</span>工具箱</h1>
+  <p class="tagline" contenteditable="true">从零搭建 · 数据驱动 · 自动化闭环</p>
+  <img src="brand-ip-1.png" class="ip-decor" alt="">
+  <p style="margin-top:16px;font-size:13px;color:var(--text2)" contenteditable="true">切果NOW · 千店连锁鲜果品牌 · 社群私域运营</p>
+</div>
 
-  <!-- 第3页：功能全景 -->
-  <div class="slide">
-    <h2 class="section-title"><span>功能</span>全景</h2>
-    <div class="card-grid cols3" style="margin-bottom:20px">
-      <div class="card" style="text-align:center">
-        <div class="icon">📝</div>
-        <h3 contenteditable="true">文案助手</h3>
-        <p contenteditable="true">50+水果品类<br>124条金句引擎<br>5天推送日</p>
-      </div>
-      <div class="card" style="text-align:center">
-        <div class="icon">🎨</div>
-        <h3 contenteditable="true">Prompt生成</h3>
-        <p contenteditable="true">7种场景风格<br>折叠对比模式<br>一键唤起豆包</p>
-      </div>
-      <div class="card" style="text-align:center">
-        <div class="icon">📊</div>
-        <h3 contenteditable="true">舆情监测</h3>
-        <p contenteditable="true">每日自动同步<br>7天历史切换<br>负面实时预警</p>
-      </div>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--text2);margin-top:8px" contenteditable="true">数据流：Cron定时抓取 → 自动分类 → GitHub Pages → PWA实时展示</p>
-    <div class="flow">
-      <div class="flow-node">⏰ Cron 7:30</div><span class="flow-arrow">→</span>
-      <div class="flow-node">🔍 智慧商情</div><span class="flow-arrow">→</span>
-      <div class="flow-node">🤖 自动分类</div><span class="flow-arrow">→</span>
-      <div class="flow-node">📤 GitHub</div><span class="flow-arrow">→</span>
-      <div class="flow-node">📱 PWA</div>
-    </div>
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第2页 — 知识投喂 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>知识</span>投喂</h2>
+  <p class="subtitle" contenteditable="true">我把什么资料喂给了 AI？</p>
+  <div class="kb-stats">
+    <div class="kb-stat"><div class="num">74页</div><div class="lbl">PDF 水果宝典</div></div>
+    <div class="kb-stat"><div class="num">2.2万</div><div class="lbl">DOCX 知识库</div></div>
+    <div class="kb-stat"><div class="num">88条</div><div class="lbl">花字库 RTF</div></div>
+    <div class="kb-stat"><div class="num">80+</div><div class="lbl">品种 Brix 糖度</div></div>
   </div>
-
-  <!-- 第4页：效率对比 -->
-  <div class="slide">
-    <h2 class="section-title"><span>效率</span>提升</h2>
-    <div class="compare-row">
-      <div class="compare-col before">
-        <h3 contenteditable="true">❌ 使用前</h3>
-        <div class="metric"><span>文案耗时</span><span class="val" style="color:#e74c3c">30分钟/条</span></div>
-        <div class="metric"><span>品类知识</span><span class="val" style="color:#e74c3c">手动查资料</span></div>
-        <div class="metric"><span>Prompt</span><span class="val" style="color:#e74c3c">每次手写</span></div>
-        <div class="metric"><span>舆情查看</span><span class="val" style="color:#e74c3c">打开电脑看HTML</span></div>
-        <div class="metric"><span>节日营销</span><span class="val" style="color:#e74c3c">手动翻日历</span></div>
-      </div>
-      <div class="compare-col after">
-        <h3 contenteditable="true">✅ 使用后</h3>
-        <div class="metric"><span>文案耗时</span><span class="val" style="color:var(--green)">10秒/条</span></div>
-        <div class="metric"><span>品类知识</span><span class="val" style="color:var(--green)">124条金句自动匹配</span></div>
-        <div class="metric"><span>Prompt</span><span class="val" style="color:var(--green)">7种风格一键生成</span></div>
-        <div class="metric"><span>舆情查看</span><span class="val" style="color:var(--green)">手机随时打开</span></div>
-        <div class="metric"><span>节日营销</span><span class="val" style="color:var(--green)">20+节自动提醒</span></div>
-      </div>
+  <div style="max-width:520px;width:100%;margin-top:16px">
+    <div class="src-card">
+      <div class="src-icon">📄</div>
+      <div class="src-info"><h4 contenteditable="true">2022年水果宝典 1.0.pdf (74页)</h4><p contenteditable="true">OCR 扫描 + Vision API 逐页识别：产地、口感、品种差异、挑选技巧</p></div>
     </div>
-  </div>
-
-  <!-- 第5页：结尾 -->
-  <div class="slide cover">
-    <img src="brand-logo.png" class="logo" alt="切果NOW">
-    <h1 style="font-size:26px"><span>持续</span>迭代</h1>
-    <p class="tagline" contenteditable="true">数据沉淀 · 自动化闭环 · 品牌私域提效</p>
-    <div style="margin-top:24px;font-size:13px;color:var(--text2);line-height:1.8;text-align:center" contenteditable="true">
-      📝 文案生成 124条金句 · 88个花字 · 50+品类<br>
-      🎨 Prompt 7种风格 · 折叠对比 · 豆包一键生图<br>
-      📊 舆情 7天历史 · 每日自动抓取 · 手机实时查看<br>
-      🏮 节日 20+节日 · 漂浮粒子 · 背景变色
+    <div class="src-card">
+      <div class="src-icon">📝</div>
+      <div class="src-info"><h4 contenteditable="true">水果知识介绍.docx (22,723字)</h4><p contenteditable="true">品种分类、季节上市时间、糖度 Brix 精确数据（夏黑24°、阳光玫瑰28°）</p></div>
     </div>
-    <p style="margin-top:32px;font-size:12px;color:var(--text2)" contenteditable="true">sophiasolo.github.io/qieguo-toolbox</p>
+    <div class="src-card">
+      <div class="src-icon">🌸</div>
+      <div class="src-info"><h4 contenteditable="true">花字库.rtf (88条花字)</h4><p contenteditable="true">9大类别：季节/品质/口感/情感/行动/稀缺/健康/节日专属</p></div>
+    </div>
   </div>
 </div>
 
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第3页 — 知识产出 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>消化</span>成果</h2>
+  <p class="subtitle" contenteditable="true">投喂资料被 AI 消化后产出了什么？</p>
+  <div class="card-grid cols2">
+    <div class="card"><div class="icon">🍎</div><div class="stat">124</div><div class="label" contenteditable="true">FRUIT_SELLING 金句</div><div class="desc" contenteditable="true">31 品类 × 4 变体，每句含口感/场景/情感钩子</div></div>
+    <div class="card"><div class="icon">💡</div><div class="stat">100</div><div class="label" contenteditable="true">FRUIT_FACTS 冷知识</div><div class="desc" contenteditable="true">25 品类 × 4 条，驱动周六轮换话题</div></div>
+    <div class="card"><div class="icon">🌸</div><div class="stat">88</div><div class="label" contenteditable="true">花字库</div><div class="desc" contenteditable="true">9大分类 · 20字内 · 含节日专属花字池</div></div>
+    <div class="card"><div class="icon">🍬</div><div class="stat">80+</div><div class="label" contenteditable="true">Brix 糖度数据</div><div class="desc" contenteditable="true">夏黑24° / 阳光玫瑰28° / 口口蜜22° 精确嵌入文案</div></div>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第4页 — 花字库展示 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>花字库</span>全景</h2>
+  <p class="subtitle" contenteditable="true">88 条品牌花字 · 9 大类别 · 每句 ≤20 字</p>
+  <div style="max-width:520px;width:100%">
+    <div class="hua-cat">🌿 季节</div>
+    <div class="hua-show"><span class="hua-item">盛夏果实的告白</span><span class="hua-item">一口咬住夏天</span><span class="hua-item">舌尖上的清凉</span><span class="hua-item">应季之选正当鲜</span><span class="hua-item">季节限定赏味期</span></div>
+    <div class="hua-cat" style="margin-top:10px">✨ 品质</div>
+    <div class="hua-show"><span class="hua-item">精选每一颗</span><span class="hua-item">阳光的味道</span><span class="hua-item">自然熟成的甜</span><span class="hua-item">树上完熟采摘</span><span class="hua-item">产地直发锁鲜</span></div>
+    <div class="hua-cat" style="margin-top:10px">😋 口感</div>
+    <div class="hua-show"><span class="hua-item">一口爆汁</span><span class="hua-item">甜到心里</span><span class="hua-item">脆甜无渣</span><span class="hua-item">入口即化</span><span class="hua-item">果香四溢</span></div>
+    <div class="hua-cat" style="margin-top:10px">🎯 行动</div>
+    <div class="hua-show"><span class="hua-item">手慢无</span><span class="hua-item">先到先得</span><span class="hua-item">趁鲜下单</span><span class="hua-item">今天就要吃</span></div>
+    <div class="hua-cat" style="margin-top:10px">🏮 节日专属</div>
+    <div class="hua-show"><span class="hua-item">送给妈妈的甜</span><span class="hua-item">520甜蜜告白</span><span class="hua-item">中秋团圆果</span><span class="hua-item">新年好意头</span></div>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:12px" contenteditable="true">花字按推送日类型 + 话题轮换自动匹配，确保每周文案不重复</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第5页 — 金句引擎 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>金句</span>引擎</h2>
+  <p class="subtitle" contenteditable="true">FRUIT_SELLING 124 条 · 31 品类 × 4 变体 · 含 Brix 数据</p>
+  <div class="compare-table">
+    <table>
+      <tr><th contenteditable="true">品类</th><th contenteditable="true">金句示例</th></tr>
+      <tr><td>阳光玫瑰 🍇</td><td contenteditable="true">「28°甜的阳光玫瑰，自带玫瑰香的葡萄贵族」</td></tr>
+      <tr><td>夏黑葡萄 🍇</td><td contenteditable="true">「24°甜度暴击，无籽夏黑一口一个停不下来」</td></tr>
+      <tr><td>口口蜜 🍈</td><td contenteditable="true">「22°甜如蜜，新疆直发的金色甜蜜炮弹」</td></tr>
+      <tr><td>猫山王榴莲 🫒</td><td contenteditable="true">「马来西亚树熟猫山王，浓郁绵密一口沦陷」</td></tr>
+      <tr><td>丹东草莓 🍓</td><td contenteditable="true">「北纬40°的甜蜜约定，丹东99草莓正当季」</td></tr>
+      <tr><td>海南金钻凤梨 🍍</td><td contenteditable="true">「不用挖眼不泡盐水，海南金钻手撕就吃」</td></tr>
+    </table>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:8px" contenteditable="true">每条金句自动匹配对应品类 + 嵌入文案首行，替代人工手写卖点</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第6页 — 节日系统 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>节日</span>系统</h2>
+  <p class="subtitle" contenteditable="true">20+ 节日自动识别 · 日历标注 · 特效触发</p>
+  <div class="card-grid cols2">
+    <div class="card"><div class="icon">🧧</div><div class="label" contenteditable="true">春节</div><div class="desc">🧧🏮红包雨 + 红背景</div></div>
+    <div class="card"><div class="icon">🎄</div><div class="label" contenteditable="true">圣诞</div><div class="desc">❄雪花粒子 + 深绿背景</div></div>
+    <div class="card"><div class="icon">🌙</div><div class="label" contenteditable="true">中秋</div><div class="desc">🌕明月粒子 + 深蓝背景</div></div>
+    <div class="card"><div class="icon">🇨🇳</div><div class="label" contenteditable="true">国庆</div><div class="desc">🇨🇳🎆国旗粒子 + 红背景</div></div>
+    <div class="card"><div class="icon">💕</div><div class="label" contenteditable="true">情人节/520/七夕</div><div class="desc">💗心跳动画 + 粉色氛围</div></div>
+    <div class="card"><div class="icon">🎖️</div><div class="label" contenteditable="true">母亲/父亲节</div><div class="desc">🌸👔专属横幅 + 花字</div></div>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:10px" contenteditable="true">农历节日（春节/端午/中秋/重阳）自动换算阳历日期 · 日历格子显示节气+农历</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第7页 — 文案成品 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>文案</span>成品</h2>
+  <p class="subtitle" contenteditable="true">输入品类 + 价格 → 10 秒出稿，每行 ≤20 字 + 行尾 emoji</p>
+  <div style="max-width:520px;width:100%">
+    <div class="demo-label">📌 周三会员日 · 阳光玫瑰 + 丹东草莓</div>
+    <div class="demo-card">
+      <div contenteditable="true">🍇 28°甜的阳光玫瑰 💚<br>自带玫瑰香的葡萄贵族 🌹<br>🍓 拿在手里就闻到香的草莓 ✨<br>丹东99 一口甜到心坎里 ❤️<br><br>💰 阳光玫瑰 ¥39.9/斤<br>💰 丹东草莓 ¥29.9/盒<br>📍 应季鲜果·区域不同·价格不同·以平台为准<br><br>🔗 美团/饿了么搜「切果NOW」<br>会员日专享价，今天最划算 🎉</div>
+      <div class="cta-line" contenteditable="true">马上点单 🛒</div>
+    </div>
+    <p style="font-size:10px;color:var(--text2);margin-top:6px" contenteditable="true">自动匹配品类金句 + 花字轮换 + 价格模式 + 节日话术 + 配送规则</p>
+  </div>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第8页 — Prompt 成品 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>Prompt</span>成品</h2>
+  <p class="subtitle" contenteditable="true">7种场景风格 · 折叠对比 · 一键唤起豆包生图</p>
+  <div class="prompt-showcase">
+    <div class="ps-card">
+      <h4 contenteditable="true">📸 社群图用</h4>
+      <p contenteditable="true">弱化品牌logo，突出水果质感，3层深度构图，中性白平衡，适合朋友圈分发</p>
+    </div>
+    <div class="ps-card">
+      <h4 contenteditable="true">🏷️ 品牌正式图</h4>
+      <p contenteditable="true">保留完整品牌标识，商务质感，统一视觉规范，适合企业宣发场景</p>
+    </div>
+    <div class="ps-card">
+      <h4 contenteditable="true">🌿 清新自然风</h4>
+      <p contenteditable="true">自然光+绿植道具，生活化场景，突出新鲜采摘感</p>
+    </div>
+    <div class="ps-card">
+      <h4 contenteditable="true">🎨 食欲特写风</h4>
+      <p contenteditable="true">微距特写+水珠细节，极致食欲感，小红书爆款风格</p>
+    </div>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:10px" contenteditable="true">每张卡片支持独立复制/删除 · 浏览器缓存不丢失 · 一键跳转豆包 App</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第9页 — 舆情监测 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>舆情</span>监测</h2>
+  <p class="subtitle" contenteditable="true">Cron 每日 7:30 自动抓取 · 分类 · 推送</p>
+  <div class="kb-stats">
+    <div class="kb-stat"><div class="num">24h</div><div class="lbl">每日自动抓取</div></div>
+    <div class="kb-stat"><div class="num">3级</div><div class="lbl">正/负/中性分类</div></div>
+    <div class="kb-stat"><div class="num">7天</div><div class="lbl">历史回溯切换</div></div>
+    <div class="kb-stat"><div class="num">📱</div><div class="lbl">手机随时查看</div></div>
+  </div>
+  <div class="flow" style="margin-top:16px">
+    <div class="flow-node">⏰ Cron 7:30</div><span class="flow-arrow">→</span>
+    <div class="flow-node">🔍 智慧商情</div><span class="flow-arrow">→</span>
+    <div class="flow-node">🤖 AI 分类</div><span class="flow-arrow">→</span>
+    <div class="flow-node">📊 JSON</div><span class="flow-arrow">→</span>
+    <div class="flow-node">📤 GitHub</div><span class="flow-arrow">→</span>
+    <div class="flow-node">📱 PWA</div>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:8px" contenteditable="true">负面舆情自动归类（政府执法 / 黑猫投诉 / 12315 / 小红书差评）含原文链接 + 截图</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第10页 — 效率对比 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide">
+  <h2 class="section-title"><span>效率</span>对比</h2>
+  <p class="subtitle" contenteditable="true">使用工具箱前 vs 使用后</p>
+  <div class="compare-row">
+    <div class="compare-col old">
+      <h3 contenteditable="true">❌ 使用前</h3>
+      <div class="compare-item"><span>单条文案</span><span class="v red">30 分钟</span></div>
+      <div class="compare-item"><span>品类知识</span><span class="v red">手动搜索</span></div>
+      <div class="compare-item"><span>配图Prompt</span><span class="v red">每次手写</span></div>
+      <div class="compare-item"><span>节日营销</span><span class="v red">手动翻日历</span></div>
+      <div class="compare-item"><span>舆情查看</span><span class="v red">打开电脑看</span></div>
+      <div class="compare-item"><span>花字重复</span><span class="v red">经常撞车</span></div>
+      <div class="compare-item"><span>周文案总量</span><span class="v red">≈ 2.5 小时</span></div>
+    </div>
+    <div class="compare-col new">
+      <h3 contenteditable="true">✅ 使用后</h3>
+      <div class="compare-item"><span>单条文案</span><span class="v" style="color:var(--green)">10 秒</span></div>
+      <div class="compare-item"><span>品类知识</span><span class="v" style="color:var(--green)">124条金句自动匹配</span></div>
+      <div class="compare-item"><span>配图Prompt</span><span class="v" style="color:var(--green)">7种风格一键生成</span></div>
+      <div class="compare-item"><span>节日营销</span><span class="v" style="color:var(--green)">20+节日自动提醒</span></div>
+      <div class="compare-item"><span>舆情查看</span><span class="v" style="color:var(--green)">手机随时打开</span></div>
+      <div class="compare-item"><span>花字轮换</span><span class="v" style="color:var(--green)">88条自动去重</span></div>
+      <div class="compare-item"><span>周文案总量</span><span class="v" style="color:var(--green)">≈ 1 分钟</span></div>
+    </div>
+  </div>
+  <p style="font-size:10px;color:var(--text2);margin-top:10px" contenteditable="true">效率提升约 150 倍 · 同时消除了人工遗忘品类卖点、花字撞车、节日遗漏等问题</p>
+</div>
+
+<!-- ──────────────────────────────────────────────────── -->
+<!-- 第11页 — 结尾 -->
+<!-- ──────────────────────────────────────────────────── -->
+<div class="slide cover">
+  <img src="brand-logo.png" class="logo" alt="切果NOW">
+  <h1 style="font-size:28px"><span>持续</span>迭代中</h1>
+  <p class="tagline" contenteditable="true">每一次优化都沉淀为知识资产</p>
+  <div style="margin-top:20px;font-size:12px;color:var(--text2);line-height:1.9;text-align:center" contenteditable="true">
+    📝 文案引擎 · 124条金句 · 88花字 · 50+品类 · 5天推送日<br>
+    🎨 Prompt工厂 · 7风格 · 折叠对比 · 豆包一键唤起<br>
+    📊 舆情看板 · Cron自动抓取 · 三级分类 · 手机PWA<br>
+    🏮 节日系统 · 20+节 · 农历算法 · 粒子特效<br>
+    ⚡ 全栈部署 · 单文件HTML · GitHub Pages · SSH<br>
+  </div>
+  <img src="brand-ip-2.png" class="ip-decor" style="width:80px;margin-top:16px" alt="">
+  <p style="margin-top:12px;font-size:11px;color:var(--text2)" contenteditable="true">sophiasolo.github.io/qieguo-toolbox</p>
+</div>
+
+</div><!-- /slides -->
+
+<!-- 导航圆点 -->
 <div class="nav-dots" id="navDots"></div>
 <div class="toast" id="toast"></div>
 
 <script>
 var currentSlide = 0;
 var totalSlides = document.querySelectorAll('.slide').length;
-var SLIDE_DATA_KEY = 'toolbox_ppt_slides';
+var SLIDE_KEY = 'toolbox_ppt_v2';
 
 // 导航点
-var dotsHtml = '';
-for (var i = 0; i < totalSlides; i++) {
-  dotsHtml += '<div class="nav-dot' + (i === 0 ? ' active' : '') + '" onclick="goTo(' + i + ')"></div>';
+(function() {
+  var html = '';
+  for (var i = 0; i < totalSlides; i++) {
+    html += '<div class="nav-dot' + (i === 0 ? ' active' : '') + '" onclick="goTo(' + i + ')"></div>';
+  }
+  document.getElementById('navDots').innerHTML = html;
+})();
+
+function updateUI() {
+  document.querySelectorAll('.slide').forEach(function(s, i) { s.classList.toggle('active', i === currentSlide); });
+  document.querySelectorAll('.nav-dot').forEach(function(d, i) { d.classList.toggle('active', i === currentSlide); });
+  document.getElementById('pageNum').textContent = (currentSlide + 1) + ' / ' + totalSlides;
 }
-document.getElementById('navDots').innerHTML = dotsHtml;
 
 function goTo(idx) {
   if (idx < 0 || idx >= totalSlides) return;
   currentSlide = idx;
-  document.querySelectorAll('.slide').forEach(function(s, i) { s.classList.toggle('active', i === idx); });
-  document.querySelectorAll('.nav-dot').forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+  updateUI();
   saveSlides();
 }
 
-// 键盘和触摸
+// 键盘
 document.addEventListener('keydown', function(e) {
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(currentSlide + 1);
   if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') goTo(currentSlide - 1);
 });
 
-var touchStartY = 0;
-document.addEventListener('touchstart', function(e) { touchStartY = e.touches[0].clientY; });
+// 触摸滑动
+var startY = 0;
+document.addEventListener('touchstart', function(e) { startY = e.touches[0].clientY; }, {passive:true});
 document.addEventListener('touchend', function(e) {
-  var diff = touchStartY - e.changedTouches[0].clientY;
-  if (Math.abs(diff) > 50) goTo(currentSlide + (diff > 0 ? 1 : -1));
+  var d = startY - e.changedTouches[0].clientY;
+  if (Math.abs(d) > 50) goTo(currentSlide + (d > 0 ? 1 : -1));
 });
 
 // 编辑自动保存
@@ -264,16 +486,14 @@ function saveSlides() {
   var data = { current: currentSlide, slides: [] };
   document.querySelectorAll('.slide').forEach(function(slide) {
     var texts = [];
-    slide.querySelectorAll('[contenteditable]').forEach(function(el) {
-      texts.push(el.innerHTML);
-    });
+    slide.querySelectorAll('[contenteditable]').forEach(function(el) { texts.push(el.innerHTML); });
     data.slides.push(texts);
   });
-  localStorage.setItem(SLIDE_DATA_KEY, JSON.stringify(data));
+  localStorage.setItem(SLIDE_KEY, JSON.stringify(data));
 }
 
 function loadSlides() {
-  var saved = localStorage.getItem(SLIDE_DATA_KEY);
+  var saved = localStorage.getItem(SLIDE_KEY);
   if (!saved) return;
   try {
     var data = JSON.parse(saved);
@@ -281,44 +501,36 @@ function loadSlides() {
     data.slides.forEach(function(texts, i) {
       if (!slides[i]) return;
       var els = slides[i].querySelectorAll('[contenteditable]');
-      texts.forEach(function(html, j) {
-        if (els[j] && html.trim()) els[j].innerHTML = html;
-      });
+      texts.forEach(function(html, j) { if (els[j] && html.trim()) els[j].innerHTML = html; });
     });
-    if (data.current != null) goTo(data.current);
+    if (data.current != null) { currentSlide = data.current; updateUI(); }
   } catch(e) {}
 }
 
 function resetAll() {
-  if (confirm('恢复所有文字为默认内容？')) {
-    localStorage.removeItem(SLIDE_DATA_KEY);
-    location.reload();
-  }
+  if (confirm('恢复所有文字为默认内容？')) { localStorage.removeItem(SLIDE_KEY); location.reload(); }
 }
 
 function exportHTML() {
   var clone = document.documentElement.cloneNode(true);
-  // 移除 toolbar 和 toast
-  var toolbar = clone.querySelector('.toolbar');
-  if (toolbar) toolbar.remove();
-  var toast = clone.querySelector('.toast');
-  if (toast) toast.remove();
-  // 所有 slide 置为 active
-  clone.querySelectorAll('.slide').forEach(function(s) { s.classList.add('active'); s.style.position='relative'; s.style.opacity='1'; s.style.transform='none'; s.style.pointerEvents='auto'; });
-  // 移除导航
+  ['toolbar','toast','pageNum'].forEach(function(id) {
+    var el = clone.querySelector('.' + id) || clone.querySelector('#' + id);
+    if (el) el.remove();
+  });
   var nav = clone.querySelector('.nav-dots');
   if (nav) nav.remove();
-  // 改 body overflow
+  clone.querySelectorAll('.slide').forEach(function(s) {
+    s.classList.add('active'); s.style.position = 'relative'; s.style.opacity = '1';
+    s.style.transform = 'none'; s.style.pointerEvents = 'auto';
+  });
   clone.querySelector('body').style.overflow = 'auto';
-  var html = '<!DOCTYPE html>\n' + clone.outerHTML
-    .replace(/contenteditable="true"/g, '')
-    .replace(/<div class="toast[^<]*<\/div>/g, '');
+  var html = '<!DOCTYPE html>\n' + clone.outerHTML.replace(/contenteditable="true"/g, '');
   var blob = new Blob([html], {type: 'text/html;charset=utf-8'});
   var a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = '切果NOW_私域运营工具箱_演示.html';
   a.click();
-  showToast('✅ PPT已导出');
+  showToast('✅ 已导出为独立HTML文件');
 }
 
 function showToast(msg) {
@@ -328,8 +540,7 @@ function showToast(msg) {
 }
 
 function debounce(fn, ms) {
-  var timer;
-  return function() { clearTimeout(timer); timer = setTimeout(fn, ms); };
+  var timer; return function() { clearTimeout(timer); timer = setTimeout(fn, ms); };
 }
 
 loadSlides();
