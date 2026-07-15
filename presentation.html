@@ -105,8 +105,8 @@ body {
 
 /* ====== 知识库统计卡 ====== */
 .kb-stats { display: flex; gap: 10px; width: 100%; max-width: 540px; flex-wrap: wrap; justify-content: center; }
-.kb-stat { flex: 0 1 auto; min-width: 90px; background: var(--card); border-radius: var(--radius); padding: 14px 10px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-.kb-stat .num { font-size: 30px; font-weight: 900; color: var(--green); }
+.kb-stat { flex: 1 1 0; min-width: 0; background: var(--card); border-radius: var(--radius); padding: 14px 6px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.kb-stat .num { font-size: 30px; font-weight: 900; color: var(--green); white-space: nowrap; }
 .kb-stat .lbl { font-size: 11px; color: var(--text2); margin-top: 4px; white-space: nowrap; }
 
 /* ====== 资料卡片 ====== */
@@ -187,7 +187,7 @@ body {
   .card-grid.cols3 { grid-template-columns: 1fr 1fr; }
   .card .stat { font-size: 22px; }
   .kb-stats { gap: 8px; }
-  .kb-stat { min-width: 72px; padding: 12px 8px; }
+  .kb-stat { padding: 12px 4px; }
   .kb-stat .num { font-size: 24px; }
   .kb-stat .lbl { font-size: 10px; }
   .compare-row { flex-direction: column; }
