@@ -2634,7 +2634,8 @@
         // 该日期无历史，清空输出区
         document.getElementById('outputCopy').classList.remove('visible');
         document.getElementById('copyContent').textContent = '';
-        document.getElementById('promptContent').textContent = '';
+        var pc = document.getElementById('promptContent');
+        if (pc) pc.textContent = '';
       }
     }
 
