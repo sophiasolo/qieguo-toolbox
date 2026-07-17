@@ -182,12 +182,12 @@
       "date": "20260716",
       "label": "7月16日",
       "total": 38,
-      "pos": 31,
+      "pos": 32,
       "neg": 2,
-      "neu": 5,
-      "pos_pct": 81.6,
+      "neu": 4,
+      "pos_pct": 84.2,
       "neg_pct": 5.3,
-      "neu_pct": 13.2,
+      "neu_pct": 10.5,
       "negatives": [
         {
           "time": "20:54",
@@ -196,7 +196,7 @@
           "summary": "出品品质投诉-份量不足",
           "url": "https://weibo.com/7381991019/R8YYfwSaq",
           "category": "出品品质",
-          "city": ""
+          "city": "湖南"
         },
         {
           "time": "01:04",
