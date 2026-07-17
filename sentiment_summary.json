@@ -182,22 +182,13 @@
       "date": "20260716",
       "label": "7月16日",
       "total": 38,
-      "pos": 34,
-      "neg": 2,
-      "neu": 2,
-      "pos_pct": 89.5,
-      "neg_pct": 5.3,
-      "neu_pct": 5.3,
+      "pos": 31,
+      "neg": 1,
+      "neu": 6,
+      "pos_pct": 81.6,
+      "neg_pct": 2.6,
+      "neu_pct": 15.8,
       "negatives": [
-        {
-          "time": "20:54",
-          "platform": "新浪微博",
-          "title": "这里切果now分量也太少了吧[吐] ​",
-          "summary": "这里<font class='standard-tag selection-tag font-weight-bold'>切果now</font>分量也太少了吧[吐] ​",
-          "url": "https://weibo.com/7381991019/R8YYfwSaq",
-          "category": "其他",
-          "city": ""
-        },
         {
           "time": "01:04",
           "platform": "黑猫投诉",
