@@ -1,37 +1,6 @@
 {
-  "updated": "20260718",
+  "updated": "20260719",
   "days": [
-    {
-      "date": "20260711",
-      "label": "7月11日",
-      "total": 29,
-      "pos": 27,
-      "neg": 2,
-      "neu": 0,
-      "pos_pct": 93.1,
-      "neg_pct": 6.9,
-      "neu_pct": 0.0,
-      "negatives": [
-        {
-          "time": "2026-07-11 16:17",
-          "platform": "黑猫投诉",
-          "title": "顾客配送点有误 导致送餐被扣款",
-          "summary": "12315/黑猫投诉",
-          "url": "https://tousu.sina.com.cn/complaint/view/17399659137/?sld=6c1475a4f083654d79c175a0b20be93b",
-          "category": "12315投诉",
-          "city": "未知"
-        },
-        {
-          "time": "2026-07-11 11:15",
-          "platform": "黑猫投诉",
-          "title": "美团外卖商家出餐慢连累骑手，申诉未通过求恢复账号权益",
-          "summary": "12315/黑猫投诉",
-          "url": "https://tousu.sina.com.cn/complaint/view/17399646271/?sld=34bccc61ad0a89158b8d6910764efe9f",
-          "category": "12315投诉",
-          "city": "未知"
-        }
-      ]
-    },
     {
       "date": "20260712",
       "label": "7月12日",
@@ -207,6 +176,18 @@
       "pos_pct": 87.0,
       "neg_pct": 0.0,
       "neu_pct": 13.0,
+      "negatives": []
+    },
+    {
+      "date": "20260718",
+      "label": "7月18日",
+      "total": 27,
+      "pos": 26,
+      "neg": 0,
+      "neu": 1,
+      "pos_pct": 96.3,
+      "neg_pct": 0.0,
+      "neu_pct": 3.7,
       "negatives": []
     }
   ]
