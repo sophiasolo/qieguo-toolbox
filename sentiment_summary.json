@@ -1,65 +1,6 @@
 {
-  "updated": "20260719",
+  "updated": "20260720",
   "days": [
-    {
-      "date": "20260712",
-      "label": "7月12日",
-      "total": 58,
-      "pos": 48,
-      "neg": 4,
-      "neu": 6,
-      "pos_pct": 82.8,
-      "neg_pct": 6.9,
-      "neu_pct": 10.3,
-      "negatives": [
-        {
-          "time": "21:21",
-          "platform": "黑猫投诉",
-          "title": "切果 NOW（附院店）",
-          "summary": [
-            ""
-          ],
-          "url": "https://tousu.sina.com.cn/complaint/view/17399700961/?sld=9014c6f89b4c8c239f29f0b245dfd1f0",
-          "category": "其他",
-          "city": ""
-        },
-        {
-          "time": "15:42",
-          "platform": "小红书",
-          "title": "避雷亳州切果NOW",
-          "summary": [
-            "展凌国际 切果NOW 鲜果切|酸奶捞|鲜米 各种小炒",
-            "(门头照片)",
-            "切果NOW!(亳州万达广场店) 别来搞我了。谢谢 昨天晚上难道不是生包吗 硬的"
-          ],
-          "url": "https://www.xiaohongshu.com/discovery/item/6a5345720000000011015d16#ocr",
-          "category": "出品品质",
-          "city": ""
-        },
-        {
-          "time": "03:14",
-          "platform": "黑猫投诉",
-          "title": "外卖超时2.5个小时 联系不上商家",
-          "summary": [
-            "切果NOW丨果切 超时不到货 投诉要求退货退款 涉诉金额45.69元"
-          ],
-          "url": "https://tousu.sina.com.cn/complaint/view/17399674317/?sld=d3f36de790db51b00dcdcbeb1ab352da",
-          "category": "配送问题",
-          "city": ""
-        },
-        {
-          "time": "17:57",
-          "platform": "云上校友圈-民大校园墙",
-          "title": "切果now 荔枝 10个",
-          "summary": [
-            "切果now 荔枝 10个 坏了五个 三个涩 只剩俩能吃"
-          ],
-          "url": "https://www.yunshangxiaoyuan.com.cn/&mid=5472734#ocr",
-          "category": "出品品质",
-          "city": ""
-        }
-      ]
-    },
     {
       "date": "20260713",
       "label": "7月13日",
@@ -199,6 +140,18 @@
           "city": "宁夏-银川"
         }
       ]
+    },
+    {
+      "date": "20260719",
+      "label": "7月19日",
+      "total": 75,
+      "pos": 75,
+      "neg": 0,
+      "neu": 0,
+      "pos_pct": 100.0,
+      "neg_pct": 0.0,
+      "neu_pct": 0.0,
+      "negatives": []
     }
   ]
 }
