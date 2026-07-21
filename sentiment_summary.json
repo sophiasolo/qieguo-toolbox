@@ -1,30 +1,25 @@
 {
-  "generated": "2026-07-21 08:51",
+  "generated": "2026-07-21 09:19",
   "latest_date": "2026-07-20",
   "today": {
-    "total": 78,
-    "pos": 40,
+    "total": 22,
+    "pos": 14,
     "neg": 2,
-    "neu": 36,
-    "pos_pct": 51.3,
-    "neg_pct": 2.6,
+    "neu": 6,
+    "pos_pct": 63.6,
+    "neg_pct": 9.1,
     "channels": {
-      "抖音": 31,
-      "快手": 20,
-      "小红书": 8,
-      "新浪微博": 5,
-      "搜狐新闻": 1,
-      "微信": 4,
-      "新浪看点": 1,
-      "微信视频号": 2,
-      "bilibili": 4,
-      "有驾": 1,
+      "小红书": 3,
+      "抖音": 9,
+      "快手": 7,
+      "微信视频号": 1,
+      "新浪微博": 1,
       "黑猫投诉": 1
     }
   },
   "last_7d": {
-    "total": 235,
-    "pos": 183,
+    "total": 179,
+    "pos": 157,
     "neg": 8
   },
   "daily_trend": [
@@ -72,10 +67,10 @@
     },
     {
       "date": "2026-07-20",
-      "total": 78,
-      "pos": 40,
+      "total": 22,
+      "pos": 14,
       "neg": 2,
-      "neu": 36
+      "neu": 6
     }
   ],
   "negative_items": [
@@ -155,38 +150,11 @@
   "today_items": [
     {
       "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "为啥注销不了|账号下所有关联业收益（包括2.账号财产已结清|付账户已注销。DOU+、抖币、现金、金巾、卡券等）和权益（包括会员身份、群主身份）均已结清、退款、清",
-      "author": "21:57",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664638242604819961#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "如果有人接不住你的真诚 希望你转身也从容",
-      "author": "丹66.",
-      "category": "消费者好评-值得",
-      "url": "https://www.kuaishou.com/short-video/3x9xpi7pe9gnp36#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "小红书",
       "title": "品牌连锁切果NOW纯外卖店整体出兑 无堂食，轻运营，只做美团、饿了么，京东，不用接待到店客人，省心省力。 店铺优势： 1. 切果NOW成熟品牌自带流量，平台活动",
       "author": "李迪",
       "category": "店铺转让/出兑",
       "url": "https://www.xiaohongshu.com/discovery/item/6a5e3fb8000000000101c6b4#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "#这歌有力气 就让我们继续维持#屌丝生活 #没人看系列",
-      "author": "1HWEC",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664630437721525603#ocr",
       "sentiment": "neu"
     },
     {
@@ -200,38 +168,11 @@
     },
     {
       "date": "2026-07-20",
-      "platform": "快手",
-      "title": "晒死了，又累又饿，有跑的同感的吗？ #给夏天一点颜色看看 #沉沦世俗为你的美",
-      "author": "众包骑手阿明",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.kuaishou.com/short-video/3xsjficm2nv2up9#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "小红书",
       "title": "切果now转让",
       "author": "一叶子枫",
       "category": "店铺转让/出兑",
       "url": "https://www.xiaohongshu.com/discovery/item/6a5e392700000000010010fe#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "充满回忆的城市",
-      "author": "黎  巴啦",
-      "category": "消费者好评-新鲜",
-      "url": "https://www.kuaishou.com/short-video/3x7dssvgrm6svsk#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "#外卖小哥 #长春 都说礼拜一买卖稀在我看来，只要肯努力就没有淡旺季，不抱怨环境，不妥协自己",
-      "author": "小刘达鸡（就乐呵）",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.kuaishou.com/short-video/3x3c25pitm7g6ce#ocr",
       "sentiment": "neu"
     },
     {
@@ -242,51 +183,6 @@
       "category": "骑手与顾客纠纷-非品牌产品问题",
       "url": "https://www.xiaohongshu.com/discovery/item/6a5e31a5000000000f02a74e#ocr",
       "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "如果我的离别能换你开心 那我毫无怨言",
-      "author": "车干",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664617894235493018#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "平静知足",
-      "author": "3 3",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.kuaishou.com/short-video/3x2hfttwc5zrm9s#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "新浪微博",
-      "title": "女孩我好幸福我好感动爱你真的！ ​",
-      "author": "叮当大王来也",
-      "category": "消费者主动关注/分享",
-      "url": "https://weibo.com/7640234172/R9BeEFBuq#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "这家店的水果不仅新鲜，还超甜！快来选一选！",
-      "author": "飘洋过海",
-      "category": "消费者好评-新鲜",
-      "url": "https://www.kuaishou.com/short-video/3x5r8wz6q9286ym#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "我想挣很多钱 买下我的自卑 买下我的欲望 买下我的未来 买下家人所有的顾虑和身不由己",
-      "author": "7",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.iesdouyin.com/share/video/7664610432918091621#ocr",
-      "sentiment": "pos"
     },
     {
       "date": "2026-07-20",
@@ -302,62 +198,8 @@
       "platform": "抖音",
       "title": "超好吃推荐。#青岛#青岛旅游#青岛好吃的特色美食",
       "author": "快乐小狗",
-      "category": "品牌提及-无明确评价",
+      "category": "消费者推荐-旅游美食",
       "url": "https://www.iesdouyin.com/share/video/7664590295984827250#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "小红书",
-      "title": "烟台竟然有亲子遛娃咖啡店apoos！",
-      "author": "Dominic",
-      "category": "消费者好评-赞",
-      "url": "https://www.xiaohongshu.com/discovery/item/6a5e17df000000000401f4c5#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "搜狐新闻",
-      "title": "重磅返场！定海夏夜福利藏不住了",
-      "author": "故事天空等你来",
-      "category": "品牌提及-无明确评价",
-      "url": "https://3g.k.sohu.com/t/n1037206979?serialId=3cdf9eb4cf6df958faecf1b235c176a0&showType=&&display=1037206979#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "微信",
-      "title": "重磅返场！定海夏夜福利藏不住了",
-      "author": "定海山",
-      "category": "品牌提及-无明确评价",
-      "url": "http://mp.weixin.qq.com/s?__biz=MzA3NjM3NzUxMg==&mid=2651705505&idx=1&sn=687344b827b72b5f1511cde1e18ba50d#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "#北京消费",
-      "author": "。。。。",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664578096830068095#asr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "买你开心",
-      "author": "刘梦茹大将军",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.kuaishou.com/short-video/3xcpeptituvgzxg#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "灵魂契合加上生理性喜欢 是上天在漫长的人生中仅有一次的馈赠@比奔驰还痴情的女人",
-      "author": "雨季（三角洲行动）",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.iesdouyin.com/share/video/7664572625096999163#ocr",
       "sentiment": "pos"
     },
     {
@@ -367,33 +209,6 @@
       "author": "半江渔火.",
       "category": "品牌提及-无明确评价",
       "url": "https://www.iesdouyin.com/share/video/7664569241991486066",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "杀疯了！淘宝美团开启即时零售终极大战 #辟谣 #外卖兵法 #购物分享 #补贴",
-      "author": "如颐doreen",
-      "category": "消费者好评-推荐",
-      "url": "https://www.iesdouyin.com/share/video/7664559192669310246#asr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "提前消费会掏空自己以后的生活 #生活需要金钱 #财经 #消费陷阱 #理性消费 #真实生活分享计划",
-      "author": "成都第一深情",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.iesdouyin.com/share/video/7664556935908548977#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "新浪看点",
-      "title": "【切果NOW!(和平店)】电话_地址_价格_营业时间_鞍山道沿线水果店团购 - [undefined]",
-      "author": "觅食风向标",
-      "category": "品牌提及-无明确评价",
-      "url": "https://k.sina.cn/article_7879849625_1d5acf69901901h1qy.html#ocr",
       "sentiment": "neu"
     },
     {
@@ -470,69 +285,6 @@
     },
     {
       "date": "2026-07-20",
-      "platform": "快手",
-      "title": "69.8元狂撸烧烤小串+碳烤猪蹄+爆炒花甲！ #团购福利官 #西瓜 #哈密瓜",
-      "author": "月牙",
-      "category": "消费者好评-便宜",
-      "url": "https://www.kuaishou.com/short-video/3xvc6edzgi2wh2u#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "微信视频号",
-      "title": "大家好@青山湖是我们最美的游乐园。[强][强][强]",
-      "author": "范玉梅1113",
-      "category": "品牌提及-无明确评价",
-      "url": "https://channels.weixin.qq.com/web/pages/feed?eid=export/UzFfBgAAxPGHQDowfwS6jMzT4DCJ3R8lc52yvyF_AZTMtto1Jw#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "我要出去玩 横竖都不在家",
-      "author": "劉  历·",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664545183216836539#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "#几线城市真的重要吗 #大城市的真实写照 #阳春高楼大厦 #城市边缘的繁华",
-      "author": "时间能改变一切吗？",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664544001790210041#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "跋山涉水的终于到家了#姑娘千万别远嫁",
-      "author": "鲲”",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664538393057885530#asr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "新浪微博",
-      "title": "吃饭 ​",
-      "author": "Hello大爬爬",
-      "category": "品牌提及-无明确评价",
-      "url": "https://weibo.com/6232554394/R9zh9za3z#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "#西瓜 #吃吃喝喝唯有美食不可辜负 #水果",
-      "author": "金堂现切水果趣",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664531115227317177#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "微信视频号",
       "title": "#西瓜",
       "author": "切果now金堂店",
@@ -551,110 +303,11 @@
     },
     {
       "date": "2026-07-20",
-      "platform": "微信",
-      "title": "【滇西南】秘境滇西诺邓、腾冲、瑞丽、芒市、巍山、纯玩双卧12日大环游",
-      "author": "上海玉屏国际旅行社",
-      "category": "消费者主动关注/分享",
-      "url": "http://mp.weixin.qq.com/s?__biz=MzU0Nzc1MzQwNA==&mid=2247551644&idx=1&sn=06b92305e74777c6f1df1d332c5a320d#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "切果NOW艾菲尔E|切果NOW艾菲尔E/re|切果NOW艾菲尔EJeL|艾菲尔EJlrel切果NOW|切果NOW|艾菲尔EreL切果NOW|切果NOWEiffe",
-      "author": "快乐平安",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664507326838467994#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "我期待着某一天 你会发长长的文字 告诉我断联的时间你很想我 没有忘记我 算了 我太天真了 #薇薇 #薇薇欣动 @刈婉若.(O2259206686)",
-      "author": "法丽兹.",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.kuaishou.com/short-video/3xezziactwfw5by#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "##平台接单日常 #接单经验分享 #跑单实录 #美团卡不派单",
-      "author": "同城-众包小L",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664503721901050451#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "#街道成河",
-      "author": "人在草木间",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664500142711841763#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "祝开业大吉生意兴隆",
-      "author": "腻",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664485730332433585#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "为了流量，给孩子逼疯了 #大庆假发",
-      "author": "亿顶假发在大庆",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.kuaishou.com/short-video/3xn556imqf9jxhg#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "新浪微博",
-      "title": "很幸福的life ​​",
-      "author": "wuenen_",
-      "category": "品牌提及-无明确评价",
-      "url": "https://weibo.com/7314511632/R9xH7j0JN#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "bilibili",
-      "title": "指环空悬指尖",
-      "author": "星斗故事会",
-      "category": "消费者主动关注/分享",
-      "url": "https://t.bilibili.com/1227010068469252101#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "小红书",
-      "title": "剧情绝了！这本小说太上头了！",
-      "author": "奇文乐看",
-      "category": "消费者好评-绝了",
-      "url": "https://www.xiaohongshu.com/discovery/item/6a5da627000000000f017f82#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "抖音",
       "title": "快 | 现点鲜切，快速送达 乐 | 独乐开心，众乐开怀 好 | 上好水果，美好滋味吃瓜  简单 想吃水果？ 我们采，我们挑，我们选，我们洗， 我们切，我们拼，我",
       "author": "切果N0W（九华店）",
       "category": "品牌自营推广",
       "url": "https://www.iesdouyin.com/share/video/7664464802089906361#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "朋友们看过来，共富路烤鸭店超实在！25 元抱走原价 39.88 元网红烤鸭，用草药腌透，堂食外带均可，速冲！ （【退款规则】到店核销：随时可退，过期未核销自动退",
-      "author": "网红特色手撕烤鸭·烤鸡官方号",
-      "category": "消费者好评-推荐",
-      "url": "https://www.iesdouyin.com/share/video/7664463995390182601#ocr",
       "sentiment": "pos"
     },
     {
@@ -668,105 +321,6 @@
     },
     {
       "date": "2026-07-20",
-      "platform": "bilibili",
-      "title": "指环空悬指尖",
-      "author": "奶糖短篇",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.bilibili.com/video/av116950382484917/#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "小红书",
-      "title": "剧情绝了！这本小说太上头了！",
-      "author": "奇文看看",
-      "category": "消费者好评-绝了",
-      "url": "https://www.xiaohongshu.com/discovery/item/6a5da2a200000000010036c9#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "bilibili",
-      "title": "指环空悬指尖",
-      "author": "我只穿芒芒果",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.bilibili.com/video/av116950382417495/#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "它们成群结队才敢说你 所谓猛虎单行 废物成群 #一群博门小臂",
-      "author": "泽导.",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.kuaishou.com/short-video/3xy5npqfa7w6gus#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "bilibili",
-      "title": "指环空悬指尖",
-      "author": "塔塔故事",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.bilibili.com/video/av116950348994405/#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "这家店的水果不仅新鲜，还超甜！快来选一选！",
-      "author": "一生一世",
-      "category": "消费者好评-新鲜",
-      "url": "https://www.kuaishou.com/short-video/3xz6qcwvt4hcypu#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "有驾",
-      "title": "#玩出数码新浪潮#同样用三折叠，为何我的效果差这么多？",
-      "author": "霞儿玩转数码",
-      "category": "品牌提及-无明确评价",
-      "url": "https://yoojia.baidu.com/app/video-detail/index?nid=5123907401102161280#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "跑步。#外卖",
-      "author": "一念雨来",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664447346268212489#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "宝妈宝爸看过来！启航儿童潜能中心 26.8 元享两节课，可选两项，速戳订位，娃玩乐开挂！ （注意，叠加新人价后的价格是26.8元，团购价是29.9元；）#河南漯",
-      "author": "启航儿童潜能发展中心",
-      "category": "消费者好评-性价比",
-      "url": "https://www.iesdouyin.com/share/video/7664435318570304384#asr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "微信",
-      "title": "别直接点外卖！每天记得领美团&淘宝闪购无门槛券，天天都能省几块！",
-      "author": "阿券",
-      "category": "品牌提及-无明确评价",
-      "url": "http://mp.weixin.qq.com/s?__biz=Mzg3MDE0Mzk2Mg==&mid=2247484022&idx=1&sn=79752441e9fe72aab2fa00167ffc998a#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "谁懂打工人决赛夜的痛！凌晨3点决战，熬完只能眯两小时赶早八，一边为绿茵场呐喊，一边担心上班全程宕机。   线下门店凌晨全线打烊，没冰啤、没冰瓜、没提神咖啡根本没",
-      "author": "小星球",
-      "category": "消费者好评-超值",
-      "url": "https://www.iesdouyin.com/share/video/7664429136665000442#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "抖音",
       "title": "tb闪购商家666，这样的店还能给继续开 晚上点了份水果，刚拿到还没开就发现是烂果，商家说熟透了，西瓜和图片严重不符，直接放了三个整块，我找商家，神人直接开怼，",
       "author": "诗⏮️⏸️⏭️",
@@ -776,74 +330,11 @@
     },
     {
       "date": "2026-07-20",
-      "platform": "小红书",
-      "title": "凌晨3点决赛局，打工人两大灵魂拷问：是干脆熬到三点不睡，还是定5个闹钟强行爬起？ 最崩溃的是嘴馋想喝冰啤，楼下便利店早关门，零食库存见底。桌上堆满薯片、卤味、小",
-      "author": "最好的檀多多",
-      "category": "消费者好评-超值",
-      "url": "https://www.xiaohongshu.com/discovery/item/6a5d82c4000000000c014bc4#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "新浪微博",
-      "title": "世上只有老婆好~ ​​",
-      "author": "冬天滚出地球",
-      "category": "品牌提及-无明确评价",
-      "url": "https://weibo.com/3950001096/R9wcV0pAR#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "真别说比送快递有趣多了。那个喜欢白嫖的同志，我记住你了。走夜路小心点#沉迷工作的打工人",
-      "author": " ",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.iesdouyin.com/share/video/7664414042992709553#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "小红书",
-      "title": "#我的世界杯日记",
-      "author": "Yep",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.xiaohongshu.com/discovery/item/6a5d7504000000000101fd5d#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "抖音",
-      "title": "回家了",
-      "author": "张",
-      "category": "品牌提及-无明确评价",
-      "url": "https://www.iesdouyin.com/share/video/7664410241622756974#ocr",
-      "sentiment": "neu"
-    },
-    {
-      "date": "2026-07-20",
       "platform": "抖音",
       "title": "切果NOW·建水店  正式营业！ 线下可到店选购， 美团/饿了么/京东/微信小程序 各大线上平台均可下单 每日鲜果现切、无添加、不卖隔夜果 单人果盒、下午茶拼盘",
       "author": "",
       "category": "消费者主动关注/分享",
       "url": "https://www.iesdouyin.com/share/video/7664409063359798459#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "微信",
-      "title": "你！！！！！！",
-      "author": "甜柚不酸",
-      "category": "消费者主动关注/分享",
-      "url": "http://mp.weixin.qq.com/s?__biz=Mzk2NDY5NzIyMg==&mid=2247484305&idx=1&sn=132d7ac37e5aec106f948d825c5f4435#ocr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-20",
-      "platform": "快手",
-      "title": "#世界杯决赛 马上决赛开始。凌晨3点是个考验。为了之后的上班大业。我现在就开始准备装备 第一咖啡备好。第二看球必须有零食在手第三为了最后的最后我必须清醒的看完全",
-      "author": "Xiaomianyang",
-      "category": "消费者主动关注/分享",
-      "url": "https://www.kuaishou.com/short-video/3xutcxm43hkmums#ocr",
       "sentiment": "pos"
     },
     {
