@@ -1,23 +1,23 @@
 {
-  "generated": "2026-07-24 08:40",
+  "generated": "2026-07-24 09:13",
   "latest_date": "2026-07-23",
   "today": {
-    "total": 15,
-    "pos": 12,
+    "total": 13,
+    "pos": 10,
     "neg": 3,
     "neu": 0,
-    "pos_pct": 80.0,
-    "neg_pct": 20.0,
+    "pos_pct": 76.9,
+    "neg_pct": 23.1,
     "channels": {
-      "抖音": 11,
       "新浪微博": 2,
+      "抖音": 9,
       "小红书": 1,
       "黑猫投诉": 1
     }
   },
   "last_7d": {
-    "total": 176,
-    "pos": 153,
+    "total": 174,
+    "pos": 151,
     "neg": 10
   },
   "daily_trend": [
@@ -65,8 +65,8 @@
     },
     {
       "date": "2026-07-23",
-      "total": 15,
-      "pos": 12,
+      "total": 13,
+      "pos": 10,
       "neg": 3,
       "neu": 0
     }
@@ -164,15 +164,6 @@
     }
   ],
   "today_items": [
-    {
-      "date": "2026-07-23",
-      "platform": "抖音",
-      "title": "听海哭的声音#二手人的日常",
-      "author": "汪玉海锦选二手车(众鑫名车)",
-      "category": "消费者自然分享-场景信号",
-      "url": "https://www.iesdouyin.com/share/video/7665736018276277608#ocr",
-      "sentiment": "pos"
-    },
     {
       "date": "2026-07-23",
       "platform": "新浪微博",
@@ -279,15 +270,6 @@
       "author": "Ss",
       "category": "消费者订单分享-切果NOW!（长江路店）",
       "url": "https://www.iesdouyin.com/share/video/7665484825268942011#asr",
-      "sentiment": "pos"
-    },
-    {
-      "date": "2026-07-23",
-      "platform": "抖音",
-      "title": "#失眠三要素#我的失眠三要素",
-      "author": "梦溪行",
-      "category": "消费者订单历史-切果NOW!金街美地店",
-      "url": "https://www.iesdouyin.com/share/video/7665424140875202225#asr",
       "sentiment": "pos"
     },
     {
