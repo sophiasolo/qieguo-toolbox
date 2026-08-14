@@ -1,6 +1,18 @@
 {
-  "updated": "20260812",
+  "updated": "20260813",
   "days": [
+    {
+      "date": "20260813",
+      "label": "8月13日",
+      "total": 32,
+      "pos": 23,
+      "neg": 0,
+      "neu": 9,
+      "pos_pct": 71.9,
+      "neg_pct": 0.0,
+      "neu_pct": 28.1,
+      "negatives": []
+    },
     {
       "date": "20260812",
       "label": "8月12日",
@@ -156,46 +168,6 @@
           "url": "https://tousu.sina.com.cn/complaint/view/17400595671/?sld=503287b34f6d5d17c634b24c9e0efe44",
           "category": "黑猫投诉-保守判负",
           "city": "江苏-苏州"
-        }
-      ]
-    },
-    {
-      "date": "20260806",
-      "label": "8月6日",
-      "total": 20,
-      "pos": 16,
-      "neg": 3,
-      "neu": 1,
-      "pos_pct": 80.0,
-      "neg_pct": 15.0,
-      "neu_pct": 5.0,
-      "negatives": [
-        {
-          "time": "13:29",
-          "platform": "今日头条-微头条",
-          "title": "给大家提个醒 切果now老板坚持是带盒重，我也是第一次见，涨知识了。翻阅了闪购的缺重退差规则，确实是不能去盒",
-          "summary": "其他",
-          "url": "https://www.toutiao.com/w/1872750651929600/#ocr",
-          "category": "其他",
-          "city": "江苏省"
-        },
-        {
-          "time": "11:53",
-          "platform": "黑猫投诉",
-          "title": "切果水果是坏的导致吃完拉肚子",
-          "summary": "黑猫/12315投诉(食品安全)",
-          "url": "https://tousu.sina.com.cn/complaint/view/17400563207/?sld=540bade78a34692eec0f85e6c5f31f3c",
-          "category": "食品安全（不适）",
-          "city": ""
-        },
-        {
-          "time": "10:37",
-          "platform": "抖音",
-          "title": "沈阳外卖避雷｜切果NOW.商家私加微信转3元现金诱导五星好评，按要求写完图文评价后，反倒被店家言语指责。 购入的酸奶口感发酸，食材新鲜度堪忧。 好评返现本就是违",
-          "summary": "消费者投诉",
-          "url": "https://www.iesdouyin.com/share/video/7670742141342220977#ocr",
-          "category": "消费者投诉",
-          "city": "辽宁-沈阳"
         }
       ]
     }
