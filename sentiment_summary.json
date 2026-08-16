@@ -1,6 +1,18 @@
 {
-  "updated": "20260814",
+  "updated": "20260815",
   "days": [
+    {
+      "date": "20260815",
+      "label": "8月15日",
+      "total": 21,
+      "pos": 13,
+      "neg": 0,
+      "neu": 8,
+      "pos_pct": 61.9,
+      "neg_pct": 0.0,
+      "neu_pct": 38.1,
+      "negatives": []
+    },
     {
       "date": "20260814",
       "label": "8月14日",
@@ -111,28 +123,6 @@
       "neg_pct": 0.0,
       "neu_pct": 0.0,
       "negatives": []
-    },
-    {
-      "date": "20260808",
-      "label": "8月8日",
-      "total": 33,
-      "pos": 31,
-      "neg": 1,
-      "neu": 1,
-      "pos_pct": 93.9,
-      "neg_pct": 3.0,
-      "neu_pct": 3.0,
-      "negatives": [
-        {
-          "time": "15:11",
-          "platform": "黑猫投诉",
-          "title": "美团买果切遇店铺异常，官方不作为，客服包庇引不满",
-          "summary": "在美团买的水果 切果now（转盘街店买的果切 ）店铺出租出兑没有在营业 美团后台还在继续营业 店铺在另一家切果now（银州店）出餐 属于一店多开,美团官方不处理 … 敷衍了事,",
-          "url": "https://tousu.sina.com.cn/complaint/view/17400639007/?sld=8f74c8d5f851aa95955be463d85ce296",
-          "category": "黑猫/12315-果切相关投诉",
-          "city": "待查-转盘街店"
-        }
-      ]
     }
   ]
 }
