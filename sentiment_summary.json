@@ -1,6 +1,73 @@
 {
-  "updated": "20260815",
+  "updated": "20260816",
   "days": [
+    {
+      "date": "20260816",
+      "label": "8月16日",
+      "total": 24,
+      "pos": 12,
+      "neg": 6,
+      "neu": 6,
+      "pos_pct": 50.0,
+      "neg_pct": 25.0,
+      "neu_pct": 25.0,
+      "negatives": [
+        {
+          "time": "21:31",
+          "platform": "新浪微博",
+          "title": "我真的气笑了 释然了 能遇到这种乐子 ​",
+          "summary": "20.03 切果 NOW 冰频特团 0:31 切果 NOW 切果 NOW 每天西瓜都不够卖 切果 NOW 少爷我还没混到差你这仁瓜俩枣的 切果 NOW 隔夜瓜建议去盛果仓哈 冰辣啤饼 切果 NOW 给你退款送你吃了赏你的 索要发票 修改地址 修改手机号 提倡文明用语 发送 @我想拥有感知幸福的能力",
+          "url": "https://weibo.com/7809644558/RdHsDmVfb#ocr",
+          "category": "出品品质",
+          "city": "宁波"
+        },
+        {
+          "time": "21:08",
+          "platform": "快手",
+          "title": "黄瓜雪梨汁喝完第二天是真的窜啊#健身日常 #健身 #健身打卡 #健身穿搭",
+          "summary": "因音 自台前天 一二 二 新精 端衣 母餐因.S . 息善完.8 最登据一. 斗鞋数 开剑.2 人错的费. 期升限 ：账员 ：账员金 自创人， 自人，人，日一人一 家胜自空，同 承行自，同膜良员会 产规以， 未气，社人等，角望心 未气，人零，典心五血高可 E E 要 1：00:1-00:00 ：00-: S|黄瓜雪梨汁 350mlFUTJICE 100%FRESH 切果 NOW|黄瓜雪梨汁 350mLFUTJICE 100%FRESH 切果 NOW",
+          "url": "https://www.kuaishou.com/short-video/3xbrdahnd4dqhbg#ocr",
+          "category": "食品安全不适",
+          "city": ""
+        },
+        {
+          "time": "21:01",
+          "platform": "新浪微博",
+          "title": "切果now的干噎酸奶有点难吃。。。 ​",
+          "summary": "切果now的干噎酸奶有点难吃。。。 ​",
+          "url": "https://weibo.com/5685869726/RdHgx3meM",
+          "category": "出品品质",
+          "city": "佛山"
+        },
+        {
+          "time": "10:28",
+          "platform": "抖音",
+          "title": "切果now 根据评论，好几个说吃完窜，大家可以留意下",
+          "summary": "切果now 根据评论，好几个说吃完窜，大家可以留意下",
+          "url": "https://www.iesdouyin.com/share/video/7674088496201616703####7674447713992491817",
+          "category": "食品安全不适",
+          "city": "沈阳"
+        },
+        {
+          "time": "02:35",
+          "platform": "抖音",
+          "title": "切果now不管哪家店我都吃一次窜一次[绝望的凝视]",
+          "summary": "切果now不管哪家店我都吃一次窜一次[绝望的凝视]",
+          "url": "https://www.iesdouyin.com/share/video/7674088496201616703####7674328956044100392",
+          "category": "食品安全不适",
+          "city": "沈阳"
+        },
+        {
+          "time": "02:29",
+          "platform": "抖音",
+          "title": "买的切果now 送来的蓝莓都长毛 别的水果都酸的 服了",
+          "summary": "买的切果now 送来的蓝莓都长毛 别的水果都酸的 服了",
+          "url": "https://www.iesdouyin.com/share/video/7674088496201616703####7674327247528854312",
+          "category": "食品安全异物",
+          "city": "沈阳"
+        }
+      ]
+    },
     {
       "date": "20260815",
       "label": "8月15日",
@@ -111,18 +178,6 @@
           "city": ""
         }
       ]
-    },
-    {
-      "date": "20260809",
-      "label": "8月9日",
-      "total": 18,
-      "pos": 18,
-      "neg": 0,
-      "neu": 0,
-      "pos_pct": 100.0,
-      "neg_pct": 0.0,
-      "neu_pct": 0.0,
-      "negatives": []
     }
   ]
 }
