@@ -1,6 +1,46 @@
 {
-  "updated": "20260820",
+  "updated": "20260821",
   "days": [
+    {
+      "date": "20260821",
+      "label": "8月21日",
+      "total": 28,
+      "pos": 21,
+      "neg": 3,
+      "neu": 4,
+      "pos_pct": 75.0,
+      "neg_pct": 10.7,
+      "neu_pct": 14.3,
+      "negatives": [
+        {
+          "time": "08:00",
+          "platform": "小红书",
+          "title": "我现在一直在哭",
+          "summary": "就因为我早上六点多下的单就给我整个庞臭的酸奶吗，而且特别难吃我现在有点想吐了，我也没有点橙子他也塞了，那个西瓜果切还有异味，我现在好难受啊再也不想点水果捞了，#避雷，#哈尔滨DieFromSorrowDieFromSorrow1分钟前DieFromSorrow她妈的，他家水果捞，酸奶都他妈过期的，果切还有哈喇味，吃，我的屁股要吐了，12分钟前cn刀刀Defrmsro的我现在",
+          "url": "https://www.xiaohongshu.com/discovery/item/6a8795040000000033034efb#ocr",
+          "category": "出品品质",
+          "city": "黑龙江-哈尔滨"
+        },
+        {
+          "time": "07:58",
+          "platform": "快手",
+          "title": "避雷",
+          "summary": "避雷DieFromSorrowSorrowDieFromSorrowDieFromSorrow1分钟前1分钟前1分钟前DieFromSorrowSorrowDieFromSorrowDieFromSorrow1分钟前2分钟前1分钟前DieFromSorrowSorrowDieFromSorrowDieFromSorrowT1分钟前亩1分钟前2分钟前DieFr",
+          "url": "https://www.kuaishou.com/short-video/3xxijqief36db7w#ocr",
+          "category": "其他",
+          "city": "黑龙江-哈尔滨"
+        },
+        {
+          "time": "07:44",
+          "platform": "小红书",
+          "title": "他家水果捞好难吃啊",
+          "summary": "07:33 西瓜 切果NOW!（南岗店） 切果 NOW 评分 月售 蜂鸟准时达 商家特色 冰镇鲜奶 4.7> 6000+ 约20分钟 榴莲保四房 爆39减1149减1559减24 ￥4购物爆红包 已领 更多 优惠 超值单品任选1件 更多 SUMMERTIME SUMMERTIME SUMMERTIME 切果 切果 切果 切果 ￥1.99 ￥0.99 ￥1.99 选TA 选TA 选TA 商品 会员 评价 外卖 自取 4.7 质量 包装 配送满意度 ★★★★肉 4.7 4.8 99% 全部5985 最新 好评5493 近期差评50 有图/视频1729 味道好22 很新鲜12 只看有内容的评价 d*",
+          "url": "https://www.xiaohongshu.com/discovery/item/6a87914b000000001b02935a#ocr",
+          "category": "出品品质",
+          "city": "黑龙江-哈尔滨"
+        }
+      ]
+    },
     {
       "date": "20260820",
       "label": "8月20日",
@@ -220,18 +260,6 @@
       "pos_pct": 61.9,
       "neg_pct": 0.0,
       "neu_pct": 38.1,
-      "negatives": []
-    },
-    {
-      "date": "20260814",
-      "label": "8月14日",
-      "total": 32,
-      "pos": 27,
-      "neg": 0,
-      "neu": 5,
-      "pos_pct": 84.4,
-      "neg_pct": 0.0,
-      "neu_pct": 15.6,
       "negatives": []
     }
   ]
