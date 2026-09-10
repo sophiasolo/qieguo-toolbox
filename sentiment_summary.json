@@ -1,6 +1,37 @@
 {
-  "updated": "20260908",
+  "updated": "20260909",
   "days": [
+    {
+      "date": "20260909",
+      "label": "9月9日",
+      "total": 28,
+      "pos": 22,
+      "neg": 2,
+      "neu": 4,
+      "pos_pct": 78.6,
+      "neg_pct": 7.1,
+      "neu_pct": 14.3,
+      "negatives": [
+        {
+          "time": "10:27",
+          "platform": "全国12315消费投诉信息公示平台-蜜饯类",
+          "title": "杭州临安果之源果品店（个体工商户）",
+          "summary": "2026年09月05日，消费者秦**（手机尾号 4393，用户ID ****4636）反映其于2026年09月05日在美团外卖（切果NOW（临安店））通过网购购买蜜饯类。可能存在食品安全问题，要求退赔费用。双方自行和解或者投诉人撤回投诉杭州市临安区市场监督管理局",
+          "url": "https://tsgs.12315.cn/#/1330185002026090564590130",
+          "category": "12315投诉",
+          "city": "浙江-杭州"
+        },
+        {
+          "time": "00:09",
+          "platform": "新浪微博",
+          "title": "看到袁一琦点切果now也翻车了我心里舒服多了 ​",
+          "summary": "看到袁一琦点切果now也翻车了我心里舒服多了 ​",
+          "url": "https://weibo.com/7414205211/RhdkjaIZB",
+          "category": "其他",
+          "city": "天津"
+        }
+      ]
+    },
     {
       "date": "20260908",
       "label": "9月8日",
@@ -112,55 +143,6 @@
       "neg_pct": 0.0,
       "neu_pct": 37.5,
       "negatives": []
-    },
-    {
-      "date": "20260902",
-      "label": "9月2日",
-      "total": 17,
-      "pos": 11,
-      "neg": 4,
-      "neu": 2,
-      "pos_pct": 64.7,
-      "neg_pct": 23.5,
-      "neu_pct": 11.8,
-      "negatives": [
-        {
-          "time": "13:28",
-          "platform": "云上校友圈-民大校园墙",
-          "title": "切果now你没事吧，款还没退呢 先从学生账户里扣一块钱是啥意思？我想知道所有人都扣了吗？",
-          "summary": "本月 调账-扣减 -￥1 2026-09-0119:25:44 切果NOW（中央民族大学丰台校区 店) H 吉",
-          "url": "https://www.yunshangxiaoyuan.com.cn/&mid=5742788#ocr",
-          "category": "客服应对",
-          "city": "北京-丰台"
-        },
-        {
-          "time": "11:19",
-          "platform": "全国12315消费投诉信息公示平台-餐饮配送服务",
-          "title": "切果NOW",
-          "summary": "2026.08.15淮安消费者网购餐饮索赔未调解",
-          "url": "https://tsgs.12315.cn/#/51320800002026081580000018",
-          "category": "12315投诉",
-          "city": "江苏-淮安"
-        },
-        {
-          "time": "08:53",
-          "platform": "云上校友圈-民大校园墙",
-          "title": "切果now谁有店员的联系方式呀 想退一下卡",
-          "summary": "H 吉",
-          "url": "https://www.yunshangxiaoyuan.com.cn/&mid=5739744#ocr",
-          "category": "客服应对",
-          "city": "北京-丰台"
-        },
-        {
-          "time": "00:20",
-          "platform": "新浪微博",
-          "title": "其实切果now我也吃不起",
-          "summary": "其实切果now我也吃不起",
-          "url": "https://weibo.com/7270500327/Rg0CqpcG5#176ecbe201b982329ed20762b25c45f7",
-          "category": "价格投诉",
-          "city": "杭州"
-        }
-      ]
     }
   ]
 }
