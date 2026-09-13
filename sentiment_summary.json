@@ -1,6 +1,28 @@
 {
-  "updated": "20260911",
+  "updated": "20260912",
   "days": [
+    {
+      "date": "20260912",
+      "label": "9月12日",
+      "total": 16,
+      "pos": 12,
+      "neg": 1,
+      "neu": 3,
+      "pos_pct": 75.0,
+      "neg_pct": 6.2,
+      "neu_pct": 18.8,
+      "negatives": [
+        {
+          "time": "10:12",
+          "platform": "抖音",
+          "title": "滨江避雷这家水果店！！愿意受气的可以去买！！ 这家店不按照备注做，一男店员上门说不按照备注做他就是有理了..他说剥皮和不剥皮不是一个价格，我说那你可以电话联系我",
+          "summary": "滨江某水果店不按备注做且态度差，避雷",
+          "url": "https://www.iesdouyin.com/share/video/7684465843263256147#ocr",
+          "category": "客服应对",
+          "city": "浙江-杭州"
+        }
+      ]
+    },
     {
       "date": "20260911",
       "label": "9月11日",
@@ -156,28 +178,6 @@
           "url": "https://h5-ol.sns.sohu.com/hy-super-h5/share/feed/1472401764648168320#ocr",
           "category": "食品安全异物",
           "city": "黑龙江-黑河"
-        }
-      ]
-    },
-    {
-      "date": "20260905",
-      "label": "9月5日",
-      "total": 20,
-      "pos": 15,
-      "neg": 1,
-      "neu": 4,
-      "pos_pct": 75.0,
-      "neg_pct": 5.0,
-      "neu_pct": 20.0,
-      "negatives": [
-        {
-          "time": "00:27",
-          "platform": "黑猫投诉",
-          "title": "投诉南宁美团外卖切果NOW（青秀店）以次充好、货不对版",
-          "summary": "2026年9月4日投诉南宁切果NOW店以次充好",
-          "url": "https://tousu.sina.com.cn/complaint/view/17401377586/?sld=9085803bee52335949945ecfd53275be",
-          "category": "品质投诉",
-          "city": "广西-南宁"
         }
       ]
     }
