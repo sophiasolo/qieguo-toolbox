@@ -1,6 +1,18 @@
 {
-  "updated": "20260914",
+  "updated": "20260915",
   "days": [
+    {
+      "date": "20260915",
+      "label": "9月15日",
+      "total": 36,
+      "pos": 31,
+      "neg": 0,
+      "neu": 5,
+      "pos_pct": 86.1,
+      "neg_pct": 0.0,
+      "neu_pct": 13.9,
+      "negatives": []
+    },
     {
       "date": "20260914",
       "label": "9月14日",
@@ -184,28 +196,6 @@
           "url": "https://weibo.com/7414205211/RhdkjaIZB",
           "category": "其他",
           "city": "天津"
-        }
-      ]
-    },
-    {
-      "date": "20260908",
-      "label": "9月8日",
-      "total": 27,
-      "pos": 11,
-      "neg": 1,
-      "neu": 15,
-      "pos_pct": 40.7,
-      "neg_pct": 3.7,
-      "neu_pct": 55.6,
-      "negatives": [
-        {
-          "time": "15:01",
-          "platform": "全国12315消费投诉信息公示平台-葡萄",
-          "title": "切果NOW(海恒店)",
-          "summary": "2026.9.5汪某网购葡萄问题达成调解",
-          "url": "https://tsgs.12315.cn/#/1340183002026090540061545",
-          "category": "12315投诉",
-          "city": "安徽-合肥"
         }
       ]
     }
