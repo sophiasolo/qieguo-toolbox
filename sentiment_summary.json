@@ -6,11 +6,11 @@
       "label": "9月19日",
       "total": 53,
       "pos": 49,
-      "neg": 4,
-      "neu": 0,
+      "neg": 2,
+      "neu": 2,
       "pos_pct": 92.5,
-      "neg_pct": 7.5,
-      "neu_pct": 0.0,
+      "neg_pct": 3.8,
+      "neu_pct": 3.8,
       "negatives": [
         {
           "time": "22:14",
@@ -29,24 +29,6 @@
           "url": "https://weibo.com/7212456730/RiPr8sVbM#ocr",
           "category": "营销质疑",
           "city": "青岛"
-        },
-        {
-          "time": "13:35",
-          "platform": "新浪微博",
-          "title": "我说为什么要点切果now我真服了",
-          "summary": "我说为什么要点切果now我真服了",
-          "url": "https://weibo.com/7485912522/RiOQleSWt#0e67fddace2eb648400d67b5ec362751",
-          "category": "其他",
-          "city": "北京"
-        },
-        {
-          "time": "13:35",
-          "platform": "新浪新闻",
-          "title": "我说为什么要点切果now我真服了",
-          "summary": "我说为什么要点切果now我真服了",
-          "url": "https://k.sina.cn/article_7811253015_m1d196431703301keg8.html####6AAE1F22-B4F8DBFA-19A9F3781-8E6-912",
-          "category": "其他",
-          "city": "北京"
         }
       ]
     },
