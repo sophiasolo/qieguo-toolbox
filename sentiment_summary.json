@@ -1,6 +1,28 @@
 {
-  "updated": "20261005",
+  "updated": "20261006",
   "days": [
+    {
+      "date": "20261006",
+      "label": "10月6日",
+      "total": 8,
+      "pos": 5,
+      "neg": 1,
+      "neu": 2,
+      "pos_pct": 62.5,
+      "neg_pct": 12.5,
+      "neu_pct": 25.0,
+      "negatives": [
+        {
+          "time": "21:12",
+          "platform": "新浪微博",
+          "title": "吃了几回忘本水果再吃切果now特别难吃。这两个太好吃了 ​",
+          "summary": "@麻辣烫帮主 ",
+          "url": "https://weibo.com/7270500327/Rls8emEQq#ocr",
+          "category": "出品品质",
+          "city": "杭州"
+        }
+      ]
+    },
     {
       "date": "20261005",
       "label": "10月5日",
@@ -204,18 +226,6 @@
           "city": "日照"
         }
       ]
-    },
-    {
-      "date": "20260929",
-      "label": "9月29日",
-      "total": 11,
-      "pos": 7,
-      "neg": 0,
-      "neu": 4,
-      "pos_pct": 63.6,
-      "neg_pct": 0.0,
-      "neu_pct": 36.4,
-      "negatives": []
     }
   ]
 }
