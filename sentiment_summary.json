@@ -36,12 +36,12 @@
       "date": "20261024",
       "label": "10月24日",
       "total": 20,
-      "pos": 16,
+      "pos": 15,
       "neg": 0,
-      "neu": 4,
-      "pos_pct": 80.0,
+      "neu": 5,
+      "pos_pct": 75.0,
       "neg_pct": 0.0,
-      "neu_pct": 20.0,
+      "neu_pct": 25.0,
       "negatives": []
     },
     {
