@@ -1,6 +1,37 @@
 {
-  "updated": "20261113",
+  "updated": "20261114",
   "days": [
+    {
+      "date": "20261114",
+      "label": "11月14日",
+      "total": 12,
+      "pos": 8,
+      "neg": 2,
+      "neu": 2,
+      "pos_pct": 66.7,
+      "neg_pct": 16.7,
+      "neu_pct": 16.7,
+      "negatives": [
+        {
+          "time": "13:26",
+          "platform": "抖音",
+          "title": "切果NOW（财富中心店）外卖超时：老子不吃了无语，客服你自己看超时多久了",
+          "summary": "老子不吃了无语 切果NOW（财富中心店）客服你自己看超时多久了 我谅解不了 雨大骑手路上路况也不好不好就别接那么多单",
+          "url": "https://www.iesdouyin.com/share/video/7707894374324135002#ocr",
+          "category": "配送问题",
+          "city": "眉山"
+        },
+        {
+          "time": "09:53",
+          "platform": "黑猫投诉",
+          "title": "用小蚕返利点切果now遇无奶油草莓诉求解决",
+          "summary": "现在影响消费者返利 用小蚕返利点切果now遇无奶油草莓诉求解决 投诉问题 客服不处理/处理不当 投诉要求 退款,改善服务",
+          "url": "https://tousu.sina.com.cn/complaint/view/17402900447/?sld=8ed4d9934cc6820a29c5281e38dd0324",
+          "category": "黑猫投诉",
+          "city": "黑猫投诉-未透露具体门店"
+        }
+      ]
+    },
     {
       "date": "20261113",
       "label": "11月13日",
@@ -167,28 +198,6 @@
       "neg_pct": 0.0,
       "neu_pct": 25.0,
       "negatives": []
-    },
-    {
-      "date": "20261107",
-      "label": "11月7日",
-      "total": 15,
-      "pos": 9,
-      "neg": 1,
-      "neu": 5,
-      "pos_pct": 60.0,
-      "neg_pct": 6.7,
-      "neu_pct": 33.3,
-      "negatives": [
-        {
-          "time": "04:53",
-          "platform": "抖音",
-          "title": "自己切的吗？我可太爱吃切果了。几点出来我去买。再也不点那个切果NOW了。",
-          "summary": "自己切的吗？我可太爱吃切果了。几点出来我去买。再也不点那个切果NOW了。",
-          "url": "https://www.iesdouyin.com/share/video/7705052862564704123####7705164577739146021",
-          "category": "其他",
-          "city": "北京"
-        }
-      ]
     }
   ]
 }
